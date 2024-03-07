@@ -1,0 +1,229 @@
+<div class="main">
+  <mat-accordion class="mat-elevation-z8">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+      <mat-expansion-panel-header>
+        Water Production (FP)
+      </mat-expansion-panel-header>
+      <form [formGroup]="searchWaterRunningForm" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Zone/Branch</mat-label>
+            <mat-select formControlName="serBranchId">
+              <mat-option value=""></mat-option>
+              <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                {{branch.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Union Council</mat-label>
+            <mat-select formControlName="serLocationId">
+              <mat-option value=""></mat-option>
+              <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                {{UC.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Filteration Plant Number</mat-label>
+            <input matInput formControlName="txtProductCode" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Filteration Plant Name</mat-label>
+            <input matInput formControlName="txtProductName" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Period</mat-label>
+            <input matInput [matDatepicker]="dp" formControlName="txtMonth">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)" (monthSelected)="chosenMonthHandler($event, dp)"
+              panelClass="example-month-picker">
+            </mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Asset Type</mat-label>
+            <mat-select formControlName="txtItemType">
+              <!-- <mat-option value=""></mat-option> -->
+              <mat-option value="FP">Filteration Plant</mat-option>
+              <!-- <mat-option value="TW">Tube Well</mat-option> -->
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>From Date & To Date</mat-label>
+            <mat-date-range-input [rangePicker]="dptrip">
+              <input matStartDate formControlName="dteDateFrom" placeholder="Start date">
+              <input matEndDate formControlName="dteDateTo" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="dptrip"></mat-datepicker-toggle>
+            <mat-date-range-picker #dptrip></mat-date-range-picker>
+  
+            <mat-error *ngIf="searchWaterRunningForm.controls.dteDateFrom.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="searchWaterRunningForm.controls.dteDateTo.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row mb-2">
+          <div class="col pr-3 d-flex justify-content-end">
+            <button mat-raised-button type="submit" [disabled]="!searchWaterRunningForm.valid"><span class="material-icons pb-1 pr-1">search</span>Search
+            </button>
+            <button mat-raised-button class="ml-2">
+              <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-card class="mat-elevation-z8 mb-1">
+    <mat-form-field class="form-group col-md-3" appearance="fill">
+      <mat-label>Columns</mat-label>
+      <mat-select [formControl]="selection" multiple>
+        <!-- <mat-select-trigger>
+                  {{selection.value ? selection.value[0] : ''}}
+                  <span *ngIf="selection.value?.length > 1" class="example-additional-selection">
+                    (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                  </span>
+                </mat-select-trigger> -->
+        <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+          {{column | formControl}}
+        </mat-option>
+        <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+      </mat-select>
+    </mat-form-field>
+    <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+      <table #waterRunningTable mat-table matTableExporter #exporter="matTableExporter" [dataSource]="waterSourceProduction" #waterSourceProductionSort="matSort"
+        matSort style="border: 1px solid #bababa;">
+
+        <!-- <ng-container matColumnDef="select" style="padding: 5px;">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()"
+                              >
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)"
+                              >
+                </mat-checkbox>
+              </td>
+            </ng-container> -->
+        <ng-container matColumnDef="txtBranchName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone/Branch</th>
+          <td mat-cell *matCellDef="let element"> {{element.txtBranchName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtLocationName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtLocationName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtProductCodeF">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Filteration Plant No</th>
+          <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue">
+            {{element.txtProductCode}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="txtProductNameF">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Filteration Plant Name</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.txtProductName}}
+          </td>
+        </ng-container>       
+        <ng-container matColumnDef="TotalRunningUnit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Running Hour</th>
+          <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue">
+            <span *ngIf="element.blnIsMetered"> {{element.numWaterProducedInUnit}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="txtAverageDischargePerUnit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg Discharge m3/</th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue">
+            <span *ngIf="element.blnIsMetered">{{element.txtAverageDischargePerUnit}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numWaterProducedInUnit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Water Cubic/Month </th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue">
+            <span *ngIf="element.blnIsMetered"> {{element.numUnitConsumed}}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="numMonthlyBill">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Monthly Electricity Bill </th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue">
+            {{element.numMonthlyBill}}
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="running">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Running </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-form-field class="form-group mr-2 mt-2 runningTableField" appearance="outline">                    
+                  <input matInput style="text-align: right" value="678564" type="number"/>
+                </mat-form-field>
+               </td>
+            </ng-container>
+              <ng-container matColumnDef="remarks">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-form-field class="form-group mr-2 mt-2 customFieldTable" appearance="outline">                    
+                    <textarea matInput
+                  
+                    ></textarea>
+                  </mat-form-field>
+                 </td>
+              </ng-container> -->
+        <ng-container matColumnDef="blnIsFunctional">
+          <th mat-header-cell *matHeaderCellDef class="pr-2">Functional </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon *ngIf="element.blnIsFunctional" style="color: green;  font-size: 25px;" class="ml-4 mr-2">done</mat-icon>
+            <mat-icon *ngIf="!element.blnIsFunctional" style="color: red;  font-size: 25px;" class="ml-4 mr-2">close</mat-icon>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="blnIsMetered">
+          <th mat-header-cell *matHeaderCellDef>Metered Connection</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon *ngIf="!element.blnIsMetered" style="color: red;  font-size: 25px;" class="ml-4 mr-2">close</mat-icon>
+            <mat-icon *ngIf="element.blnIsMetered" style="color: green;  font-size: 25px;" class="ml-4 mr-2">done</mat-icon>
+
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="Actions" >
+                  <th mat-header-cell *matHeaderCellDef> Actions</th>
+                  <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                   
+                      <mat-icon matTooltip="View" class=" mr-2 ml-2" [routerLink]="['/operationManagement/WaterProductionAndUnitConsumed/viewWaterProductionAndUnitConsumed']" style="padding-top: 10px; color: #bd7d08; cursor: pointer;font-size: 25px;"  >remove_red_eye</mat-icon>
+                      <mat-icon matTooltip="Edit" style="color: #ffae1b; cursor: pointer; font-size: 25px;" class="ml-1"(click)="openEditModel()">edit</mat-icon>
+                  </td>
+               </ng-container> -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+            <!-- <a >Approve</a> -->
+            <mat-icon matTooltip="View" (click)="onView(element)" class="btnView ml-2">remove_red_eye</mat-icon>
+            <mat-icon matTooltip="Edit" class="btnEdit" (click)="openEditModel(element)">edit</mat-icon>
+            <!-- <button class="ml-2" mat-raised-button  [routerLink]="['/operationManagement/householdAndPopulationRecord/editHHAndPopulationRecord']" >Cancel</button> -->
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="waterProductionColumn"></tr>
+        <tr mat-row *matRowDef="let row;let even = even;  columns: waterProductionColumn;">
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-paginator #waterSourceProductionPaginator [pageSizeOptions]="[10, 20,50]" showFirstLastButtons></mat-paginator>
+    <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+      Water Production List</button>
+      <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Water Production', sheet: 'sheet'})">
+              <span class="material-icons pb-1 pr-1">download</span>Download Excel
+          </button>
+  </mat-card>
+  <!-- <div class="row mt-3 mb-1">
+    <div class="col d-flex justify-content-end">
+        <button mat-raised-button (click)="openSubmitDialog()">
+            <span class="material-icons pr-1">save</span>Submit
+        </button>
+    </div>
+</div> -->
+</div>

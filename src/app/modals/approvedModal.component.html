@@ -1,0 +1,22 @@
+
+<mat-dialog-content class="m-0 p-3"> 
+<!-- <form [formGroup]="form">   
+     <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Connection Provider</mat-label>
+        <mat-select formControlName="txtConnectionProvider">
+            <mat-option value="" hidden>Select Asset</mat-option>
+            <mat-option value=""></mat-option>
+            <mat-option value="dam">Dam</mat-option>
+            <mat-option value="tubeWell">TubeWell</mat-option>
+        </mat-select>
+    </mat-form-field> 
+</form> -->
+<h6>{{message}}</h6>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="col mb-3 d-flex justify-content-end">
+        <button mat-raised-button class="ml-2" mat-dialog-close  (click)="onConfirmClick()">  <span class="material-icons pb-1 pr-1">check_circle_outline</span>Approve</button>
+        <button mat-raised-button class="ml-2"  mat-dialog-close>  <span class="material-icons pb-1 pr-1">close</span>Cancel</button>
+    </div>
+    <!-- [routerLink]="['/billing/newConnection']" -->
+</mat-dialog-actions>

@@ -1,0 +1,45 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    Adjustment
+</mat-card-header>
+<!-- (ngSubmit)="onSubmit()" -->
+<mat-dialog-content class="mt-2">
+    <form [formGroup]="adjustmentForm" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline" >
+                <mat-label>Customer Code </mat-label>
+                <input matInput formControlName="txtCustomerCode" readonly>               
+            </mat-form-field>
+            <!-- <mat-form-field class="form-group col-md-4" appearance="outline">
+                <mat-label>Bill Month/Period</mat-label>
+                <input matInput formControlName="dteBillTo" readonly/>
+            </mat-form-field> -->
+            <mat-form-field class="form-group col-md-3" appearance="outline" >
+                <mat-label>Bill From </mat-label>
+                <input matInput  formControlName="dteBillFrom" readonly>               
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline" >
+                <mat-label>Bill To </mat-label>
+                <input matInput  formControlName="dteBillTo" readonly>
+               
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Bill Amount</mat-label>
+                <input matInput formControlName="numTotalAmount" readonly/>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Adjustment Amount</mat-label>
+                <input matInput type="number" formControlName="numAdjustment"/>
+                <span class='badge' *ngIf="show">Enter amount less than total</span>
+            </mat-form-field>
+                
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button class="ml-2" type="submit"><span
+                class="material-icons pb-1 pr-1">save</span>Submit</button>
+            <button mat-raised-button class="ml-2" mat-dialog-close><span
+                class="material-icons pb-1 pr-1">close</span>Close</button>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<!-- [routerLink]="['/billing/billAdjustment']" -->

@@ -1,0 +1,207 @@
+﻿<!-- /*
+* Author Seemab Khalil
+*
+* Created on Tue Jan 2 2020 : 8:37 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<div class="main">
+  <div class="card">
+    <div class="card-header">
+      <b>Maintenance Record</b>
+    </div>
+    <div class="card-body">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <div class="row mb-3 mt-3">
+          <div class="col d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary">Edit</button>
+            <button type="button" class="btn btn-secondary ml-2">Add</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="inputZip">Vehicle No <span class="required-straic">*</span></label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtVehicleNo">
+            <div *ngFor="let validation of formValidationMessages.txtVehicleNo">
+              <div class='alert alert-danger'
+                *ngIf="form.controls.txtVehicleNo.hasError(validation.type) && (form.controls.txtVehicleNo.dirty || form.controls.txtVehicleNo.touched)">
+                {{validation.message}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Maintenance Order No <span class="required-straic">*</span></label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtMaintenanceOrderNo">
+            <div *ngFor="let validation of formValidationMessages.txtMaintenanceOrderNo">
+              <div class='alert alert-danger'
+                *ngIf="form.controls.txtMaintenanceOrderNo.hasError(validation.type) && (form.controls.txtMaintenanceOrderNo.dirty || form.controls.txtMaintenanceOrderNo.touched)">
+                {{validation.message}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Issue Date</label>
+            <div class="input-group">
+              <input class="form-control" id="inputZip" placeholder="yyyy-mm-dd" name="dp"
+              [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" formControlName="txtIssueDate">
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar2-week-fill"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Maintenance Item <span class="required-straic">*</span></label>
+            <select id="inputZip" class="form-control" formControlName="txtMaintenanceItem">
+              <option selected>Choose...</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
+            <div *ngFor="let validation of formValidationMessages.txtMaintenanceItem">
+              <div class='alert alert-danger'
+                *ngIf="form.controls.txtMaintenanceItem.hasError(validation.type) && (form.controls.txtMaintenanceItem.dirty || form.controls.txtMaintenanceItem.touched)">
+                {{validation.message}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">UOM</label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtUom">
+
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Required Quantity</label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtRequiredQuantity">
+
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Issued Quantity</label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtIssuedQuantity">
+
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputZip">Life <span class="required-straic">*</span></label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtLife" required>
+
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="inputZip">Issue Cost Price <span class="required-straic">*</span></label>
+            <input type="text" class="form-control" id="inputZip" formControlName="txtIssueCostPrice">
+            <div *ngFor="let validation of formValidationMessages.txtIssueCostPrice">
+              <div class='alert alert-danger'
+                *ngIf="form.controls.txtIssueCostPrice.hasError(validation.type) && (form.controls.txtIssueCostPrice.dirty || form.controls.txtIssueCostPrice.touched)">
+                {{validation.message}}
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="row mb-3">
+          <div class="col d-flex justify-content-end">
+            <button type="submit" class="btn btn-secondary" [disabled]="!form.valid">Submit</button>
+            <button type="button" class="btn btn-secondary ml-2">Cancel</button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Vehicle No</th>
+                <th scope="col">Maintenance Order No</th>
+                <th scope="col">Issue Date</th>
+                <th scope="col">Maintenance Item</th>
+                <th scope="col">UOM</th>
+                <th scope="col">Required Quantity</th>
+                <th scope="col">Issued Quantity</th>
+                <th scope="col">Life</th>
+                <th scope="col">Issue Cost Price</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>30</td>
+                <td>15</td>
+                <td>15-09-20</td>
+                <td>Tyres</td>
+                <td>Test</td>
+                <td>Best</td>
+                <td>Middle</td>
+                <td>2 Year</td>
+                <td>50000</td>
+
+
+
+              </tr>
+
+              <tr>
+                <th scope="row">2</th>
+                  <td>30</td>
+                  <td>15</td>
+                  <td>15-09-20</td>
+                  <td>Tyres</td>
+                  <td>Test</td>
+                  <td>Best</td>
+                  <td>Middle</td>
+                  <td>2 Year</td>
+                  <td>50000</td>
+
+
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>30</td>
+                <td>15</td>
+                <td>15-09-20</td>
+                <td>Tyres</td>
+                <td>Test</td>
+                <td>Best</td>
+                <td>Middle</td>
+                <td>2 Year</td>
+                <td>50000</td>
+
+
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+              <td>30</td>
+              <td>15</td>
+              <td>15-09-20</td>
+              <td>Tyres</td>
+              <td>Test</td>
+              <td>Best</td>
+              <td>Middle</td>
+              <td>2 Year</td>
+              <td>50000</td>
+
+
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>30</td>
+                <td>15</td>
+                <td>15-09-20</td>
+                <td>Tyres</td>
+                <td>Test</td>
+                <td>Best</td>
+                <td>Middle</td>
+                <td>2 Year</td>
+                <td>50000</td>
+
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

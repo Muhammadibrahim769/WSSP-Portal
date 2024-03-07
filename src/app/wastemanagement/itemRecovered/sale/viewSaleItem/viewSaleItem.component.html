@@ -1,0 +1,60 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Sale Item
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Sold Date:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtSoldDate | date:'dd MMMM, yyyy'}}</td>
+                        <th>
+                            <h6>Vendor:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtVendor}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Rate:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.numRate}}</td>
+                        <th>
+                            <h6>Amount:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.numAmount}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Sale Item:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtSaleItem}}</td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Sale Item</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/saleRecoveredItemList']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

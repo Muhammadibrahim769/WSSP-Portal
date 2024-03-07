@@ -1,0 +1,378 @@
+<div class="main">
+    <mat-card class=" mat-elevation-z8 p-0 mt-0 mb-2">
+        <mat-card-header class="matCardHeader">
+            Bill Page
+        </mat-card-header>
+        <mat-card-content class="page mb-0" id="printBill">
+            <mat-card class="example-card">
+                <mat-card class="table-card">
+                    <table id="billBasicInfo">
+                        <thead>
+                            <tr>
+                                <th>Branch</th>
+                                <th>Union Council</th>
+                                <th>Neighborhood Council</th>
+                                <th>Billing Period From</th>
+                                <th>Billing Period To</th>
+                                <th>Issue Date</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>C</td>
+                                <td class="billInt">25</td>
+                                <td></td>
+                                <td>Nov 2020</td>
+                                <td>Dec 2020</td>
+                                <td>22-12-20</td>
+                                <td>06-01-2021</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>Distributor Code</th>
+                                <th>Customer Id</th>
+                                <th>Old ID/Parcel ID</th>
+                                <th>Connection Type</th>
+                                <th>Category</th>
+                                <th>Sub Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>34/053/186</td>
+                                <td class="billInt">22510003408</td>
+                                <td class="billInt">3408</td>
+                                <td>Domestic</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card>
+                <div class="row col-md-12">
+                    <div class="col-md-6 pr-1 pl-0">
+                        <mat-card class="customer-card mt-2 p-0">
+                            <mat-card-header class="billCardHeader">CUSTOMER DETAILS</mat-card-header>
+                            <mat-card-content class="p-1">
+                                <table>
+                                    <tr>Umar Khan</tr>
+                                    <tr>Mohallah Gulberg,Area Gulberg.</tr>
+                                    <tr>14202-8395088-7</tr>
+                                    <tr>0334-8871244</tr>
+                                </table>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-6 pl-1 pr-0">
+                        <mat-card class="customer-card mt-2 p-0">
+                            <mat-card-header class="billCardHeader">BILLING HISTORY</mat-card-header>
+                            <mat-card-content>
+                                <table id="billInfo">
+                                    <thead>
+                                        <tr>
+                                            <th>BILLING PERIOD</th>
+                                            <th>BILL</th>
+                                            <th>PAYMENT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Jan-20 to Feb-20</td>
+                                            <td class="billInt">2.220</td>
+                                            <td class="billInt">2.220</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mar-20 to Apr-20</td>
+                                            <td class="billInt">2.220</td>
+                                            <td class="billInt">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>May-20 to June-20</td>
+                                            <td class="billInt">4.660</td>
+                                            <td class="billInt">4.660</td>
+                                        </tr>
+                                        <tr>
+                                            <td>July-20 to Aug-20</td>
+                                            <td class="billInt">3.120</td>
+                                            <td class="billInt">3.120</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sep-20 to Oct-20</td>
+                                            <td class="billInt">3.120</td>
+                                            <td class="billInt">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="row p-0">
+                            <div class="col-md-8 p-0">
+                                <div class="row">
+                                    <div class="col-md-7 pr-1 pl-0">
+                                        <mat-card class="serviceDetail mt-2 p-0">
+                                            <mat-card-header class="billCardHeader">
+                                                WATER SUPPLY/CONSERVANCY/SEWERAGE CHARGES
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Service</th>
+                                                            <th>Rate/Month</th>
+                                                            <th>Amount Of Period</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Water Supply (Rs):</td>
+                                                            <td class="billInt">690</td>
+                                                            <td class="billInt">1380</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Conservancy (Rs):</td>
+                                                            <td class="billInt">720</td>
+                                                            <td class="billInt">1440</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Sewerage (Rs):</td>
+                                                            <td class="billInt">150</td>
+                                                            <td class="billInt">300</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>New Connection (Rs):</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Change of Profile</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">10000000/-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-5 pr-1 pl-1">
+                                        <mat-card class="serviceDetail mt-2 p-0">
+                                            <mat-card-header class="billCardHeader">
+                                                SOLID WASTE MANAGEMENT SERVICES</mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Particulars</th>
+                                                            <th>Number/Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>No of trips</td>
+                                                            <td class="billInt">-</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rate per trip (Rs):</td>
+                                                            <td class="billInt"> -</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Item 3</td>
+                                                            <td class="billInt"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">10000000/-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 pl-0 pr-1 pt-0">
+                                        <mat-card class="serviceDetail p-0 mt-2">
+                                            <mat-card-header class="billCardHeader">GROUND WATER ABSTRACTION/AQUIFER
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Service</th>
+                                                            <th>Rate/Month</th>
+                                                            <th>Amount of Period</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Water Charges</td>
+                                                            <td class="billInt"></td>
+                                                            <td class="billInt"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>License Fee (Rs):</td>
+                                                            <td class="billInt"></td>
+                                                            <td class="billInt"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt"> 10000000/-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- <div id="maindiv">
+                                                    <div id="div1">
+                                                        <table id="billInfo">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Service</th>
+                                                                    <th>Rate/Month</th>
+                                                                    <th>Amount of Period</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Water Charges</td>
+                                                                    <td class="billInt"></td>
+                                                                    <td class="billInt"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>License Fee (Rs):</td>
+                                                                    <td class="billInt"></td>
+                                                                    <td class="billInt"></td>
+                                                                </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                    <div id="div2">
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>TOTAL (Rs):</th>
+                                                                    <td class="billInt"> 10000000/-</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>  -->
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-5 p-1 pt-0">
+                                        <mat-card class="serviceDetail p-0 mt-2">
+                                            <mat-card-header class="billCardHeader">OTHER SERVICES</mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Particulars</th>
+                                                            <th>Number/Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>--</td>
+                                                            <td class="billInt">-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">10000000/-</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0 pl-1">
+                                <mat-card class="billSummary p-0 mt-2">
+                                    <mat-card-header class="billSummaryHeader">BILL SUMMARY</mat-card-header>
+                                    <mat-card-content>
+                                        <table id="billInfo">
+                                            <tr>
+                                                <th>Water Supply(Rs.)</th>
+                                                <td class="billInt">3120</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Aquifer(Rs.)</th>
+                                                <td class="billInt">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Solid Waste(Rs.)</th>
+                                                <td class="billInt">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Other Services(Rs.)</th>
+                                                <td class="billInt">-</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Arrears(Rs.)</th>
+                                                <td class="billInt">3,430</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Discount(Rs.)</th>
+                                                <td class="billInt"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Credit(Rs.)</th>
+                                                <td class="billInt"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Adjustment(Rs.)</th>
+                                                <td class="billInt"></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: blue;">Payable within Due Date</th>
+                                                <td class="billInt">6,550</td>
+                                            </tr>
+                                            <tr>
+                                                <th>LP Surcharge</th>
+                                                <td class="billInt">310</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: red;">Payable after Due Date</th>
+                                                <td class="billInt">6,860</td>
+                                            </tr>
+                                        </table>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-3 ml-2 p-0">
+                            <mat-card>
+                                <mat-card-header class="billCardHeader">BILL SUMMARY</mat-card-header>
+    
+                            </mat-card>
+                        </div> -->
+                    </div>
+                </div>
+            </mat-card>
+        </mat-card-content>
+        <mat-card-actions class=" p-0">
+            <div class="col d-flex  mb-2 justify-content-end">
+                    <button mat-raised-button class="mr-2" (click)="downloadPdf('printBill')"><span class="material-icons pb-1 pr-1">file_download</span>Download
+                        Pdf</button>
+                <button [routerLink]="['/billing/billInstallment']" mat-raised-button class="ml-2"><span class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

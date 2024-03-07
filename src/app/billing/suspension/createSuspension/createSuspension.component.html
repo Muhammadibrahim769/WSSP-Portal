@@ -1,0 +1,136 @@
+<div class="main col-md-12">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            New Suspension
+        </mat-expansion-panel-header>
+        <form>
+            <div class="row mt-3 p-2">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Branch</mat-label>
+                    <mat-select>
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone</mat-label>
+                    <mat-select>
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select>
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Neighbourhood Council</mat-label>
+                    <mat-select>
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Connection Type</mat-label>
+                    <mat-select>
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Domestic">Domestic</mat-option>
+                        <mat-option value="Commercial">Commercial</mat-option>
+                        <mat-option value="Aquifer">Aquifer</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Services Start Date</mat-label>
+                    <input matInput [matDatepicker]="dp3">
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3></mat-datepicker>
+                  </mat-form-field>
+                <mat-radio-group class="form-group mt-3 col-md-6" aria-label="Select an option">
+                    <mat-radio-button value="metered">Metered</mat-radio-button>
+                    <mat-radio-button value="unmetered">Un-Metered</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>longitude</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>latitude</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <span class="col-md-6"></span>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Name</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Cnic</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sub-Category</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>NTN</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>STN</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Area</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sector Mohallah</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>House No</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Street No</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Cell No</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Land Line No</mat-label>
+                    <input matInput placeholder="Placeholder" />
+                </mat-form-field>
+            </div>
+            <div class="row mb-1 mr-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button [routerLink]="['/billing/suspension']" (click)="openSuspendDialog()">Suspend</button>
+                    <button mat-raised-button class="ml-2" [routerLink]="['/billing/suspension']">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

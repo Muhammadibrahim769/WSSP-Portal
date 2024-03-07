@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="calculatorSize">
+
+            <div class="calculator jumbotron col-sm-12 p-2 m-2 bg-inverse">
+
+                <h1 class="text-center">Formula Generator <span class="ml-3 material-icons pb-1 pr-1 btnClose"
+                        mat-dialog-close>close</span></h1>
+
+                Formula
+                <!-- <div >
+                    <input  class="col-sm-12 form-control text-lg-right" type="text"  >
+                </div> -->
+                <div class="input-group input-group-sm col-sm-12 m-0 p-0">
+                        <input type="text" class="col-sm-12 form-control text-lg-right" value="{{input+fact}}" >
+                        
+                    </div>
+
+                <div class="col-sm-12 p-1 m-0">
+                    <button class="btn btnClear col-sm-6" type="button" (click)="allClear()">C</button>
+                    <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('(')">(</button>
+                    <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator(')')">)</button>
+
+                </div>
+
+                <div class="col-sm-12 p-1 m-0">
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('7')">7</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('8')">8</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('9')">9</button>
+                    <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('*')">*</button>
+                </div>
+                <div class="col-sm-12 p-1 m-0">
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('4')">4</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('5')">5</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('6')">6</button>
+                    <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('-')">-</button>
+                </div>
+                <div class="col-sm-12 p-1 m-0">
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('1')">1</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('2')">2</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('3')">3</button>
+                    <button class="btn btn-lg btn-secondary col-sm-3 p-1" type="button" (click)="pressOperator('+')">+</button>
+                </div>
+                <div class="col-sm-12 p-1 m-0">
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('.')">.</button>
+                    <button class="btn btn-lg btn-outline-secondary col-sm-3 p-1" type="button" (click)="pressNum('0')">0</button>
+                    <button class=" btn btn-secondary backButton col-sm-3 " type="button" (click)="clear()"> <span
+                            class="material-icons pt-1">
+                            keyboard_backspace</span></button>
+                    <button class="btn btn-secondary col-sm-3 ml-1" type="button" (click)="pressOperator('/')">/</button>
+
+                </div>
+
+            </div>
+        </div>       
+            <div  class="factorListSize">
+                <form [formGroup]="factorListForm">
+                    <h1 class="mt-2">Factor List</h1>
+                    <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 100PX">
+                        <mat-progress-spinner class="spinnerClr spinnerSize" [diameter]="70" mode="indeterminate">
+                        </mat-progress-spinner>
+                    </div>
+                    <mat-selection-list formControlName="txtFactorCode" (selectionChange)="onChange($event)" class="factorList "
+                        [multiple]="false">
+                        <mat-list-option class="factorListopt" *ngFor="let item of formulaGeneratorList" value="{{item.txtFactorCode}}({{item.txtFactorName}})">
+                            {{item.txtFactorCode}}({{item.txtFactorName}})
+                        </mat-list-option>
+                    </mat-selection-list>
+                </form>
+            </div>        
+    </div>
+</div>

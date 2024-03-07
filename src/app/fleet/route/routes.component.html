@@ -1,0 +1,354 @@
+<!-- /*
+* Author M. Ibrahim Sagheer
+*
+* Created on Tue Jan 12 2020 : 3:27 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<!-- (click)="addRoutesLink()" -->
+<div class="main">
+  <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+    <mat-expansion-panel-header>
+      Search Route
+    </mat-expansion-panel-header>
+    <form [formGroup]="searchForm">
+      <div class="row p-0 mt-3">
+        <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Zone/Branch</mat-label>
+          <mat-select formControlName="serBranchId">
+                  <mat-option value=""></mat-option>
+                  <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                      {{branch.name}}
+                  </mat-option>
+          </mat-select>
+      </mat-form-field>  -->
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Zone/Branch</mat-label>
+          <mat-select formControlName="serBranchId">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let user of branchList" value={{user.id}}>
+              {{user.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Union Council</mat-label>
+          <mat-select formControlName="serLocationId">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+              {{UC.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Route No</mat-label>
+          <input matInput formControlName="txtRouteNo" />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Route Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Route Type</mat-label>
+          <mat-select formControlName="txtRouteType">
+              <mat-option value=""></mat-option>
+              <mat-option value="TS">TS</mat-option>
+              <mat-option value="DS">DS</mat-option>
+              <mat-option value="Container">Container</mat-option>
+              <mat-option value="Compactor">Compactor</mat-option>
+          </mat-select>
+      </mat-form-field>        
+      </div>
+      <div class="row mb-2">
+        <div class="col d-flex justify-content-end">
+          <button mat-raised-button (click)="onSearch()">
+            <span class="material-icons">search</span>
+            Search
+          </button>
+          <button mat-raised-button class="ml-2" (click)="onReset()">
+            <span class="material-icons">refresh</span>
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+  <mat-card class="mat-elevation-z8">
+    <div class="row">
+      <mat-form-field class="form-group col-md-3" appearance="fill">
+        <mat-label>Columns</mat-label>
+        <mat-select [formControl]="selection" multiple>          
+          <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+            {{column | formControl}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-card-header class="form-group col-md-9">
+        <button mat-flat-button [routerLink]="['/fleet/routes/addRoutesLink']">
+          <span class="material-icons">add</span>
+          Add Routes
+        </button>
+      </mat-card-header>
+    </div>
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content class="mat-elevation-z4 mt-2">
+      <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="routesListData" #routeSort="matSort" matSort style=" border: 1px solid #e0e0e0; white-space:nowrap;">
+       
+        <ng-container matColumnDef="txtBranchName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Branch</th>
+          <td mat-cell *matCellDef="let element">{{element?.txtBranchName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="txtLocationName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+          <td mat-cell *matCellDef="let element">{{element?.txtLocationName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="txtRouteType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Route type </th>
+          <td mat-cell *matCellDef="let element">{{element?.txtRouteType}}</td>
+        </ng-container>    
+        <ng-container matColumnDef="txtRouteNo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Route No </th>
+          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtRouteName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Route Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="distance">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Distance </th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.totalDistance}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon matTooltip="View" class="btnView ml-4" [routerLink]="['/fleet/routes/viewRoutes',element.id]">remove_red_eye</mat-icon>
+            <mat-icon matTooltip="Edit" class="btnEdit " [routerLink]="['/fleet/routes/editRoutes',element.id]">edit</mat-icon>
+             </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="routesColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: routesColumn;"></tr>
+        <div *ngIf="!isLoading">
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No Record Found</td>
+          </tr>
+        </div>
+      </table>
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 5PX">
+        <mat-progress-spinner class="spinnerClr" mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+    </mat-card-content>
+    <mat-paginator #routePaginator [pageSizeOptions]="[ 10,20,50]" showFirstLastButtons></mat-paginator>
+    <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+      Route List</button>
+      <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Route', sheet: 'sheet'})">
+              <span class="material-icons pb-1 pr-1">download</span>Download Excel
+          </button>
+  </mat-card>
+</div>
+
+<!-- <div class="main">
+  
+    <div class="card-body pt-0">
+      <div class="card shadow">
+        <div class="card-header">
+          <b>Vehicle Routes Table</b>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col table__max_size_scorllable">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">S. No</th>
+                    <th scope="col">Zone</th>
+                    <th scope="col">Union Council</th>
+                    <th scope="col">Route No.</th>
+                    <th scope="col">Route Name</th>
+                    <th scope="col">Start Point</th>
+                    <th scope="col">End Point</th>
+                    <th scope="col">Distance (km)</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of vehicleRoutes | slice: (page-1) * pageSize : page * pageSize ; let i = index">
+                    <td scope="row">{{i+1}}</td>
+                    <td>{{data.Zone}}</td>
+                    <td>{{data.UnionCouncil}}</td>
+                    <td>{{data.RouteNo}}</td>
+                    <td>{{data.RouteName}}</td>
+                    <td>{{data.StartPoint}}</td>
+                    <td>{{data.EndPoint}}</td>
+                    <td>{{data.DistanceKm}}</td>
+                    <td>{{data.Description}}</td>
+                    <td style="justify-content: center;"><button mat-raised-button type="button">Edit</button>
+                      <button mat-raised-button type="button" class="ml-2 mr-2"
+                        style="color :white !important; background-color: red !important;">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+              <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="vehicleRoutes.length">
+              </ngb-pagination>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- [ngbCollapse]="isCollapsedRoutes" -->
+<!-- <div class="row">
+    <div class="col">
+    <table class="table table-bordered table-hover">
+    <tr ngFor="let item of list | slice: (page-1) pageSize : (page-1) * pageSize+pageSize">
+    </table>
+    <ngb-pagination class="d-flex justify-content-end"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [collectionSize]="list.length">
+    </ngb-pagination>
+    </div>
+    </div> -->
+<!-- Start Drag
+
+
+    <thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Link No</th>
+    <th scope="col">Link Name</th>
+    <th scope="col">Distance (km)</th>
+    <th scope="col">Start Point</th>
+    <th scope="col">End Point</th>
+    </tr>
+    </thead>
+    <tbody cdkDropList (cdkDropListDropped)="onDrop($event)">
+    <tr *ngFor="let user of users" cdkDrag cdkDragLockAxis="y">
+    <th class="col-xs">
+    <div class="drag-handle">
+    <ng-container> </ng-container>
+    {{ user.order }}
+    </div>
+    </th>
+    <td class="col-md">{{ user.txtLinkNo }}</td>
+    <td class="col-md">{{ user.txtLinkName }}</td>
+    <td class="col-md">{{ user.txtDistanceKm }}</td>
+    <td class="col-md">{{ user.txtStartPoint }}</td>
+    <td class="col-md">{{ user.txtEndPoint }}</td>
+    </tr>
+    </tbody>
+    </table>
+    <ng-template #dragHandleTmpl>
+    <svg class="bi bi-list handle" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd"
+    d="M2.5 11.5A.5.5 0 013 11h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 7h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5zm0-4A.5.5 0 013 3h10a.5.5 0 010 1H3a.5.5 0 01-.5-.5z"
+    clip-rule="evenodd" />
+    </svg>
+    </ng-template>
+    END Drag -->
+
+
+
+<!------------------------------------------------------------>
+
+<!-- Form Start (click)="open(content)" -->
+<!--
+          <div class="card shadow">
+            <div class="card-header mb-3">
+              <b>Search Routes</b>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Zone or Branch <span class="required-straic">*</span></label>
+                    <span *ngFor="let validation of formValidationMessages.txtZone">
+                      <span class='badge badge-danger ml-2'
+                        *ngIf="searchForm.controls.txtZone.hasError(validation.type) && (searchForm.controls.txtZone.dirty || searchForm.controls.txtZone.touched)">
+                        {{validation.message}}
+                      </span>
+                    </span>
+                    <select id="inputState" class="form-control form-select" formControlName="txtZone">
+                      <option selected></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="unionCouncil">Union Council <span class="required-straic">*</span></label>
+                    <span *ngFor="let validation of formValidationMessages.txtUnionCouncil">
+                      <span class='badge badge-danger ml-2'
+                        *ngIf="searchForm.controls.txtUnionCouncil.hasError(validation.type) && (searchForm.controls.txtUnionCouncil.dirty || searchForm.controls.txtUnionCouncil.touched)">
+                        {{validation.message}}
+                      </span>
+                    </span>
+                    <select id="unionCouncil" class="form-control form-select" formControlName="txtUnionCouncil">
+                      <option selected></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="routeNo">Route No. <span class="required-straic">*</span> </label>
+                    <span *ngFor="let validation of formValidationMessages.txtRouteNo">
+                      <span class='badge badge-danger ml-2'
+                        *ngIf="searchForm.controls.txtRouteNo.hasError(validation.type) && (searchForm.controls.txtRouteNo.dirty || searchForm.controls.txtRouteNo.touched)">
+                        {{validation.message}}
+                      </span>
+                    </span>
+                    <select id="routeNo" class="form-control form-select" formControlName="txtRouteNo">
+                      <option selected></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="routeName">Route Name</label>
+                    <select id="routeName" class="form-control form-select" formControlName="txtRouteName">
+                      <option selected></option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="distance">Distance</label>
+                    <input type="text" class="form-control"  id="distance" formControlName="txtDistance" >
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="startPoint">Start Point</label>
+                    <input type="text" id="startPoint" class="form-control" formControlName="txtStartPoint">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="endPoint">End Point</label>
+                    <input type="text" id="endPoint" class="form-control" formControlName="txtEndPoint">
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label for="inputState">Description</label>
+                    <input class="form-control" formControlName="txtDescription">
+                  </div>
+
+                </div>
+                <div class="row mb-3">
+                  <div class="col d-flex justify-content-end">
+                    <button type="button" class="btn btn-search">Search <i class="bi bi-search"></i></button>
+                    <button type="button" class="btn btn-reset ml-2">Reset <i class="bi bi-arrow-clockwise"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+    <br> -->

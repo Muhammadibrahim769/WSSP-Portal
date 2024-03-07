@@ -1,0 +1,72 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Gas Collection
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+            
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewGasCollection?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewGasCollection?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Date:</h6>
+                        </th>
+                        <td>{{viewGasCollection?.txtDate | date :'dd MMMM, yyyy'}}</td>
+                        <th>
+                            <h6>Total Amount Recieved(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numTotalAmountRecieved}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Waste Sent to Compost Plant(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numWasteCompostPlant}}</td>
+                        <th>
+                            <h6> Waste Sent To RDF(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numWasteSentToRdf}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <h6>Waste Sent to Segregation(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numWasteSentSegregation}}</td>
+                        <th>
+                            <h6>Waste Sent To Cell(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numWasteSentToCell}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Total Balanace(ton):</h6>
+                        </th>
+                        <td>{{viewGasCollection?.numTotalBalanace}}</td>
+
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                   Waste Diversion</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/wasteDiversionSheet']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

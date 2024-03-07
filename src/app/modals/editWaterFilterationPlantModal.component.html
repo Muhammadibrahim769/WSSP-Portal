@@ -1,0 +1,66 @@
+<mat-card>
+    <mat-card-header class="editBasicInfoCardHeader">
+        Edit Water Filtration Plant
+    </mat-card-header>
+    <mat-card-content class="card mat-elevation-z8 mb-0">
+        <form [formGroup]="operationBasicInfoForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <input matInput formControlName="txtBranchName" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <input matInput formControlName="txtLocationName" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Filteration Plant Number</mat-label>
+                    <input matInput formControlName="txtProductCode" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Filteration Plant Name</mat-label>
+                    <input matInput formControlName="txtProductName" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Total Running hr <span class="required-straic">*</span></mat-label>
+                    <input matInput type="number" formControlName="numWaterProducedInUnit" min="0" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Avg Discharge m3/hr</mat-label>
+                    <input matInput formControlName="txtAverageDischargePerUnit" type="number" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Total Water Produced Cubic/Month </mat-label>
+                    <input matInput formControlName="numUnitConsumed" type="number" readonly />
+                </mat-form-field>
+                <mat-form-field *ngIf="!shown" class="form-group col-md-4" appearance="outline">
+                    <mat-label>Monthly Bill</mat-label>
+                    <input matInput formControlName="numMonthlyBill" type="number" />
+                  </mat-form-field>
+                  <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Period</mat-label>
+                    <input matInput formControlName="txtMonth" readonly />
+                  </mat-form-field>
+                <section class="form-group col-md-4">
+                    <label class="example-section customcheck">
+                        <input formControlName="blnIsFunctional" type="checkbox">
+                        <span class="checkmark"></span> Functional
+                    </label>
+                </section>
+
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <div class="col mb-3 d-flex justify-content-center">
+                        <button mat-raised-button type="submit"><span class="material-icons pt-1 pb-2">update</span>Update
+                        </button>
+                        <button mat-raised-button class="ml-2" mat-dialog-close>
+                            <span class="material-icons pt-1 pb-2">close</span>Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- <pre>{{ operationBasicInfoForm.value | json}}</pre>  -->
+    </mat-card-content>
+</mat-card>

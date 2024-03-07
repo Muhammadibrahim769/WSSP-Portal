@@ -1,0 +1,58 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Routes
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+            <div class="row col-md-12">
+                <table class="testTable">
+                        
+                        <tr>
+                                <th class="headerTable">Branch:</th>
+                                <td>{{ basicInfo?.txtBranchName }}</td>
+                                <th  class="headerTable">Union Council:</th>
+                                <td>{{ basicInfo?.txtLocationName }}</td>
+                            </tr>
+                    <tr>
+                        <th class="headerTable">Route id:</th>
+                        <td>{{ basicInfo?.id }}</td>
+                        <th  class="headerTable">Route No:</th>
+                        <td>{{ basicInfo?.code }}</td>
+                    </tr>
+                    <tr>
+                        <th class="headerTable">Description:</th>
+                        <td>{{ basicInfo?.description }}</td>
+                        <th class="headerTable">Route Name:</th>
+                        <td>{{ basicInfo?.name }}</td>
+                    </tr>  
+                </table>                
+                <table class="testTable mt-3">
+                    <tr>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Distance</th>
+                            <th>Sequence No</th>
+                            <th>Route Detail Id</th>
+                            <th>Link Name</th>
+                    </tr>
+                    <tr *ngFor="let item of basicInfo?.routeDetails">
+                        <td>{{item.latitude}}</td>
+                        <td style="text-align:left">{{item.longitude}}</td>
+                        <td style="text-align:left">{{item.num_distance}}</td>
+                        <td style="text-align:left">{{item.num_sequence_number}}</td>
+                        <td style="text-align:left">{{item.ser_route_detail_id}}</td>
+                        <td style="text-align:left">{{item.txt_name}}</td>
+                    </tr>
+                    
+                </table>
+
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/fleet/routes']"><span class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions> 
+    </mat-card>
+    
+</div>

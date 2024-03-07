@@ -1,0 +1,194 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            General Operation
+        </mat-expansion-panel-header>
+        <form [formGroup]="generalOperationForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Period</mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="txtMonth">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                    </mat-datepicker>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtMonth">
+                        <mat-error *ngIf="generalOperationForm.controls.txtMonth.hasError(validation.type) && (generalOperationForm.controls.txtMonth.dirty || generalOperationForm.controls.txtMonth.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Period<span class="required-straic">*</span></mat-label>
+                            <input matInput [matDatepicker]="dob" formControlName="txtMonth" readonly>
+                            <mat-datepicker-toggle matSuffix (click)="clearPeriod()">
+                              <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                            <mat-datepicker #dob startView="multi-year" (yearSelected)="handleYearSelected($event)" (monthSelected)="handleMonthSelected($event)">
+                            </mat-datepicker>
+                            <mat-error *ngFor="let validation of formValidationMessages.txtMonth">
+                                    <mat-error *ngIf="generalOperationForm.controls.txtMonth.hasError(validation.type) && (generalOperationForm.controls.txtMonth.dirty || generalOperationForm.controls.txtMonth.touched)">
+                                        {{validation.message}}
+                                    </mat-error>
+                                </mat-error>
+                          </mat-form-field> -->
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button type="submit" [disabled]="!generalOperationForm.valid"><span class="material-icons pt-1 pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2"  (click)="onReset()">
+                        <mat-icon class="material-icons mt-1 pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="mat-elevation-z8">
+        <div class="row">
+            <mat-form-field class="form-group col-md-3" appearance="fill">
+                <mat-label>Columns</mat-label>
+                <mat-select [formControl]="selection" multiple>
+                    <!-- <mat-select-trigger>
+                            {{selection.value ? selection.value[0] : ''}}
+                            <span *ngIf="selection.value?.length > 1" class="example-additional-selection">
+                              (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger> -->
+                    <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                        {{column | formControl}}
+                    </mat-option>
+                    <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="generalOperation" #generalOperationSort="matSort" matSort style="border: 1px solid #bababa;">
+                <ng-container matColumnDef="serNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                    <td mat-cell *matCellDef="let element ; let i=index " class="tableNumericValue"> {{i+1}} </td>
+                </ng-container>
+                <ng-container matColumnDef="branch">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone/Branch </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBranchName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unionCouncil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtLocationName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtMonth">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Month</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtMonth}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numOfBillDistributed">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>No of Bill Distributed</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numOfBillDistributed}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numOfPrimaryMainholes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>RPC Manholes Repair(No.s) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numPriMhRepaired}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numOfSecondaryMainholes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>RCC Manholes Repair(No.s) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numSecMhRepaired}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numOfTeriaryMainholes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> IronGrit Manholes Repair(No.s)</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numTerMhRepaired}} </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="numTotalSewerageLines">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sewerage Lines Repair </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numSewerageLinesRepaired}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="numPriMhCleaned">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Manholes Cleaned(No.s) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriMhCleaned}} </td>
+                </ng-container>              
+                <ng-container matColumnDef="numSewerageLinesCleaned">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Primary Sewerage Lines Cleaned(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriSewerageLinesCleaned}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numDrainageLinesRepaired">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Drainage Lines Repair(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriDrainageLinesRepaired}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numSewerageLinesRepaired">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sewerage Lines Repair(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriSewerageLinesRepaired}} </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="numDrainageLinesRepaired">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Drainage Lines Repair </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numDrainageLinesRepaired}} </td>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="numSewerageLinesCleaned">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sewerage Lines Cleaned </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numSewerageLinesCleaned}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="numDrainageLinesCleaned">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Drainage Lines Cleaned(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriDrainageLinesCleaned}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numDrainageLinesDiscelitation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Drainage Lines Desilation(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriDrainageLinesDiscelitation}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numSewerageLineDiscelitation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sewerage Lines Desilation(km) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        {{element.numPriSewerageLineDiscelitation}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <mat-icon matTooltip="View" (click)="onView(element)" class="btnView">remove_red_eye</mat-icon>
+                        <mat-icon matTooltip="Edit" (click)="openEditModel(element)" class="btnEdit pl-1">edit</mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="generalOperationColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: generalOperationColumns;">
+                </tr>
+                <!-- <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No Record Found</td>
+                    </tr>             -->
+            </table>
+        </mat-card-content>
+        <mat-paginator #generalOperationPaginator [pageSizeOptions]="[10, 20,50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+            General Operation List</button>
+            <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'General Operation', sheet: 'sheet'})">
+                    <span class="material-icons pb-1 pr-1">download</span>Download Excel
+                </button>
+    </mat-card>
+</div>

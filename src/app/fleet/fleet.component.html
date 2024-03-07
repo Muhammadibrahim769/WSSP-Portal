@@ -1,0 +1,563 @@
+﻿<!-- /*
+* Muhammad Mohsin
+*
+* Created on Tue Jan 16 2021 : 6:52 PM
+*
+* Copyright (c) 2021 - DRL
+*/ -->
+<div class="main">
+    <mat-accordion >
+        <mat-expansion-panel  class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+            <mat-expansion-panel-header>
+                Search Filters
+            </mat-expansion-panel-header>
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form)" >
+                    <div class="row mt-3">
+                        <div class="branch">
+                            <mat-form-field  class="form-group col-md-3" appearance="outline">
+                                <mat-label>Branch</mat-label>
+                                <mat-select formControlName="txtBranchId">
+                                    <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                    <mat-option value=""></mat-option>
+                                    <mat-option value="one">A</mat-option>
+                                    <mat-option value="two">B</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Asset Main Category</mat-label>
+                                <mat-select formControlName="txtMainCategory">
+                                    <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                    <mat-option value=""></mat-option>
+                                    <mat-option value="one">A</mat-option>
+                                    <mat-option value="two">B</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Asset Category</mat-label>
+                                <mat-select formControlName="txtVehicleCategory">
+                                    <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                    <mat-option value=""></mat-option>
+                                    <mat-option value="one">A</mat-option>
+                                    <mat-option value="two">B</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Sub Category</mat-label>
+                                <mat-select formControlName="txtVehicleSubCategory">
+                                    <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                    <mat-option value=""></mat-option>
+                                    <mat-option value="one">A</mat-option>
+                                    <mat-option value="two">B</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Asset Type</mat-label>
+                                <mat-select  formControlName="txtVehicleType">
+                                    <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                    <mat-option value=""></mat-option>
+                                    <mat-option value="one">A</mat-option>
+                                    <mat-option value="two">B</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Asset No</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" formControlName="txtVehicleId" placeholder="Placeholder"
+                                    (keypress)="OnlyNumbersAllowed($event)" minlength="1" maxlength="10" />
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Asset Name</mat-label>
+                                <input matInput formControlName="txtVehicleName" placeholder="Placeholder" />
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Brand</mat-label>
+                                <input matInput formControlName="txtbrand" placeholder="Placeholder" />
+                            </mat-form-field>
+                            <mat-form-field  class="form-group  col-md-3" appearance="outline">
+                                <mat-label>Serial No</mat-label>
+                                <input matInput formControlName="txtSerialNo" (keypress)="OnlyNumbersAllowed($event)"
+                                    minlength="1" maxlength="10" placeholder="Placeholder" />
+                            </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <button mat-raised-button (click)="searchFunction()">Search
+                                <mat-icon class="close-icon" aria-label="Example icon-button with a search icon">
+                                    search</mat-icon>
+                            </button>
+                            <button mat-raised-button class="ml-2">Reset
+                                <mat-icon class="close-icon" aria-label="Example icon-button with a reset icon">
+                                    refresh</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-card class="card mat-elevation-z8">
+        <mat-card-header>
+            <button mat-raised-button [routerLink]="['/fleet/createVehicle']">
+                Create Vehicle
+                <mat-icon aria-label="Example icon-button with a add icon">add</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder=" Ssearch For Data" #input>
+              </mat-form-field>
+              
+            <table mat-table [dataSource]="dataSource" matSort style="white-space:nowrap;">
+                <ng-container matColumnDef="sNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> S No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Vehicle_Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Vehicle_Type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Brand">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Brand}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Model">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Model}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Asset/Vehicle No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_No}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Vehicle_Name" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle/Asset Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Vehicle_Name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Serial_No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Serial_No}} </td>
+                </ng-container>
+                <ng-container matColumnDef="EngineNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Engine No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.EngineNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Chassis_No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Chassis No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Chassis_No}} </td>
+                </ng-container>
+                <ng-container matColumnDef="colour">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> colour </th>
+                    <td mat-cell *matCellDef="let element"> {{element.colour}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Fuel_Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fuel/Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Fuel_Type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Fuel_Capacity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fuel Capacity </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Fuel_Capacity}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Average_Fuel_Consumption">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Average Fuel Consumption </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Average_Fuel_Consumption}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Engine_Cylinder">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Engine Cylinder</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Engine_Cylinder}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Engine_Size">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Engine Size </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Engine_Size}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Body_Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Body Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Body_Type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Current_Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Current_Status}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Current_Condition">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Condition </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Current_Condition}} </td>
+                </ng-container>
+                <ng-container matColumnDef="With_Effect_From">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>With Effect From </th>
+                    <td mat-cell *matCellDef="let element"> {{element.With_Effect_From}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Load_Capacity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Load Capacity</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Load_Capacity}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Servicable_Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Servicable Time</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Servicable_Time}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Un_Servicable_Time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Un Servicable Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Un_Servicable_Time}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator [pageSizeOptions]="[2, 4,6,8, 10]" showFirstLastButtons></mat-paginator>
+    </mat-card>
+</div>
+
+
+
+
+<!-- <mat-card class="row mt-3">
+                    <div class="col-md-12 table__max_size_scorllable">
+                        <table class="table table-bordered table__scroll_scrollable" style="white-space:nowrap;">
+                            <thead>
+                                <tr mr-1>
+                                    <th scope="col">Actions</th>
+                                    <th scope="col ">S.no</th>
+    
+                                  
+                                    <th scope="col">Vehicle Type</th>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Model</th>
+                                    <th scope="col">Vehicle/Asset No</th>
+    
+                                    
+                                    <th scope="col">Asset/Vehicle Name</th>
+                                    
+                                    <th scope="col">Serial No</th>
+                                    <th scope="col">Engine No.</th>
+                                    <th scope="col">Chassis No.</th>
+                                    <th scope="col">colour</th>
+                                    
+                                    <th scope="col">Fuel/Type</th>
+                                    
+                                    <th scope="col">Fuel Capacity</th>
+                                    <th scope="col">Average Fuel Consumption</th>
+    
+                                    <th scope="col">Engine Cylinder</th>
+                                    <th scope="col">Engine Size</th>
+                                    
+                                    <th scope="col">Load Capacity</th>
+                                    <th scope="col">Body Type</th>
+                                    <th scope="col">Body Size</th>
+    
+                                    <th scope="col">Current Status</th>
+                                    <th scope="col">Current Condition</th>
+                                    <th scope="col">With Effect From</th>
+                                    <th scope="col">Servicable Time</th>
+                                    <th scope="col">UN-Servicable Time</th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of createVehicle,index as i">
+    
+                                    <td style="justify-content: center;">
+                                        <button type="button" class="btn btn-edit" [routerLink]="['/fleet/edit',1]" (click)="onEdit(i)" >
+                                            <i class="bi bi-pencil-square"></i>
+    
+                                        </button>
+                                       
+    
+                                        <button type="button" class="btn btn-delete ml-2 mr-2" (click)="openSweetAlert(i)"><i
+                                                class="bi bi-trash"></i></button>
+                                    </td>
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{item.txtVehicleType}}</td>
+                                    <td>{{item.txtbrand}}</td>
+                                    <td>{{item.txtModel}}</td>
+    
+                                    <td>{{item.txtVehicleId}}</td>
+                                    <td>{{item.txtVehicleName}}</td>
+                                    <td>{{item.txtSerialNo}}</td>
+                                    <td>{{item.txtEngineNo}}</td>
+                                    <td>{{item.txtChassisNo}}</td>
+    
+                                    <td>{{item.txtVehicleColor}}</td>
+                                    <td>{{item.txtFuelType}}</td>
+                                    
+                                    <td>{{item.txtFuelCapacity}}</td>
+                                    <td>{{item.txtAverageFuel}}</td>
+    
+                                    <td>{{item.txtEngineCylinder}}</td>
+                                    <td>{{item.txtEngineSize}}</td>
+                                    <td>{{item.txtVehicleLoadCapcity}}</td>
+                                    <td>{{item.txtBodyType}}</td>
+                                    <td>{{item.txtBodySize}}</td>
+    
+                                    
+                                    <td>{{item.txtCurrentStatus}}</td>
+                                    
+                                    
+                                    <td>{{item.txtxCurrentCondition}}</td>
+                                    <td>{{item.txtWithEffectFromDate}}</td>
+                                    <td>{{item.txtServicableTime}}</td>
+                                    <td>{{item.txtUnServicableTime}}</td>
+                                   
+                                    
+    
+                                </tr>
+    
+    
+                            </tbody>
+                        </table>
+                    </div>    
+                </mat-card> -->
+
+
+
+
+<!-- <ul class="pagination pagination-lg justify-content-end" >
+        <li class="page-item"><a href="" class="page-link">Previous</a></li>
+
+         <li class="page-item active"><a href="" class="page-link">1</a></li>
+         <li class="page-item"><a href="" class="page-link">2</a></li>
+
+         <li class="page-item"><a href="" class="page-link">3</a></li>
+         <li class="page-item"><a href="" class="page-link">4</a></li>
+         <li class="page-item"><a href="" class="page-link">Next</a></li>
+
+       </ul> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- Table End -->
+
+<!-- </div> -->
+<!-- <ngb-pagination class="d-flex justify-content-end" [(page)]="page" [pageSize]="pageSize"
+            [collectionSize]="createVehicle.length">
+        </ngb-pagination> -->
+
+
+
+
+<!--   *ngFor="let item of createVehicle  | slice: (page-1)*pageSize : (page-1) * pageSize+pageSize,index as i"> -->
+
+
+<!-- <mat-card>
+    <div class="card-header">
+        Vehicle Detail
+        <button type="button" class="btn btn-sm btn-add ml-3 font-weight-bold" [routerLink]="['/fleet/createVehicle']">
+            Create Vehicle
+            <mat-icon aria-label="Example icon-button with a add icon">add</mat-icon>
+
+        </button>
+    </div>
+
+    
+           
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+                <div class="row ml-2 mr-1 mt-2">
+                    <div class="form-group col-md-3">
+                        <label for="branch">Branch</label>
+                        <select id="branch" class="form-control form-select" formControlName="txtBranchId">
+                            <option value="" disabled selected hidden>Choose...</option>
+                            <option value=""></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row ml-2 mr-1">
+                    <div class="form-group  col-md-3">
+                        <label for="assetMC">Asset Main Category</label>
+                        <select id="assetMC" class="form-control form-select"
+                            formControlName="txtMainCategory">
+                            <option value="" disabled selected hidden>Choose...</option>
+                            <option value=""></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="assetC">Asset Category</label>
+                        <select id="assetC" class="form-control form-select"
+                            formControlName="txtVehicleCategory">
+                            <option value="" disabled selected hidden>Choose...</option>
+                            <option value=""></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="assetSC">Sub-Category</label>
+                        <select id="assetSC" class="form-control form-select"
+                            formControlName="txtVehicleSubCategory">
+                            <option value="" disabled selected hidden>Choose...</option>
+                            <option value=""></option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="assetT">Asset Type </label>
+
+
+                        <select id="assetT" class="form-control form-select"
+                            formControlName="txtVehicleType">
+                            <option value="" disabled selected hidden>Choose...</option>
+                            <option value=""></option>
+
+                            <option value="A">A</option>
+
+                            <option value="B">B</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="assetN">Asset No </label>
+                        <input type="text" class="form-control" id="assetN" formControlName="txtVehicleId"
+                            (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+                            maxlength="10">
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="assetName">Asset Name </label>
+                        <input type="text" class="form-control" id="assetName" formControlName="txtVehicleName"
+                           
+                            onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
+
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="brand">Brand</label>
+                        <input type="text" class="form-control" id="brand" formControlName="txtVehicleName"
+                            onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
+
+                    </div>
+                   
+
+
+
+                    <div class="form-group col-md-3">
+                        <label for="sNo">Serial No</label>
+                        <input type="text" class="form-control" id="sNo" formControlName="txtSerialNo"
+                            (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+                            maxlength="10">
+
+                    </div>
+                </div>
+
+
+                <div class="row ">
+                    <div class="col d-flex justify-content-end">
+                        <button type="button" class="btn btn-search" (click)="searchFunction()">Search
+                            <mat-icon class="close-icon" aria-label="Example icon-button with a search icon">
+                                search</mat-icon>
+                        </button>
+
+                        <button type="button" class="btn btn-reset ml-2">Reset
+                            <mat-icon class="close-icon" aria-label="Example icon-button with a reset icon">
+                                refresh</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        
+
+    
+
+</mat-card> -->
+<!-- <mat-card class=" mt-3">
+
+
+    <table class="table table-striped table-bordered table__scroll_scrollable" style="white-space:nowrap;">
+        <thead>
+            <tr mr-1>
+                <th scope="col">Actions</th>
+                <th scope="col ">S.no</th>
+
+              
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Vehicle/Asset No</th>
+
+                
+                <th scope="col">Asset/Vehicle Name</th>
+                
+                <th scope="col">Serial No</th>
+                <th scope="col">Engine No.</th>
+                <th scope="col">Chassis No.</th>
+                <th scope="col">colour</th>
+                
+                <th scope="col">Fuel/Type</th>
+                
+                <th scope="col">Fuel Capacity</th>
+                <th scope="col">Average Fuel Consumption</th>
+
+                <th scope="col">Engine Cylinder</th>
+                <th scope="col">Engine Size</th>
+                
+                <th scope="col">Load Capacity</th>
+                <th scope="col">Body Type</th>
+                <th scope="col">Body Size</th>
+
+                <th scope="col">Current Status</th>
+                <th scope="col">Current Condition</th>
+                <th scope="col">With Effect From</th>
+                <th scope="col">Servicable Time</th>
+                <th scope="col">UN-Servicable Time</th>
+
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let item of createVehicle,index as i">
+
+                <td style="justify-content: center;">
+                    <button type="button" class="btn btn-edit" [routerLink]="['/fleet/edit',1]" (click)="onEdit(i)" >
+                        <i class="bi bi-pencil-square"></i>
+
+                    </button>
+                   
+
+                    <button type="button" class="btn btn-delete ml-2 mr-2" (click)="openSweetAlert(i)"><i
+                            class="bi bi-trash"></i></button>
+                </td>
+                <th scope="row">{{i+1}}</th>
+                <td>{{item.txtVehicleType}}</td>
+                <td>{{item.txtbrand}}</td>
+                <td>{{item.txtModel}}</td>
+
+                <td>{{item.txtVehicleId}}</td>
+                <td>{{item.txtVehicleName}}</td>
+                <td>{{item.txtSerialNo}}</td>
+                <td>{{item.txtEngineNo}}</td>
+                <td>{{item.txtChassisNo}}</td>
+
+                <td>{{item.txtVehicleColor}}</td>
+                <td>{{item.txtFuelType}}</td>
+                
+                <td>{{item.txtFuelCapacity}}</td>
+                <td>{{item.txtAverageFuel}}</td>
+
+                <td>{{item.txtEngineCylinder}}</td>
+                <td>{{item.txtEngineSize}}</td>
+                <td>{{item.txtVehicleLoadCapcity}}</td>
+                <td>{{item.txtBodyType}}</td>
+                <td>{{item.txtBodySize}}</td>
+
+                
+                <td>{{item.txtCurrentStatus}}</td>
+                
+                
+                <td>{{item.txtxCurrentCondition}}</td>
+                <td>{{item.txtWithEffectFromDate}}</td>
+                <td>{{item.txtServicableTime}}</td>
+                <td>{{item.txtUnServicableTime}}</td>
+               
+                
+
+            </tr>
+
+
+        </tbody>
+      </table>
+    <mat-card-footer>i am footer</mat-card-footer>
+
+</mat-card> -->
+

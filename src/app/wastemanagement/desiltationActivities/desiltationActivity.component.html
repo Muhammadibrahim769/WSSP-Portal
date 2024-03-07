@@ -1,0 +1,174 @@
+<!-- * Author Muhammad Mohsin
+*
+* Created on Tue sep 01 2021 : 04:01 PM
+*
+* Copyright (c) 2020 - DRL
+* -->
+<div class="main">
+  <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+    <mat-expansion-panel-header>
+      Search Desiltstion Activity
+    </mat-expansion-panel-header>
+    <form [formGroup]="form">
+      <div class="row p-0 mt-3">
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Zone/Branch</mat-label>
+          <mat-select formControlName="serBranchId">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+              {{branch.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Union Council</mat-label>
+          <mat-select formControlName="serLocationId">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+              {{UC.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Date Service Performed</mat-label>
+          <input matInput [matDatepicker]="dp1" formControlName="txtDateServicePerformed" readonly>
+          <mat-datepicker-toggle matSuffix (click)="clearDateServicePerformed()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field> -->
+
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Date Service Performed</mat-label>
+          <mat-date-range-input [rangePicker]="dp12">
+            <input matStartDate formControlName="txtDateServicePerformed" placeholder="Start date">
+            <input matEndDate formControlName="txtDateServicePerformedEnd" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="dp12"></mat-datepicker-toggle>
+          <mat-date-range-picker #dp12></mat-date-range-picker>
+
+          <mat-error *ngIf="form.controls.txtDateServicePerformed.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+          <mat-error *ngIf="form.controls.txtDateServicePerformedEnd.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-3" appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="txtCategory">
+            <mat-option value=""></mat-option>
+              <mat-option value="Open Drain">Open Drain</mat-option>
+              <mat-option value="Covered Drain">Covered Drain</mat-option>
+              <mat-option value="Sewer">Sewer</mat-option>
+              <mat-option value="Manhole">Manhole</mat-option>
+          </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="row mb-2">
+        <div class="col d-flex justify-content-end">
+          <button mat-raised-button (click)="onSearch()">
+            <span class="material-icons">search</span>
+            Search
+          </button>
+          <button mat-raised-button class="ml-2">
+            <span class="material-icons">refresh</span>
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+  <mat-card class="mat-elevation-z8">
+    <div class="row">
+        <mat-form-field class="form-group col-md-3" appearance="fill">
+          <mat-label>Columns</mat-label>
+          <mat-select [formControl]="selection" multiple>
+            <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+              {{column | formControl}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-card-header class="form-group col-md-9">
+          <button mat-flat-button class="mr-3"  [routerLink]="['/wasteManagement/createDesiltationActivity']">
+            <span class="material-icons">add</span>
+            Create Desiltation Acitvity
+          </button>
+        </mat-card-header>
+      </div>
+    <mat-card-content class="mat-elevation-z4 mt-2">
+      <table mat-table [dataSource]="wasteCollectionData" [hiddenColumns]="[13]" matTableExporter #exporter="matTableExporter" #desiltationActivitySort="matSort" matSort style=" border: 1px solid #e0e0e0; white-space:nowrap;">
+        <ng-container matColumnDef="sr">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+          <td mat-cell *matCellDef="let element ; let i= index" class="tableNumericValue"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtBranchName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone / Branch</th>
+          <td mat-cell *matCellDef="let element"> {{element.txtBranchName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtLocationName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtLocationName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtDateServicePerformed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Time of service performed </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtDateServicePerformed | date :'dd MMMM, yyyy : h:mm' }} </td>
+          <!-- | date :'dd-mm-yyyy / h:mm' -->
+        </ng-container>
+        <ng-container matColumnDef="txtCategory">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Category </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtCategory}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtStreetName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Area</th>
+          <td mat-cell *matCellDef="let element"> {{element.txtStreetName }} </td>
+        </ng-container>
+        <ng-container matColumnDef="numStreetId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Street Id / Container Id</th>
+          <td mat-cell *matCellDef="let element"class="tableNumericValue"> {{element.numStreetId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtModality">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Modality </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtModality}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtStartPointCoord">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Point Coord </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtStartPointCoord}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtFinishPointCoord">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Finish Point Coord</th>
+          <td mat-cell *matCellDef="let element"> {{element.txtFinishPointCoord}} </td>
+        </ng-container>
+        <ng-container matColumnDef="numHouses">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No of Houses </th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numHouses}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtModeOfCollection">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mode Of Collection </th>
+          <td mat-cell *matCellDef="let element"> {{element.txtModeOfCollection}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txtFrequencyWasteCollection">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Frequency of Waste Collection</th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.txtFrequencyWasteCollection}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="numTotalWasteCollected">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Waste Collected</th>
+          <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numTotalWasteCollected}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon matTooltip="View" style="padding-top: 10px; color: #bd7d08; cursor: pointer;font-size: 25px;"
+              [routerLink]="['/wasteManagement/wasteCollection/viewDesiltationActivities',element.serWasteCollectionId]">remove_red_eye</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="wasteCollectionColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: wasteCollectionColumn;"></tr>
+      </table>
+    </mat-card-content>
+    <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+      Desiltation Activities</button>
+      <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Desiltation Activities', sheet: 'sheet'})">
+              <span class="material-icons pb-1 pr-1">download</span>Download Excel
+          </button>
+    <mat-paginator #desiltationActivityPaginator [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+  </mat-card>
+</div>

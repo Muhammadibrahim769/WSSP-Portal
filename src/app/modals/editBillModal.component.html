@@ -1,0 +1,80 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    Edit
+</mat-card-header>
+<!-- (ngSubmit)="onSubmit()" -->
+<mat-dialog-content class="mt-2">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Customer Code:</h6>
+                        </th>
+                        <td>{{ info?.txtCustomerCode}}</td>
+                        <th>
+                            <h6>Payable Within Due Date:</h6>
+                        </th>
+                        <td>{{ info?.numPayableWithinDueDate }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Late Payment Surcharge:</h6>
+                        </th>
+                        <td>{{ info?.numLatePaymentSurcharge }}</td>
+                        <th>
+                            <h6>Payable After Due Date:</h6>
+                        </th>
+                        <td>{{ info?.numPayableAfterDueDate}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Due Date:</h6>
+                        </th>
+                        <td>{{ info?.dteBillDueDate | date: 'dd MMMM, yyyy' }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group col-md-6 mt-3">
+                <mat-radio-group aria-label="Select an option" formControlName="txtSelectValue">
+                    <mat-radio-button value="true">Discount</mat-radio-button>
+                    <mat-radio-button value="false">Due Date</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="form-group col-md-6 mt-3"></div>
+            <mat-form-field class="col-md-4 form-group" appearance="outline" *ngIf="updateForm.controls.txtSelectValue.value === 'true'">
+                <mat-label>Discount</mat-label>
+                <input matInput formControlName="numDiscount" type="number" min="0" (blur)="onBlurEvent($event)"/>
+            </mat-form-field>
+            <mat-form-field class="col-md-4 form-group" appearance="outline" *ngIf="updateForm.controls.txtSelectValue.value === 'true'">
+                <mat-label>Payable Within Due Date</mat-label>
+                <input matInput formControlName="numPayableWithinDueDate" readonly/>
+            </mat-form-field>
+            <mat-form-field class="col-md-4 form-group" appearance="outline" *ngIf="updateForm.controls.txtSelectValue.value === 'true'">
+                <mat-label>Payable After Discount</mat-label>
+                <input matInput formControlName="numDifference" readonly/>
+            </mat-form-field>
+            <mat-form-field class="col-md-4 form-group" appearance="outline" *ngIf="updateForm.controls.txtSelectValue.value === 'true'">
+                <mat-label>Payable After Due Date</mat-label>
+                <input matInput formControlName="numPayableAfterDueDate" readonly/>
+            </mat-form-field>
+
+
+            <mat-form-field class="form-group col-md-4" appearance="outline" *ngIf="updateForm.controls.txtSelectValue.value === 'false'">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="dp3" formControlName="dteBillDueDate" readonly>
+                <mat-datepicker-toggle matSuffix (click)="clearDueDate()">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                <mat-datepicker #dp3></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button class="ml-2" type="submit"><span
+                class="material-icons pb-1 pr-1">save</span>Submit</button>
+            <button mat-raised-button class="ml-2" mat-dialog-close><span
+                class="material-icons pb-1 pr-1">close</span>Close</button>
+        </div>
+    </form>
+</mat-dialog-content>

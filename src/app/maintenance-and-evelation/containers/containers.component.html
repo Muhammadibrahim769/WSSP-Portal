@@ -1,0 +1,133 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search Container
+        </mat-expansion-panel-header>
+        <form [formGroup]="factorForm">
+            <div class="row p-0 mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Zone/Branch</mat-label>
+                  <mat-select formControlName="serBranchId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                      {{branch.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Union Council</mat-label>
+                  <mat-select formControlName="serLocationId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                      {{UC.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="dp1" formControlName="txtDate" readonly>
+        
+                  <mat-datepicker-toggle matSuffix (click)="clearTimeOut()">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                  <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Container No</mat-label>
+                    <input matInput formControlName="txtContainerNo" />
+          
+                  </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Location</mat-label>
+                  <input matInput formControlName="txtContainerLocation" />
+        
+                </mat-form-field>
+              </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button (click)=" onSearch()"><span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2" (click)="onReset()">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8 mb-2">
+        <div class="row">
+            <mat-form-field class="form-group col-md-3" appearance="fill">
+                <mat-label>Columns</mat-label>
+                <mat-select [formControl]="selection" multiple>
+                    <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                        {{column | formControl}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-card-header class="form-group col-md-9">
+                <button mat-flat-button class="mr-3" [routerLink]="['/maintenanceAndEveluation/createContainer']">
+                  <span class="material-icons">add</span>
+                  Create Container
+                </button>
+              </mat-card-header>
+        </div>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="factorListData" #factorSort="matSort"
+                matSort style="border: 1px solid #bababa;">
+                <ng-container matColumnDef="txtBranchName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Zone / Branch</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBranchName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtLocationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Union Council</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtLocationName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtDate">
+                    <th mat-header-cell *matHeaderCellDef> Date</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtDate}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtContainerNo">
+                    <th mat-header-cell *matHeaderCellDef> Container No</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtContainerNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtContainerLocation">
+                    <th mat-header-cell *matHeaderCellDef> Location</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtContainerLocation}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtCleanlinessSurrounding">
+                    <th mat-header-cell *matHeaderCellDef> Cleanliness of Surrounding</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCleanlinessSurrounding}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtCleanlinessContainer">
+                    <th mat-header-cell *matHeaderCellDef> Cleanliness of Container</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCleanlinessContainer}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" class="btnView">remove_red_eye</mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="factorColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: factorColumns;"></tr>
+                <div *ngIf="!isLoading">
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No Record Found</td>
+                    </tr>
+                </div>
+            </table>
+            <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 5PX">
+                <mat-progress-spinner class="spinnerClr" mode="indeterminate">
+                </mat-progress-spinner>
+            </div>
+        </mat-card-content>
+        <mat-paginator #factorPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button (click)="downloadPDF()">
+            <span class="material-icons pb-1 pr-1">download</span>Factor List
+        </button>
+        <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Factor', sheet: 'sheet'})">
+            <span class="material-icons pb-1 pr-1">download</span>Download Excel
+        </button>
+    </mat-card>
+</div>

@@ -1,0 +1,94 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Waste Collection
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Date time of service performed:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtDateServicePerformed | date :'dd MMMM, yyyy:hh:mm'}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Collection Type:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtCollectionType}}</td>
+                        <th>
+                            <h6>Street Id:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.numStreetId}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Total Waste Collected (ton):</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.numTotalWasteCollected}}</td>
+                        <th>
+                            <h6>Activity:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtActivity}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Start Point Coord:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtStartPointCoord}}</td>
+                        <th>
+                            <h6>Finish Point Coord:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtFinishPointCoord}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Frequency Waste Collection:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtFrequencyWasteCollection}}</td>
+                        <th>
+                            <h6>Modality:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtModality}}</td>
+                    </tr>
+                    <tr>
+                        <!-- <th>
+                                <h6>Modality Container:</h6>
+                            </th>
+                            <td>{{viewWasteCollection?.txtModalityContainer}}</td> -->
+                        <th>
+                            <h6>Street Name:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtStreetName}}</td>
+                        <th>
+                            <h6>Mode Of Collection:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtModeOfCollection}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Waste Collection</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/wasteCollection']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

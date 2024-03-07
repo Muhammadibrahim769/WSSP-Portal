@@ -1,0 +1,132 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form  [formGroup]="billInstallmentForm">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput type="number" formControlName="serConsumerId" />
+                </mat-form-field>
+                <br>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="txtBranch">
+                        <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.name}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="txtUnionCouncil">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Bill Number</mat-label>
+                    <input matInput type="number" formControlName="numBillNo"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Bill Period</mat-label>
+                    <input matInput formControlName="txtBillPeriod"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total Bill Amount</mat-label>
+                    <input matInput type="number"  formControlName="numTotalBillAmount"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total No Of Installments</mat-label>
+                    <input matInput type="number" formControlName="numTotalNoOfInstallments"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Installment Amount</mat-label>
+                    <input matInput type="number" formControlName="numInstallmentAmount"/>
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="row mb-2">
+            <div class="col pr-3 d-flex justify-content-end">
+                <button mat-raised-button><span class="material-icons pb-1 pr-1">search</span>Search
+                </button>
+                <button mat-raised-button class="ml-2" ><mat-icon class="material-icons pr-1">refresh</mat-icon>Reset</button>
+
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="fill">
+                    <mat-label>Columns</mat-label>
+                    <mat-select [formControl]="selection" multiple>
+                      <!-- <mat-select-trigger>
+                        {{selection.value ? selection.value[0] : ''}}
+                        <span *ngIf="selection.value?.length > 1">
+                          (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                      </mat-select-trigger> -->
+                      <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                        {{column | formControl}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field >   
+                      <mat-card-header class="form-group col-md-9">
+                            <button mat-flat-button [routerLink]="['/billing/billInstallment/newInstallment']">
+                                <span class="material-icons pb-1">add</span>
+                                New Installment
+                            </button>
+                        </mat-card-header>
+                </div>
+       
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table [dataSource]="dataSource" matSort style="border: 1px solid #bababa;">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="consumerId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Id </th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.consumerId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="billNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill No </th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.billNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="billPeriod">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill Period </th>
+                    <td mat-cell *matCellDef="let element"> {{element.billPeriod}} </td>
+                </ng-container>
+                <ng-container matColumnDef="totalBillAmount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Bill Amount </th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.totalBillAmount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="totalNoOfInstallments">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total No Of Installments </th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.totalNoOfInstallments}} </td>
+                </ng-container>
+                <ng-container matColumnDef="installmentAmount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Installment Amount</th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.installmentAmount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <!-- <a >Approve</a> -->
+                        <mat-icon matTooltip="View" [routerLink]="['/billing/billInstallment/viewBillInstallment']" class="btnView ml-3">remove_red_eye</mat-icon>
+                        <!-- <button class="ml-2" mat-raised-button  [routerLink]="['/billing/newConnection']" >Cancel</button> -->
+                    </td>
+                 </ng-container>                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator [pageSizeOptions]="[10, 20,50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button class="ml-2" (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+            Bill Installment List</button>
+    </mat-card>
+    
+</div>

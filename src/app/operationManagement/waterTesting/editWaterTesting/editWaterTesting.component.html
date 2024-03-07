@@ -1,0 +1,239 @@
+<div class="main">
+    
+     
+        <form [formGroup]="editForm " >
+            
+            <mat-tab-group mat-align-tabs="center" animationDuration="500ms">
+                <mat-tab label="New Connection Information">
+            <div class="row mt-3 p-2">
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Zone/Branch</mat-label>
+                            <mat-select formControlName="serBranchId">
+                                    <mat-option value=""></mat-option>
+                                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                        {{branch.name}}
+                                    </mat-option>
+                            </mat-select>
+                        </mat-form-field> 
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                          <mat-label>Union Council</mat-label>
+                          <mat-select formControlName="serLocationId">
+                              <mat-option value=""></mat-option>
+                              <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                                  {{UC.name}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <mat-form-field  class="form-group col-md-3" appearance="outline">
+                        <mat-label>Latitude</mat-label>
+                        <input matInput  formControlName="numLatitude" />
+                       
+                    </mat-form-field>
+                      <mat-form-field  class="form-group col-md-3" appearance="outline">
+                        <mat-label>Longitude</mat-label>
+                        <input matInput  formControlName="numLongitude" />
+                       
+                    </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Testing Agency</mat-label>
+                    <mat-select formControlName="txtTestingAgency">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="WSSP">WSSP</mat-option>
+                        <mat-option value="PCSIR WR">PCSIR WR</mat-option>
+                        <mat-option value="Others">Others</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Testing Type</mat-label>
+                    <!-- <mat-select formControlName="txtTestingType" >
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Chemical">Chemical</mat-option>
+                        <mat-option value="Biological">Biological</mat-option>
+                        <mat-option value="WR">Chlorine</mat-option>
+                    </mat-select> -->
+                    <mat-select [formControl]="testingType"  multiple>
+                        <mat-option *ngFor="let testingType of toppingList" [value]="testingType">{{testingType}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sampling Date</mat-label>
+                    <input matInput [matDatepicker]="dp15" formControlName="txtSamplingDate" readonly>
+                    <mat-datepicker-toggle matSuffix>
+                        <mat-icon matDatepickerToggleIcon (click)=" clearSamplingDate()">clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp15"></mat-datepicker-toggle>
+                    <mat-datepicker #dp15></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <mat-select formControlName="txtAssetType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="OverHead Tank">OverHead Tank</mat-option>
+                        <mat-option value="Tube Well">Tube Well</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sampling Point</mat-label>
+                    <mat-select formControlName="txtSamplingPoint">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Source">Source</mat-option>
+                        <mat-option value="Water Supply Line">Water Supply Line</mat-option>
+                        <mat-option value="Consumer Tap">Consumer Tap</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="editForm.controls.txtSamplingPoint.value === 'Consumer Tap'" class="form-group col-md-3"
+                    appearance="outline">
+                    <mat-label>Consumer No</mat-label>
+                    <input matInput type="number" formControlName="numConsumerNo" />
+                </mat-form-field>
+                <mat-form-field *ngIf="editForm.controls.txtSamplingPoint.value === 'Consumer Tap'" class="form-group col-md-3"
+                    appearance="outline">
+                    <mat-label>Consumer Name</mat-label>
+                    <input matInput formControlName="txtConsumerName" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="txtAddress" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Street Name</mat-label>
+                    <input matInput formControlName="txtStreetName" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Type</mat-label>
+                    <mat-select formControlName="txtConsumerType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Domestic">Domestic</mat-option>
+                        <mat-option value="Commercial">Commercial</mat-option>
+                        <mat-option value="Acquifer">Aquifer</mat-option>
+                    </mat-select>
+                </mat-form-field>
+              
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Test Result</mat-label>
+                    <mat-select formControlName="txtTestResult">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Fit">Fit</mat-option>
+                        <mat-option value="Un Fit">Un Fit</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Result Submission Date</mat-label>
+                    <input matInput [matDatepicker]="dp14" formControlName="txtResultSubmissionDate" readonly>
+                    <mat-datepicker-toggle matSuffix>
+                        <mat-icon matDatepickerToggleIcon (click)="clearResultSubissionDate()">clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp14"></mat-datepicker-toggle>
+                    <mat-datepicker #dp14></mat-datepicker>
+                </mat-form-field>
+                <!-- <div class="col-md-5">
+                    <label class="btn btn-default">
+                        <input type="file" multiple="true" (change)="selectMutipleFiles($event)" formControlName="files"/> -->
+                    <!-- </label>     -->
+                    <!-- <button mat-raised-button type="button" class="btn btn-success" [disabled]="!selectedMutipleFiles" (click)="uploadFiles()">
+                        Upload
+                    </button> -->
+                <!-- </div> -->
+                <!-- <div class="col-md-3 pt-2 pl-3">
+                    <button mat-raised-button type="button" class="btn btnChoose" (click)="fileInput.click()">
+                        <mat-icon>insert_drive_file</mat-icon>Result Attachment
+                    </button>
+                    <input hidden (change)="onChange($event)" #fileInput type="file" id="file" multiple="multiple">
+                </div> -->
+                <div class="col-md-6 p-0 pt-2">
+                    <div class="pt-2" *ngIf="isFileShow">
+                        <span *ngFor="let progressInfo of pppp">
+                            <span class="mr-2"><span>{{progressInfo.value}}</span><span>-</span><span>{{progressInfo.fileName}}</span>,</span>
+                        </span>
+                    </div>
+                </div>
+                <!--<button (click)="onUpload()" 
+                        class="btn btn-success">
+                        Upload
+                    </button> -->
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Comment/Remarks</mat-label>
+                    <textarea matInput formControlName="txtComments"></textarea>
+                </mat-form-field>
+            </div>
+        </mat-tab>
+   <mat-tab label="Add Document">
+                <div style="float: right; padding: 8px 8px 0px 0px">
+                    <button mat-raised-button type="button" (click)=addBillingDocument(null,null)>
+                            <span class="material-icons pr-1 mb-1" >add</span>Add Document
+                        </button>
+                </div>
+                <table mat-table [dataSource]="fileListData" matSort>
+                    <ng-container matColumnDef="txtDocumentFileName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                        <td mat-cell *matCellDef="let element"> {{element?.txtDocumentFileName}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="txtDocumentReferenceNo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Reference No</th>
+                        <td mat-cell *matCellDef="let element"> {{element?.txtDocumentReferenceNo}} </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="Actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                        <td mat-cell *matCellDef="let element" style="justify-content: center;">
+                            <button mat-flat-button class="ml-2" type="button" (click)="onDelete(element.txtDocumentFileName)">
+                                    <mat-icon>delete_forever</mat-icon>
+                                </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="fileColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: fileColumns;"></tr>
+                </table>
+            </mat-tab>
+
+            
+            <!-- <table mat-table [dataSource]="editWaterTestListData" matSort>
+                <ng-container matColumnDef="txtDocumentFileName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element?.txtDocumentFileName}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Actions </th>
+                    <td mat-cell *matCellDef="let element" style="justify-content: center;">
+                        <button mat-flat-button (click)="onDownload(element)">
+                            <mat-icon>download</mat-icon>
+                        </button>
+                        <button mat-flat-button class="ml-2" (click)="onDelete(element.txtDocumentFileName)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="editWaterTestColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: editWaterTestColumns;"></tr>
+            </table> -->
+        </mat-tab-group>
+
+            <!-- <pre>{{editForm.value | json}}</pre> -->
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button (click)="onUpdate()">
+                        <span class="material-icons pb-1 pr-1">update</span>Update
+                    </button>
+                    <button mat-raised-button [routerLink]="['/waterSupplyManagement/waterTesting']" class="ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+  
+</div>

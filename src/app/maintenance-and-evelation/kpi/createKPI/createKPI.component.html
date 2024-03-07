@@ -1,0 +1,77 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Add New KPI
+        </mat-expansion-panel-header>
+        <form [formGroup]="createkpiForm">
+            <div class="row mt-3">                
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>KPI Code</mat-label>
+                    <input matInput formControlName="txtKPICode">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>KPI Name</mat-label>
+                    <input matInput formControlName="txtKPIName">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Formula</mat-label>
+                    <input matInput formControlName="txtFormula">
+                    <mat-icon matSuffix class="btnoFormulaGenerator" (click)="openFormulaGenerator()">functions</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="txtDescription">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Min Value</mat-label>
+                    <input matInput formControlName="numMinValue">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Max Value</mat-label>
+                    <input matInput formControlName="numMaxValue" type="number">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>UOM</mat-label>
+                    <mat-select formControlName="txtUom">
+                        <mat-option value="" hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="No's">No's</mat-option>
+                        <mat-option value="Each">Each</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Cost Centre</mat-label>
+                    <mat-select formControlName="txtCostCenterName">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let item of CostCentre" value="{{item}}">{{item}}</mat-option>
+                   </mat-select>
+                </mat-form-field>
+                <div class="form-group col-md-4 ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Performance Area</mat-label>
+                        <mat-select formControlName="serPerformanceAreaId">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let item of performanceArea" value="{{item.serPerformanceAreaId}}">
+                                {{ item.txtAreaName }}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <input matInput formControlName="txtperformanceArea" > -->
+                        <!-- <mat-icon matSuffix class="btnAddCursor" (click)="openPerformanceModal()">add</mat-icon> -->
+                    </mat-form-field>
+                    <span matSuffix class="material-icons addIcon pl-2 mr-0 btnAddCursor" (click)="openPerformanceModal()">add</span>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button (click)="onSubmit()"><span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button class="ml-2" [routerLink]="['/maintenanceAndEveluation/kpiList']">
+                        <mat-icon class="material-icons pr-1">close</mat-icon>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

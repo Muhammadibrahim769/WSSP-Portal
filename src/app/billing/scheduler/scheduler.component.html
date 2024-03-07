@@ -1,0 +1,174 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="schedulerForm">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                      <mat-option value=""></mat-option>
+                      <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                        {{branch.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                      <mat-option value=""></mat-option>
+                      <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Schedule Date & Time</mat-label>
+                    <input matInput formControlName="dteScheduleDate" [owlDateTime]="dp5" [owlDateTimeTrigger]="dp5"
+                        placeholder="Date Time" readonly>
+                    <owl-date-time #dp5></owl-date-time>
+                    <mat-datepicker-toggle matSuffix (click)="clearScheduleDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+                    <mat-datepicker #dp5></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group  col-md-4" appearance="outline">
+                    <mat-label>Referance Code End</mat-label>
+                    <input matInput formControlName="referenceCodeEnd" (keypress)="OnlyNumbersAllowed($event)"
+                        minlength="1" maxlength="10" />
+                </mat-form-field> -->
+                <!-- <mat-form-field class="form-group  col-md-4" appearance="outline">
+                    <mat-label>Referance Code Out</mat-label>
+                    <input matInput formControlName="referenceCodeStart" (keypress)="OnlyNumbersAllowed($event)"
+                        minlength="1" maxlength="10" />
+                </mat-form-field> -->
+
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Bill Due Date</mat-label>
+                    <input matInput formControlName="dteBillLastDate" [owlDateTime]="dp6" [owlDateTimeTrigger]="dp6"
+                        placeholder="Date Time" readonly>
+                    <owl-date-time #dp6></owl-date-time>
+                    <mat-datepicker-toggle matSuffix (click)="clearBillLastDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp6"></mat-datepicker-toggle>
+                    <mat-datepicker #dp6></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group  col-md-3" appearance="outline">
+                    <mat-label>Late Payment %</mat-label>
+                    <input matInput formControlName="numLatePayment" (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+                      maxlength="10" />
+                  </mat-form-field> -->
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button (click)="onSearch()"><span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2" (click)="onReset()">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8 mb-2" (click)="onReset()">
+            <div class="row mt-3">
+                    <mat-form-field class="form-group col-md-3" appearance="fill">
+                        <mat-label>Columns</mat-label>
+                        <mat-select [formControl]="selection" multiple>
+                          <!-- <mat-select-trigger>
+                            {{selection.value ? selection.value[0] : ''}}
+                            <span *ngIf="selection.value?.length > 1">
+                              (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger> -->
+                          <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                            {{column | formControl}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field >
+                     
+                </div>
+                <!-- <div class="form-button-container">
+                        <mat-form-field class="reportColumn-filter" appearance="standard">
+                          <mat-label>Columns</mat-label>
+                          <mat-select [formControl]="selection" multiple>
+                            <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                              {{column | formControl}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field> 
+                      </div> -->
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table [dataSource]="schedulerListData" [hiddenColumns]="[9]" matTableExporter #exporter="matTableExporter"
+             #schedulerSort="matSort" matSort style="border: 1px solid #bababa; white-space: nowrap;">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="branch">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Zone/Branch </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBranchName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unionCouncil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtLocationName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dteScheduleDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Date</th>
+                    <td mat-cell *matCellDef="let element"> {{element.dteScheduleDate | date :'dd MMMM, yyyy : hh:mm'}} </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="referenceCodeEnd">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Referance Code End</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.referenceCodeEnd}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="referenceCodeStart">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Distributor  Code</th>
+                    <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue"> {{element.referenceCodeStart}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="billFrom">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill From</th>
+                        <td mat-cell *matCellDef="let element"> {{element.billFrom}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="billTo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill To</th>
+                            <td mat-cell *matCellDef="let element" > {{element.billTo}}
+                            </td>
+                        </ng-container>
+                <ng-container matColumnDef="billLastDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill Due Date</th>
+                    <td mat-cell *matCellDef="let element"> {{element.dteBillLastDate | date:'dd MMMM, yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="dteBillValidityDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Validity Date</th>
+                    <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue"> {{element.dteBillValidityDate | date:'dd MMMM, yyyy'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="latePayment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Late Payment % </th>
+                    <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue">
+                        {{element.numLatePayment}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" class="btnView" [routerLink]="['viewSchedule',element.serScheduleId]">remove_red_eye</mat-icon>
+                        <mat-icon matTooltip="Edit" class="btnEdit" [routerLink]="['editSchedule',element.serScheduleId]">edit</mat-icon>
+                        <mat-icon matTooltip="Delete" class="btnDelete" (click)="deleteScheduleRow(element.serScheduleId)">delete</mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="schedulerColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: schedulerColumns;"></tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator #schedulerPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button class="ml-2" (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+            Schedule List</button>
+            <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Schedule List', sheet: 'sheet'})">
+                <span class="material-icons pb-1 pr-1">download</span>Download Excel
+            </button>
+    </mat-card>
+</div>

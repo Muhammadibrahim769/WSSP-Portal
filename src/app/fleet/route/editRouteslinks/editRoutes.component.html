@@ -1,0 +1,140 @@
+<div class="main ">
+  <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+      <mat-expansion-panel-header>
+          Add Routes Link
+      </mat-expansion-panel-header>
+      <form [formGroup]="routesform">
+          <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let user of branchList" value={{user.id}} >
+                            {{user.name}}
+                        </mat-option>
+                </mat-select>
+            </mat-form-field> 
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <mat-select formControlName="serLocationId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>Route No</mat-label>
+              <mat-select formControlName="code">
+                  <mat-option value=""></mat-option>
+                  <mat-option *ngFor="let Rl of getAllNameCode" value="{{Rl.code}}">
+                      {{Rl.code}}
+                  </mat-option>
+              </mat-select>              
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>Route Name</mat-label>
+              <mat-select formControlName="name">
+                <mat-option value="">Choose...</mat-option>
+                <mat-option *ngFor="let Rl of getAllNameCode" value="{{Rl.name}}">
+                  {{Rl.name}}
+              </mat-option>
+              </mat-select>
+            </mat-form-field>
+              <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Total Distance</mat-label>
+                  <input matInput formControlName="totalDistance" readonly />
+              </mat-form-field>
+              <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Route Type</mat-label>
+                <mat-select formControlName="txtRouteType">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="TS">TS</mat-option>
+                    <mat-option value="DS">DS</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div>
+          <!--          Table Start        -->
+          <div class="card shadow ">
+              <div class="card-header">
+                  <b>Set Routes</b>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col">
+                          <!-- {{data | json}} -->
+                          <table class="table table-bordered table-hover ">
+                              <thead>
+                                  <tr class="tr-head">
+                                      <!-- <th scope="col">#</th> -->
+
+                                      <th scope="col">Sequence No.</th>
+                                      <th scope="col">Link Name</th>
+                                      <!-- <th scope="col">End Point</th> -->
+                                      <th scope="col">Distance (km)</th>
+                                      <th scope="col">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody cdkDropList (cdkDropListDropped)="onDrop($event)" class="table-body" formArrayName="routeDetails">
+
+                                  <tr [formGroupName]="i" *ngFor="let distances of routeDetails.controls; let i=index" cdkDrag cdkDragLockAxis="y">
+
+                                      <td class="col-sm">{{ i+1 }}</td>
+
+                                      <td class="col-md">
+                                          <input type="text" class="form-control" formControlName="txt_name">
+                                      </td>
+                                      <!-- <td class="col-md">
+                    <input type="text" class="form-control" formControlName="txtEndPoint">
+                  </td> -->
+                                      <!-- <ng-container  > -->
+
+                                      <td class="col-md">
+                                          <input type="number" class="form-control" formControlName="routeDistance">
+                                      </td>
+                                      <!-- </ng-container> -->
+                                      <td scope="col"><button type="button" class="btn btn-delete ml-2 mr-2" (click)="openDeleteDialog(i)"><i
+                    class="bi bi-trash"></i></button></td>
+
+                                  </tr>
+
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+
+                  <div class="row ">
+                      <div class="col d-flex justify-content-end">
+                          <button mat-raised-button (click)="addRows()">
+              <span class="material-icons pb-1">add</span>
+              ADD
+            </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!--          Table End          -->
+          <!-- <pre>{{form.value | json}}</pre> -->
+          <!-- <pre>{{form.valid | json}}</pre> -->
+
+          <mat-action-row class="pr-0">
+              <div class="col d-flex justify-content-end p-0">
+                  <button mat-raised-button (click)="onUpdateRoute()">
+      <span class="material-icons mb-1">update</span>
+      Update
+    </button>
+                  <button class="mr-2" mat-raised-button type="button" routerLink="/fleet/routes">
+      <span class="material-icons mb-1">
+        clear
+      </span>Close
+    </button>
+              </div>
+          </mat-action-row>
+      </form>
+  </mat-expansion-panel>
+</div>
+
+
+<!-- <td class="col-md"><i class="bi bi-arrow-down-up"></i></td> -->
+<!-- <td class="col-md">{{distances.controls.txt_name.value}}</td>
+                    <td class="col-md">{{distances.controls.txtEndPoint.value}}</td> -->

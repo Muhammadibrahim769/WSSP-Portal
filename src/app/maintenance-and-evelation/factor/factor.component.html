@@ -1,0 +1,86 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search Factor
+        </mat-expansion-panel-header>
+        <form [formGroup]="factorForm">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Factor Code</mat-label>
+                    <mat-select formControlName="serFactorId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let item of factorCode" value="{{item.serFactorId}}">
+                            {{ item.txtFactorCode }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Factor Name</mat-label>
+                    <input matInput formControlName="txtFactorName">
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button (click)=" onSearch()"><span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2" (click)="onReset()">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8 mb-2">
+        <div class="row">
+            <mat-form-field class="form-group col-md-3" appearance="fill">
+                <mat-label>Columns</mat-label>
+                <mat-select [formControl]="selection" multiple>
+                    <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                        {{column | formControl}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="factorListData" #factorSort="matSort"
+                matSort style="border: 1px solid #bababa;">
+                <ng-container matColumnDef="numFactorCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Factor Code</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtFactorCode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtFactorName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Factor Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtFactorName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtDescription">
+                    <th mat-header-cell *matHeaderCellDef> Description</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtDescription}} </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" class="btnView">remove_red_eye</mat-icon>
+                    </td>
+                </ng-container> -->
+                <tr mat-header-row *matHeaderRowDef="factorColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: factorColumns;"></tr>
+                <div *ngIf="!isLoading">
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No Record Found</td>
+                    </tr>
+                </div>
+            </table>
+            <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 5PX">
+                <mat-progress-spinner class="spinnerClr" mode="indeterminate">
+                </mat-progress-spinner>
+            </div>
+        </mat-card-content>
+        <mat-paginator #factorPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button (click)="downloadPDF()">
+            <span class="material-icons pb-1 pr-1">download</span>Factor List
+        </button>
+        <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Factor', sheet: 'sheet'})">
+            <span class="material-icons pb-1 pr-1">download</span>Download Excel
+        </button>
+    </mat-card>
+</div>

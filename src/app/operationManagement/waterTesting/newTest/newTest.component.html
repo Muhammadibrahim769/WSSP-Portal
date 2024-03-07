@@ -1,0 +1,302 @@
+<div class="main">
+
+    
+     
+        <form [formGroup]="newTestForm" (ngSubmit)="onSubmit()">
+            <mat-tab-group mat-align-tabs="center" animationDuration="500ms">
+                <mat-tab label="Water Testing Information">
+            <div class="row mt-3 p-2">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                       
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                        <mat-error *ngIf="newTestForm.controls.serBranchId.hasError(validation.type) && (newTestForm.controls.serBranchId.dirty || newTestForm.controls.serBranchId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                      
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                        <mat-error *ngIf="newTestForm.controls.serLocationId.hasError(validation.type) && (newTestForm.controls.serLocationId.dirty || newTestForm.controls.serLocationId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                <mat-label>Latitude</mat-label>
+                <input matInput  formControlName="numLatitude" />
+                <mat-error *ngFor="let validation of formValidationMessages.numLatitude">
+                    <mat-error *ngIf="newTestForm.controls.numLatitude.hasError(validation.type) && (newTestForm.controls.numLatitude.dirty || newTestForm.controls.numLatitude.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field  class="form-group col-md-3" appearance="outline">
+                <mat-label>Longitude</mat-label>
+                <input matInput  formControlName="numLongitude" />
+                <mat-error *ngFor="let validation of formValidationMessages.numLongitude">
+                    <mat-error *ngIf="newTestForm.controls.numLongitude.hasError(validation.type) && (newTestForm.controls.numLongitude.dirty || newTestForm.controls.numLongitude.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Testing Agency</mat-label>
+                    <mat-select formControlName="txtTestingAgency">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="WSSP">WSSP</mat-option>
+                        <mat-option value="PCSIR WR">PCSIR WR</mat-option>
+                        <mat-option value="Others">Others</mat-option>
+                        
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtTestingAgency">
+                        <mat-error *ngIf="newTestForm.controls.txtTestingAgency.hasError(validation.type) && (newTestForm.controls.txtTestingAgency.dirty || newTestForm.controls.txtTestingAgency.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Testing Type</mat-label>
+                    <!-- <mat-select formControlName="txtTestingType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Chemical">Chemical</mat-option>
+                        <mat-option value="Biological">Biological</mat-option>
+                        <mat-option value="WR">Chlorine</mat-option>
+                    </mat-select> -->
+                    <mat-select [formControl]="newTestForm.controls.testingType" multiple>
+                        <mat-option *ngFor="let testingType of toppingList" [value]="testingType">{{testingType}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.testingType">
+                        <mat-error *ngIf="newTestForm.controls.testingType.hasError(validation.type) && (newTestForm.controls.testingType.dirty || newTestForm.controls.testingType.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sampling Date<span class="required-straic">*</span> </mat-label>
+                    <input matInput [matDatepicker]="dp13" formControlName="txtSamplingDate" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearSamplingDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp13"></mat-datepicker-toggle>
+                    <mat-datepicker #dp13></mat-datepicker>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtSamplingDate">
+                        <mat-error *ngIf="newTestForm.controls.txtSamplingDate.hasError(validation.type) && (newTestForm.controls.txtSamplingDate.dirty || newTestForm.controls.txtSamplingDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <mat-select formControlName="txtAssetType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="OverHead Tank">OverHead Tank</mat-option>
+                        <mat-option value="Tube Well">Tube Well</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sampling Point</mat-label>
+                    <mat-select formControlName="txtSamplingPoint">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Source">Source</mat-option>
+                        <mat-option value="Water Supply Line">Water Supply Line</mat-option>
+                        <mat-option value="Consumer Tap">Consumer Tap</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtSamplingPoint">
+                        <mat-error *ngIf="newTestForm.controls.txtSamplingPoint.hasError(validation.type) && (newTestForm.controls.txtSamplingPoint.dirty || newTestForm.controls.txtSamplingPoint.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="newTestForm.controls.txtSamplingPoint.value === 'Consumer Tap'"
+                    class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer No</mat-label>
+                    <input matInput type="number" formControlName="numConsumerNo" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numConsumerNo">
+                        <mat-error *ngIf="newTestForm.controls.numConsumerNo.hasError(validation.type) && (newTestForm.controls.numConsumerNo.dirty || newTestForm.controls.numConsumerNo.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="newTestForm.controls.txtSamplingPoint.value === 'Consumer Tap'"
+                    class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Name</mat-label>
+                    <input matInput formControlName="txtConsumerName" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtConsumerName">
+                        <mat-error *ngIf="newTestForm.controls.txtConsumerName.hasError(validation.type) && (newTestForm.controls.txtConsumerName.dirty || newTestForm.controls.txtConsumerName.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="txtAddress" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtAddress">
+                        <mat-error *ngIf="newTestForm.controls.txtAddress.hasError(validation.type) && (newTestForm.controls.txtAddress.dirty || newTestForm.controls.txtAddress.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Street Name</mat-label>
+                    <input matInput formControlName="txtStreetName" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtStreetName">
+                        <mat-error *ngIf="newTestForm.controls.txtStreetName.hasError(validation.type) && (newTestForm.controls.txtStreetName.dirty || newTestForm.controls.txtStreetName.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Type</mat-label>
+                    <mat-select formControlName="txtConsumerType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Domestic">Domestic</mat-option>
+                        <mat-option value="Commercial">Commercial</mat-option>
+                        <mat-option value="Acquifer">Aquifer</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtConsumerType">
+                        <mat-error *ngIf="newTestForm.controls.txtConsumerType.hasError(validation.type) && (newTestForm.controls.txtConsumerType.dirty || newTestForm.controls.txtConsumerType.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Longitude</mat-label>
+                    <input matInput type="number" formControlName="numLongitude" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Latitude</mat-label>
+                    <input matInput type="number" formControlName="numLatitude" />
+                </mat-form-field>  -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Test Result</mat-label>
+                    <mat-select formControlName="txtTestResult">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Fit">Fit</mat-option>
+                        <mat-option value="Un Fit">Un Fit</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtTestResult">
+                        <mat-error *ngIf="newTestForm.controls.txtTestResult.hasError(validation.type) && (newTestForm.controls.txtTestResult.dirty || newTestForm.controls.txtTestResult.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Result Submission Date<span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp14" formControlName="txtResultSubmissionDate" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="ResultSubmissionDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp14"></mat-datepicker-toggle>
+                    <mat-datepicker #dp14></mat-datepicker>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtResultSubmissionDate">
+                        <mat-error *ngIf="newTestForm.controls.txtResultSubmissionDate.hasError(validation.type) && (newTestForm.controls.txtResultSubmissionDate.dirty || newTestForm.controls.txtResultSubmissionDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <!-- <div class="col-md-5">
+                    <label class="btn btn-default">
+                        <input type="file" multiple="true" (change)="selectMutipleFiles($event)" formControlName="files"/>
+                    </label>    
+                    <button mat-raised-button type="button" class="btn btn-success" [disabled]="!selectedMutipleFiles" (click)="uploadFiles()">
+                        Upload
+                    </button>
+                </div> -->
+
+                <!-- <div class="col-md-3 pt-2 pl-3">
+                    <button mat-raised-button type="button" class="btn btnChoose" (click)="fileInput.click()">
+                        <mat-icon>insert_drive_file</mat-icon>Result Attachment
+                    </button>
+                    <input style="display: none" #attachments type="file" (change)="onFileChanged($event)" #fileInput
+                        multiple="true">
+                </div> -->
+
+                <div class="col-sm-3 pt-2" *ngFor="let selected of listOfFiles;let index = index">
+                    <mat-chip-list>
+                        <mat-chip selected>{{selected}}
+                            <mat-icon class="pt-1 pl-2" style="cursor: pointer; color: white;"
+                                (click)="removeSelectedFile(index)">cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Comment/Remarks</mat-label>
+                    <textarea matInput formControlName="txtComments"></textarea>
+                </mat-form-field>
+
+            </div>
+            <!-- <p>DAta: {{newTestForm.value | json}}</p> -->
+            <!-- <pre>{{newTestForm.value | json}}</pre> -->
+        </mat-tab>
+            <mat-tab label="Add Document">
+                <div style="float: right; padding: 8px 8px 0px 0px">
+                    <button mat-raised-button type="button" (click)=addBillingDocument(null,null)>
+                            <span class="material-icons pr-1 mb-1" >add</span>Add Document
+                        </button>
+                </div>
+                <table mat-table [dataSource]="fileListData" matSort>
+                    <ng-container matColumnDef="txtDocumentFileName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                        <td mat-cell *matCellDef="let element"> {{element?.txtDocumentFileName}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="txtDocumentReferenceNo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Reference No</th>
+                        <td mat-cell *matCellDef="let element"> {{element?.txtDocumentReferenceNo}} </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="Actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                        <td mat-cell *matCellDef="let element" style="justify-content: center;">
+                            <button mat-flat-button class="ml-2" type="button" (click)="onDelete(element.txtDocumentFileName)">
+                                    <mat-icon>delete_forever</mat-icon>
+                                </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="fileColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: fileColumns;"></tr>
+                </table>
+            </mat-tab>
+        </mat-tab-group>
+            <div class="row mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button type="submit">
+                        <span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/waterSupplyManagement/waterTesting']" class=" ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+            <!-- <p>Selected range: {{newTestForm.value | json}}</p> -->
+        </form>
+        
+
+
+</div>

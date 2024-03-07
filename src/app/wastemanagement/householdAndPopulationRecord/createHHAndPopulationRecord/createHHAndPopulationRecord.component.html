@@ -1,0 +1,162 @@
+<div class="main">
+    <form [formGroup]="createHHAndPopulationForm" (ngSubmit)="onSubmit()">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Population Part
+        </mat-expansion-panel-header>
+       
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="txtBranch">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.name}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="txtUnionCouncil">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Date</mat-label>
+                    <input matInput [matDatepicker]="dp16" formControlName="txtDate" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp16"></mat-datepicker-toggle>
+                    <mat-datepicker #dp16></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total HouseHold</mat-label>
+                    <input matInput formControlName="txtTotalHouseHold" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Avg Member/House</mat-label>
+                    <input matInput formControlName="txtAvgMemberPerHouse" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total Population</mat-label>
+                    <input matInput formControlName="txtTotalPopulation" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Remarks </mat-label>
+                    <textarea matInput                    
+                    formControlName="txtRemarks"></textarea>                  
+                </mat-form-field>
+
+               
+            </div>
+           
+       
+    </mat-expansion-panel>
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Category Part
+        </mat-expansion-panel-header>
+       
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Sub Category</mat-label>
+                    <mat-select formControlName="txtAssetSubCategory">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let subCategory of subCategoryList" value="{{subCategory.id}}">
+                                {{subCategory.name}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Sub Category</mat-label>
+                    <mat-select formControlName="txtAssetSubCategory">
+                        <mat-option value="" hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <mat-select formControlName="txtAssetType">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let assetType of serviceInfoList" value="{{assetType.productId}}">
+                                {{assetType.serviceName}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <mat-select formControlName="txtAssetType">
+                        <mat-option value="" hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Id</mat-label>
+                    <input matInput formControlName="numAssetId" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Status</mat-label>
+                    <mat-select formControlName="txtAssetStatus">
+                        <mat-option value="" hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="Fit">Fit</mat-option>
+                        <mat-option value="Un-Fit">Un-Fit</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+
+                    </mat-select>
+                </mat-form-field>   
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Avg Discharge m3/hr</mat-label>
+                    <input matInput formControlName="txtAvgDischarge" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Vloume Capacity in m3 </mat-label>
+                    <input matInput formControlName="txtVolumeCapacity" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Load Capacity </mat-label>
+                    <input matInput formControlName="txtLoadCApacity" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total Length </mat-label>
+                    <input matInput formControlName="txtTotalLength" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total No's </mat-label>
+                    <input matInput formControlName="numTotalNo" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Other Information 1 </mat-label>
+                    <input matInput formControlName="txtOtherInformationOne" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Other Information 2 </mat-label>
+                    <input matInput formControlName="txtOtherInformationTwo" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Other Information 3 </mat-label>
+                    <input matInput formControlName="txtOtherInformationThree" />
+                </mat-form-field>
+            </div>           
+       
+    </mat-expansion-panel>
+    <div class="row mt-3 mb-1">
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button type="submit">
+                <span class="material-icons pb-1 pr-1">save</span>Submit
+            </button>
+            <button mat-raised-button [routerLink]="['/operationManagement/householdAndPopulationRecord']" class="ml-2">
+                <span class="material-icons pb-1 pr-1">close</span>Close
+            </button>
+        </div>
+    </div>
+</form>
+</div>

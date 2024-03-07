@@ -1,0 +1,69 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+          Edit Item Recovered
+        </mat-expansion-panel-header>
+    <form [formGroup]="addItemRecoveredForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <mat-select formControlName="serBranchId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                        {{branch.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <mat-select formControlName="serLocationId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="dp1" formControlName="txtRecoveredDate" readonly>
+                <mat-datepicker-toggle matSuffix (click)="clearTxtDate()">
+                  <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                <mat-datepicker #dp1></mat-datepicker>
+              </mat-form-field> 
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Item Recovered</mat-label>
+                <mat-select formControlName="txtItemRecovered">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="PET Recovered">PET Recovered</mat-option>
+                    <mat-option value="Metal Recovered">Metal Recovered</mat-option>
+                    <mat-option value="Glass Recovered">Glass Recovered</mat-option>
+                    <mat-option value="Paper Recovered">Paper Recovered</mat-option>
+                    <mat-option value="Plastic Recovered">Plastic Recovered</mat-option>
+                    <mat-option value="Combutib">Combutib</mat-option>
+                    <mat-option value="Left Over Insert Waste">Left Over Insert Waste</mat-option>                   
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Amount of Waste Recieved (ton)</mat-label>
+                <input matInput formControlName="numTotalWasteRecieved" />
+            </mat-form-field> 
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Total Amount Recovered</mat-label>
+                <input matInput formControlName="numTotalRecovered" />
+            </mat-form-field>        
+        </div>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button type="submit">
+                    <span class="material-icons pb-1 pr-1">update</span>Update
+                </button>
+                <button mat-raised-button [routerLink]="['/wasteManagement/quantityRecoveredItem']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+    </mat-expansion-panel>
+</div>

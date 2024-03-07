@@ -1,0 +1,96 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            All Connection Information
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.branch.name }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.unionCouncil.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Connection Type:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtConnectionType }}</td>
+                        <th>
+                            <h6>Consumer ID:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtCustomerCode }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Bussiness Name:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtBusinessName }}</td>
+                        <th>
+                            <h6>Cnic:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtCnicNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>NTN:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtNtnNo }}</td>
+                        <th>
+                            <h6>STN:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStnNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Area:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtShippingAddress }}</td>
+                        <th>
+                            <h6>Sector Mohallah:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtMohallah }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Street No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStreetNo }}</td>
+                        <th>
+                            <h6>House No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtHouseNo }}</td>
+                       
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Cell No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtMobileNo }}</td>
+                        <th>
+                            <h6>Status</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStatus }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="col d-flex justify-content-end mb-3">
+                    <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        New Connection Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/waterSupplyManagement/connectionList']">
+                    <mat-icon class="material-icons">close</mat-icon>Close
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

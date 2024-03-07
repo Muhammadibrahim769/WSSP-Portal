@@ -1,0 +1,114 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="billAdjustmentForm">
+            <div class="row mt-3">     
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="txtBranch">
+                        <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.name}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput formControlName="serConsumerId" />
+                </mat-form-field>
+                <br>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Bill Number</mat-label>
+                    <input matInput formControlName="numBillNo"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Bill Period</mat-label>
+                    <input matInput formControlName="txtBillPeriod"/>
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="row mb-2">
+            <div class="col pr-3 d-flex justify-content-end">
+                <button mat-raised-button><span class="material-icons pb-1 pr-1">search</span>Search
+                </button>
+                <button mat-raised-button class="ml-2" (click)="onReset()" ><mat-icon class="material-icons pr-1">refresh</mat-icon>Reset</button>
+
+            </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8">
+        <mat-card-header>
+            <button mat-raised-button [routerLink]="['/billing/billAdjustment/newAdjustment']">
+                <span class="material-icons pb-1">add</span>
+                New Adjustment
+            </button>
+        </mat-card-header>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+                <div class="row mt-3">
+                    <mat-form-field class="form-group col-md-3" appearance="fill">
+                        <mat-label>Columns</mat-label>
+                        <mat-select [formControl]="selection" multiple>
+                          <!-- <mat-select-trigger>
+                            {{selection.value ? selection.value[0] : ''}}
+                            <span *ngIf="selection.value?.length > 1">
+                              (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger> -->
+                          <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                            {{column | formControl}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field >   
+                    </div>
+            <table mat-table [dataSource]="billAdjustmentListData" [hiddenColumns]="[6]" matTableExporter #exporter="matTableExporter"
+             #billAdjustmentSort="matSort" matSort style="border: 1px solid #bababa;">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="txtCustomerCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCustomerCode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtBillNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBillNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dteBillFrom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill From </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dteBillFrom}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dteBillTo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill To </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dteBillTo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numTotalAmount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Bill Amount </th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.numTotalAmount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numAdjustment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Adjustment Amount</th>
+                    <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element.numAdjustment}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <!-- <a >Approve</a> -->
+                        <mat-icon [routerLink]="['/billing/billAdjustment/viewBillAdjustment',element.serAdjustedBillId]" matTooltip="View" class="btnView ml-3">remove_red_eye</mat-icon>
+                        <!-- <button class="ml-2" mat-raised-button  [routerLink]="['/billing/newConnection']" >Cancel</button> -->
+                        
+                    </td>
+                 </ng-container>                
+                <tr mat-header-row *matHeaderRowDef="billAdjustmentColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: billAdjustmentColumns;"></tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator #billAdjustmentPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button class="ml-2" (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+            Bill Adjustment List</button>
+            <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Bill Adjustment List', sheet: 'sheet'})">
+                <span class="material-icons pb-1 pr-1">download</span>Download Excel
+            </button>
+    </mat-card>
+    
+</div>

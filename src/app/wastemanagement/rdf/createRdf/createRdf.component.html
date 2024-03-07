@@ -1,0 +1,80 @@
+<div class="main">
+    <mat-card class="mat-elevation-z8 p-0 m-0">
+        <mat-card-header class="matCardHeader" style="padding: 15px 0px 0px 24px">
+           Add Rdf
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="createform">
+                <div class="row p-0 mt-3">
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Zone/Branch</mat-label>
+                        <mat-select formControlName="branch">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Union Council</mat-label>
+                        <mat-select formControlName="unionCouncil">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let  UC of getUC" value="{{ UC.id }}">
+                                {{ UC.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="dp1" formControlName="dteRdf" readonly>
+                        <mat-datepicker-toggle matSuffix (click)="clearTo()">
+                            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Combustible Segregated Recieved</mat-label>
+                        <input matInput formControlName="txtSegregatedRecieved" />
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>RDF Pallet Produced</mat-label>
+                        <input matInput formControlName="txtPalletProduced" />
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>RDF Sold</mat-label>
+                        <input matInput formControlName="txtRdfSold" (blur)="onBlurEvent($event)" />
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Rate</mat-label>
+                        <input matInput formControlName="txtRate" />
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Vendor</mat-label>
+                        <input matInput formControlName="txtVendor" />
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Amount</mat-label>
+                        <input matInput formControlName="numAmount" type="number"/>
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>RDF Balance</mat-label>
+                        <input matInput formControlName="numRdfBalance" type="number" readonly/>
+                    </mat-form-field>
+                </div>
+                <div class="row mb-2">
+                    <div class="col d-flex justify-content-end">
+                        <button mat-raised-button (click)="onSumbit()">
+                            <span class="material-icons">save</span>
+                            Submit
+                        </button>
+                        <button mat-raised-button class="ml-2" [routerLink]="['/wasteManagement/rdf']">
+                            <span class="material-icons">close</span>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

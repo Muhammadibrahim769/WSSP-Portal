@@ -1,0 +1,97 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Sweeping Schedule
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Date:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtDate | date :'dd MMMM, yyyy'}}</td>
+                        <th>
+                            <h6>Shift:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtShift}}</td>
+                       
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Type of Area:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtTypeOfArea}}</td>
+                        <th>
+                            <h6>Mode of Sweeping:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtSweepingMode}}</td>                        
+                    </tr>
+                    <tr>                        
+                        <th>
+                            <h6>Start Point Coord:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtStartPointCoord}}</td>
+                        <th>
+                            <h6>Finish Point Coord:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtFinishPointCoord}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Length (Km):</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.numLength}}</td>
+                        <th>
+                            <h6>Required Number of Days:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.numOfRequiredDays}}</td>                       
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Schedule & Frequency of Sweeping:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtScheduleSweeping}}</td>
+                        <th>
+                            <h6>Schedule & Frequency of Sweeping:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtScheduleSweeping}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Staff Deputed:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtStaffDeputed}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Remarks:</h6>
+                        </th>
+                        <td>{{viewWasteCollection?.txtRemarks}}</td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Sweeping Schedule</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/sweepingSchedule']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

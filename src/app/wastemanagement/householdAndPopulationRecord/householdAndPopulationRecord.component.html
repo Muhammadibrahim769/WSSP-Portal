@@ -1,0 +1,96 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchHouseholdAndPopulationForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="txtBranchName">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="txtLocationName">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button><span class="material-icons pt-1 pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2">
+                        <mat-icon class="material-icons mt-1 pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="mat-elevation-z8">
+        <!-- <mat-card-header>
+            <button mat-raised-button [routerLink]="['/operationManagement/householdAndPopulationRecord/createHHAndPopulationRecord']">
+                <mat-icon class="material-icons">add</mat-icon>
+                Create HH & Population Record
+            </button>
+        </mat-card-header>      -->
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table [dataSource]="houseHold" #houseHoldSort="matSort" matSort style="border: 1px solid #bababa;">
+                <ng-container matColumnDef="serBranchId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone/Branch </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.txtBranchName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unionCouncil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.txtLocationName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="noOfMainholes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No Of Mainholes </th>
+                    <td mat-cell *matCellDef="let element"> {{element.numTotalMainholes}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numTotalSewerageLines">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sewerage Lines (Total Length) </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numTotalSewerageLines}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numTotalHouseHold">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total HouseHold </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numTotalHouseHold}} </td>
+                </ng-container>
+                <ng-container matColumnDef="avgMemberPerHouse">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Average Member/House</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">
+                        <span *ngIf="!element.numTotalHouseHold  || !element.numTotalPopulation">0</span>
+                        <span *ngIf="element.numTotalHouseHold  && element.numTotalPopulation">{{element.numTotalHouseHold
+                            / element.numTotalPopulation}}</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="totalPopulation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Population</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numTotalPopulation}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" [routerLink]="['/operationManagement/householdAndPopulationRecord/viewHHAndPopulationRecord',element.serPopulationId]"
+                            style="padding-top: 10px; color: #bd7d08; cursor: pointer;font-size: 25px;" class=" mr-1">remove_red_eye</mat-icon>
+                        <mat-icon matTooltip="Edit" style="color: #ffae1b; cursor: pointer; font-size: 25px;" 
+                            [routerLink]="['/operationManagement/householdAndPopulationRecord/editHHAndPopulationRecord',element.serPopulationId]">edit</mat-icon>
+                        <!-- <button class="ml-2" mat-raised-button  [routerLink]="['/operationManagement/householdAndPopulationRecord/editHHAndPopulationRecord']" >Cancel</button> -->
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="houseHoldColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: houseHoldColumns;">
+                </tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator #houseHoldPaginator [pageSizeOptions]="[10, 20,50]" showFirstLastButtons></mat-paginator>
+    </mat-card>
+</div>

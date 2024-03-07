@@ -1,0 +1,226 @@
+<div class="main">
+    <mat-card class="card p-0 m-0 mat-elevation-z8">
+        <mat-card-header class="matCardHeader">
+            Funds Transfer
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+                <div class="row mt-3">
+                    <mat-form-field class="form-group col-md-4" appearance="outline" appYearMonthFormat>
+                        <mat-label>Bill From </mat-label>
+                        <input matInput [matDatepicker]="dp" formControlName="dteBillFrom">
+                        <mat-datepicker-toggle matSuffix (click)="clearBillFromDate()">
+                            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                            (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                        </mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="form-group col-md-4" appearance="outline" appYearMonthFormat>
+                        <mat-label>Bill To </mat-label>
+                        <input matInput [matDatepicker]="dp1" formControlName="dteBillTo">
+                        <mat-datepicker-toggle matSuffix (click)="clearBillToDate()">
+                            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1 startView="multi-year" (yearSelected)="chosenYearHandlerBillTo($event)"
+                            (monthSelected)="chosenMonthHandlerBillTo($event, dp1)">
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <form [formGroup]="searchFormA" (ngSubmit)="onSearchA()">
+                        <div class="row p-0 m-0">
+
+                            <mat-form-field class="form-group col-md-6 p-0" appearance="outline">
+                                <mat-label>Consumer Id</mat-label>
+                                <input matInput formControlName="txtCustomerCodeA" mask="00000000000"/>
+                                <mat-error *ngIf="searchFormA.controls.txtCustomerCodeA.invalid">
+                                    <span *ngFor="let validation of formValidationMessages.txtCustomerCodeA">
+                                        <span *ngIf="searchFormA.controls.txtCustomerCodeA.hasError(validation.type) && (searchFormA.controls.txtCustomerCodeA.dirty || searchFormA.controls.txtCustomerCodeA.touched)">
+                                            {{validation.message}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="searchFormA.get('txtCustomerCodeA').hasError('minlength')">
+                                        Length should be 11
+                                    </span>
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="col-md-3">
+                                <button mat-flat-button type="submit" [disabled]="!searchFormA.valid">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <span class="matCardHeader">Transfer From</span>
+                    <table class="table table-borderless" id="fundsTransferTable" *ngIf="showCurrent">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <h6>Customer Code:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtCustomerCode }}</td>
+                                <th>
+                                    <h6>Name:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtBusinessName }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Zone:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtZone }}</td>
+                                <th>
+                                    <h6>Union Council:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtUnionCouncil }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Connection Type:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtConnectionType }}</td>
+                                <th>
+                                    <h6>Category:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtCustomerCategory }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Area:</h6>
+                                </th>
+                                <td>{{currentBillData?.txtArea}},{{currentBillData?.txtSectorMohallah}},{{currentBillData?.txtStreetNo}},{{currentBillData?.txtHouseNo}}</td>
+                                <th>
+                                    <h6>Cnic No:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtCnicNo }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Bill Amount:</h6>
+                                </th>
+                                <td>{{ currentBillData?.numPayableWithinDueDate }}</td>
+                                <th>
+                                    <h6>Late Payment Amount:</h6>
+                                </th>
+                                <td>{{ currentBillData?.numPayableAfterDueDate }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Bill No:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtBillNo }}</td>
+                                <th>
+                                    <h6>Payment Status:</h6>
+                                </th>
+                                <td>{{ currentBillData?.txtStatus }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <form [formGroup]="searchFormB" (ngSubmit)="onSearchB()">
+                        <div class="row">
+                            <mat-form-field class="form-group col-md-6 p-0" appearance="outline">
+                                <mat-label>Consumer Id</mat-label>
+                                <input matInput formControlName="txtCustomerCodeB" mask="00000000000"/>
+                                <mat-error *ngIf="searchFormB.controls.txtCustomerCodeB.invalid">
+                                    <span *ngFor="let validation of formValidationMessages.txtCustomerCodeB">
+                                        <span *ngIf="searchFormB.controls.txtCustomerCodeB.hasError(validation.type) && (searchFormB.controls.txtCustomerCodeB.dirty || searchFormB.controls.txtCustomerCodeB.touched)">
+                                            {{validation.message}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="searchFormB.get('txtCustomerCodeB').hasError('minlength')">
+                                        Length should be 11
+                                    </span>
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="col-md-3">
+                                <button mat-flat-button type="submit" [disabled]="!searchFormB.valid">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <span class="matCardHeader">Transfer To</span>
+                    <table class="table borderLeft" id="fundsTransferTable" *ngIf="showHistory">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <h6>Customer Code:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtCustomerCode }}</td>
+                                <th>
+                                    <h6>Name:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtBusinessName }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Zone:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtZone }}</td>
+                                <th>
+                                    <h6>Union Council:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtUnionCouncil }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Connection Type:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtConnectionType }}</td>
+                                <th>
+                                    <h6>Category:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtCustomerCategory }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Area:</h6>
+                                </th>
+                                <td>{{historyBillData?.txtArea}},{{historyBillData?.txtSectorMohallah}},{{historyBillData?.txtStreetNo}},{{historyBillData?.txtHouseNo}}</td>
+                                <th>
+                                    <h6>Cnic No:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtCnicNo }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Bill Amount:</h6>
+                                </th>
+                                <td>{{ historyBillData?.numPayableWithinDueDate }}</td>
+                                <th>
+                                    <h6>Late Payment Amount:</h6>
+                                </th>
+                                <td>{{ historyBillData?.numPayableAfterDueDate }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6>Bill No:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtBillNo }}</td>
+                                <th>
+                                    <h6>Payment Status:</h6>
+                                </th>
+                                <td>{{ historyBillData?.txtStatus }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col d-flex justify-content-end mb-2 mt-2">
+                <button mat-raised-button class="ml-2" (click)="onTransfer()">
+                    <span class="material-icons pr-1">attach_money</span>Transfer</button>
+                <button mat-raised-button class="ml-2" [routerLink]="['/billing/bill']">
+                    <span class="material-icons pr-1">close</span>Close</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

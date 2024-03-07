@@ -1,0 +1,316 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            New Connection Information
+        </mat-expansion-panel-header>
+        <form [formGroup]="createConnectionForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3 p-2 mr-2">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="branch">
+                        <mat-option *ngFor="let  branch of branchList" value="{{ branch.id }}">
+                            {{ branch.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.branch">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.branch.hasError(validation.type) && (createConnectionForm.controls.branch.dirty || createConnectionForm.controls.branch.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council <span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="unionCouncil">
+                        <mat-option *ngFor="let  UC of getBranchId" value="{{ UC.id }}">
+                            {{ UC.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.unionCouncil">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.unionCouncil.hasError(validation.type) && (createConnectionForm.controls.unionCouncil.dirty || createConnectionForm.controls.unionCouncil.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Neighbourhood Council</mat-label>
+                    <mat-select formControlName="neighborhoodUnionCouncil">
+                        <mat-option *ngFor="let  NUC of getLocationId" value="{{ NUC.id }}">
+                            {{ NUC.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Code<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtCustomerCode" />
+                    <mat-error *ngIf="createConnectionForm.controls.txtCustomerCode.invalid">
+                        <span *ngFor="let validation of formValidationMessages.txtCustomerCode">
+                              <span *ngIf="createConnectionForm.controls.txtCustomerCode.hasError(validation.type) && (createConnectionForm.controls.txtCustomerCode.dirty || createConnectionForm.controls.txtCustomerCode.touched)">
+                                {{validation.message}}
+                              </span>
+                        </span>
+                        <span *ngIf="createConnectionForm.get('txtCustomerCode').hasError('maxlength')">
+                            max length is 12
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="form-group col-md-3 mt-3">
+                    <mat-radio-group aria-label="Select an option" formControlName="txtMetered">
+                        <mat-radio-button value="true">Metered</mat-radio-button>
+                        <mat-radio-button value="false">Un-Metered</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Connection Type<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="txtConnectionType" (selectionChange)="onConnectionChange($event)">
+                        <mat-option *ngFor="let  CTL of connectionTypeList" value="{{ CTL}}">
+                            {{ CTL }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtConnectionType">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.txtConnectionType.hasError(validation.type) && (createConnectionForm.controls.txtConnectionType.dirty || createConnectionForm.controls.txtConnectionType.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Services Start Date<span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp3" formControlName="dteCreatedDate" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3></mat-datepicker>
+
+                    <mat-error *ngFor="let validation of formValidationMessages.dteCreatedDate">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.dteCreatedDate.hasError(validation.type) && (createConnectionForm.controls.dteCreatedDate.dirty || createConnectionForm.controls.dteCreatedDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Old Id/Parcel Id</mat-label>
+                    <input matInput formControlName="txtReferenceCode" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Name<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtBusinessName" />
+
+                    <mat-error *ngFor="let validation of formValidationMessages.txtBusinessName">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.txtBusinessName.hasError(validation.type) && (createConnectionForm.controls.txtBusinessName.dirty || createConnectionForm.controls.txtBusinessName.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>CNIC<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtCnicNo" placeholder="xxxxx-xxxxxxx-x" mask="00000-0000000-0" />
+
+                    <mat-error *ngFor="let validation of formValidationMessages.txtCnicNo">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.txtCnicNo.hasError(validation.type) && (createConnectionForm.controls.txtCnicNo.dirty || createConnectionForm.controls.txtCnicNo.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Category<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let  category of categoryList" value="{{ category.id }}">
+                            {{ category.name }}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngFor="let validation of formValidationMessages.category">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.category.hasError(validation.type) && (createConnectionForm.controls.category.dirty || createConnectionForm.controls.category.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sub-Category<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="subCategory">
+                        <mat-option *ngFor="let  subCategory of subCategoryList" value="{{ subCategory.id }}">
+                            {{ subCategory.name }}
+                        </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngFor="let validation of formValidationMessages.subCategory">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.subCategory.hasError(validation.type) && (createConnectionForm.controls.subCategory.dirty || createConnectionForm.controls.subCategory.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>NTN</mat-label>
+                    <input matInput formControlName="txtNtnNo" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>STN</mat-label>
+                    <input matInput formControlName="txtStnNo" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Area</mat-label>
+                    <input matInput formControlName="txtShippingAddress" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sector Mohallah</mat-label>
+                    <input matInput formControlName="txtMohallah" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>House No</mat-label>
+                    <input matInput formControlName="txtHouseNo" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Street No</mat-label>
+                    <input matInput formControlName="txtStreetNo" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Mobile No<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtMobileNo" placeholder="Ex. (0000) 000-0000"
+                        mask="(0000) 000-0000" />
+
+                    <mat-error *ngFor="let validation of formValidationMessages.txtMobileNo">
+                        <mat-error
+                            *ngIf="createConnectionForm.controls.txtMobileNo.hasError(validation.type) && (createConnectionForm.controls.txtMobileNo.dirty || createConnectionForm.controls.txtMobileNo.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Land Line No</mat-label>
+                    <input matInput formControlName="txtPhoneNo" placeholder="Ex. (000) 0000-000"
+                        mask="(000) 0000-000" />
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="txtEmailAddress" placeholder="abc@example.com" />
+                </mat-form-field>
+
+                <div class="col-md-2 pt-2 pl-3">
+                    <button mat-raised-button type="button" class="btn btnChoose" (click)="fileInput.click()">
+                        <mat-icon>insert_drive_file</mat-icon>Attach File
+                    </button>
+                    <input hidden (change)="onChange($event)" #fileInput type="file" id="file" multiple="multiple">
+                </div>
+                <div class="col-md-7 p-0 pt-2">
+                    <div class="pt-2" *ngIf="isFileShow">
+                        <span *ngFor="let progressInfo of pppp">
+                            <span
+                                class="mr-2"><span>{{progressInfo.value}}</span><span>-</span><span>{{progressInfo.fileName}}</span>,</span>
+                        </span>
+                    </div>
+                </div>
+                <!--<button (click)="onUpload()" 
+                        class="btn btn-success">
+                        Upload
+                    </button> -->
+            </div>
+            <mat-card class="mat-elevation-z4" style="padding: 0 !important;">
+                <mat-card-content>
+                    <table mat-table [dataSource]="productSource" #productSourceSort="matSort" matSort
+                        formArrayName="serviceInfoListFrontend" matSortActive="symbol" matSortDirection="asc">
+                        <!-- Checkbox Column -->
+
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row; let i=index" [formGroupName]="i">
+                                <mat-checkbox (click)="$event.stopPropagation()" (change)="checkboxLabel(row,$event)"
+                                    formControlName="checked">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="txtProductCode">
+                            <th mat-header-cell *matHeaderCellDef> Services Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.txtProductCode}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="serUomId">
+                            <th mat-header-cell *matHeaderCellDef> UoM </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.serUomId}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="txtProductName">
+                            <th mat-header-cell *matHeaderCellDef> Services Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.txtProductName}} </td>
+                        </ng-container>
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="numSalePrice">
+                            <th mat-header-cell *matHeaderCellDef> Rate </th>
+                            <td mat-cell *matCellDef="let element; let i=index" id="numericValues"
+                                class="tableNumericValue" [formGroupName]="i">
+                                <input mat-input class="form-control" type="number" formControlName="rate" />
+                            </td>
+                            <!-- <td mat-cell *matCellDef="let element"  id="numericValues" class="tableNumericValue"> {{element?.numSalePrice}} </td> -->
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="productSourceColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: productSourceColumns;"
+                            (click)="selection.toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator #productSourcePaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+                    </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button  type="submit">
+                        <span class="material-icons pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/waterSupplyManagement/connectionList']" class="ml-2">
+                        <span class="material-icons pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

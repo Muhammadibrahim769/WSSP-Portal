@@ -1,0 +1,153 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            KPI List
+        </mat-expansion-panel-header>
+        <form [formGroup]="kpiForm">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>KPI Code</mat-label>
+                    <input matInput formControlName="txtKPICode">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>KPI Name</mat-label>
+                    <input matInput formControlName="txtKPIName">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Area Code</mat-label>
+                    <input matInput formControlName="txtAreaCode">
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Area Name</mat-label>
+                    <input matInput formControlName="txtAreaName">
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>UOM</mat-label>
+                    <mat-select formControlName="txtUom">
+                        <mat-option value="" hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="No's">No's</mat-option>
+                        <mat-option value="each">Each</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Cost Centre</mat-label>
+                    <mat-select formControlName="txtCostCenterName">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let item of CostCentre" value="{{item}}">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button (click)="onSearch()"><span
+                            class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2" (click)="onReset()">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8 mb-2">
+        <div class="row">
+            <mat-form-field class="form-group col-md-3" appearance="fill">
+                <mat-label>Columns</mat-label>
+                <mat-select [formControl]="selection" multiple>
+                    <!-- <mat-select-trigger>
+                            {{selection.value ? selection.value[0] : ''}}
+                            <span *ngIf="selection.value?.length > 1" class="example-additional-selection">
+                              (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger> -->
+                    <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                        {{column | formControl}}
+                    </mat-option>
+                    <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="kpiListData" #kpiSort="matSort"
+                matSort style="border: 1px solid #bababa;">
+                <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="txtperformanceAreaName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Performance Area Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtAreaName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtperformanceAreaCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Performance Area Code</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtAreaCode}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="numkpiCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> KPI Code </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtKPICode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtKpiName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>KPI Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtKPIName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtFormula">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Formula </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtFormula}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numMinValue">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Min Value</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numMinValue}} </td>
+                </ng-container>
+                <ng-container matColumnDef="numMaxValue">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Max Value </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numMaxValue}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtUom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>UOM</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtUom}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtCostCenter">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost Center </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCostCenterName}} </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="txtDescription">
+                    <th mat-header-cell *matHeaderCellDef> Description</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtDescription}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" class="btnView" (click)="onViewKPI(element)">remove_red_eye
+                        </mat-icon>
+                        <mat-icon matTooltip="Edit" style="color: #ffae1b; cursor: pointer; font-size: 25px;"
+                            [routerLink]="['/maintenanceAndEveluation/editKPI/',element.serKpiDefinitionId]">edit
+                        </mat-icon>
+
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="kpiColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: kpiColumns;"></tr>
+                <div *ngIf="!isLoading">
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No Record Found</td>
+                    </tr>
+                </div>
+            </table>
+            <div *ngIf="isLoading"
+                style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 5PX">
+                <mat-progress-spinner class="spinnerClr" mode="indeterminate">
+                </mat-progress-spinner>
+            </div>
+        </mat-card-content>
+        <mat-paginator #kpiPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span
+                class="material-icons pb-1 pr-1">download</span>Download
+            KPI List</button>
+        <button class="ml-3" mat-raised-button mat-flat-button
+            (click)="exporter.exportTable('xlsx', {fileName:'KPI List', sheet: 'sheet'})">
+            <span class="material-icons pb-1 pr-1">download</span>Download Excel
+        </button>
+    </mat-card>
+</div>

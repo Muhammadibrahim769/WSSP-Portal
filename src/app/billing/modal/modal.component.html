@@ -1,0 +1,33 @@
+
+<mat-card-header mat-dialog-title  class="matCardHeader">
+    Adjustment Plan 
+</mat-card-header>
+<mat-dialog-content class="mt-2"> 
+    <form>
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Bill Month/Period</mat-label>
+                <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Bill Amount</mat-label>
+                <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+            <span class="col-md-6"></span>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>No of Adjustment</mat-label>
+                <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Adjustment Amount</mat-label>
+                <input matInput placeholder="Placeholder" />
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="col mb-3 d-flex justify-content-end">
+        <button mat-raised-button class="ml-2" [routerLink]="['/billing/installment']">Submit</button>
+        <button mat-raised-button class="ml-2"  mat-dialog-close>Close</button>
+    </div>
+</mat-dialog-actions>

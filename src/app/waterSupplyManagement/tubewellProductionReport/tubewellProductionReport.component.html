@@ -1,0 +1,367 @@
+<div class="main">
+    <mat-accordion class="mat-elevation-z8">
+      <mat-expansion-panel
+        class="mat-elevation-z8"
+        [expanded]="step === 0"
+        (opened)="setStep(0)"
+      >
+        <mat-expansion-panel-header>
+          Water Production Report (TW
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchWaterRunningForm" (ngSubmit)="onSubmit()">
+          <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>Zone/Branch</mat-label>
+              <mat-select formControlName="serBranchId">
+                <mat-option value=""></mat-option>
+                <mat-option
+                  *ngFor="let branch of branchList"
+                  value="{{ branch.id }}"
+                >
+                  {{ branch.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>Union Council</mat-label>
+              <mat-select formControlName="serLocationId">
+                <mat-option value=""></mat-option>
+                <mat-option *ngFor="let UC of getBranchId" value="{{ UC.id }}">
+                  {{ UC.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>TubeWell No</mat-label>
+              <input matInput formControlName="txtProductCode" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>TubeWell Name</mat-label>
+              <input matInput formControlName="txtProductName" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>TubeWell Ref No</mat-label>
+              <input matInput formControlName="txtTubewellRefNo" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+              <mat-label>From Date & To Date</mat-label>
+              <mat-date-range-input [rangePicker]="dptrip">
+                <input
+                  matStartDate
+                  formControlName="txtMonth"
+                  placeholder="Start date"
+                />
+                <input
+                  matEndDate
+                  formControlName="dteDateTo"
+                  placeholder="End date"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dptrip"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #dptrip></mat-date-range-picker>
+  
+              <mat-error
+                *ngIf="
+                  searchWaterRunningForm.controls.txtMonth.hasError(
+                    'matStartDateInvalid'
+                  )
+                "
+                >Invalid start date</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  searchWaterRunningForm.controls.dteDateTo.hasError(
+                    'matEndDateInvalid'
+                  )
+                "
+                >Invalid end date</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="row mb-2">
+            <div class="col pr-3 d-flex justify-content-end">
+              <button
+                mat-raised-button
+                type="submit"
+                [disabled]="!searchWaterRunningForm.valid"
+              >
+                <span class="material-icons pb-1 pr-1">search</span>Search
+              </button>
+              <button mat-raised-button class="ml-2">
+                <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-card class="mat-elevation-z8 mb-1">
+      <mat-form-field class="form-group col-md-3" appearance="fill">
+        <mat-label>Columns</mat-label>
+        <mat-select [formControl]="selection" multiple>
+          <mat-option
+            *ngFor="let column of tableColumn"
+            [value]="column"
+            (click)="selectingColumns()"
+          >
+            {{ column | formControl }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+        <table
+          #waterRunningTable
+          mat-table
+          matTableExporter
+          #exporter="matTableExporter"
+          [dataSource]="waterSourceProduction"
+          #waterSourceProductionSort="matSort"
+          matSort
+          style="border: 1px solid #bababa" 
+        >
+          <ng-container matColumnDef="txtBranchName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Zone/Branch</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.txtBranchName }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="txtLocationName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Union Council
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.txtLocationName }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="txtProductCode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>TubeWell No</th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              id="numericValues"
+              class="tableNumericValue"
+            >
+              {{ element.txtProductCode }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="txtProductName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              TubeWell Name
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.txtProductName }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="txtTubewellRefNo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              TubeWell Reference No
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.txtTubewellRefNo }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <ng-container matColumnDef="txtMonth">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Month
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.txtMonth }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="numTotalRunningHours">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Total Running Hour
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              id="numericValues"
+              class="tableNumericValue"
+            >
+                {{ element.numWaterProducedInUnit }}
+              
+            </td>
+            <td mat-footer-cell *matFooterCellDef> <b>{{sumTotalRunningHour}}</b> </td>
+          </ng-container>
+          <ng-container matColumnDef="txtAverageDischargePerHour">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Avg Discharge m3/hr
+            </th>
+            <td mat-cell *matCellDef="let element" class="tableNumericValue">
+              <span *ngIf="!element.blnIsMetered">
+                {{ element.numAvgDischargeVolume }}</span
+              >
+            </td>
+            <td mat-footer-cell *matFooterCellDef> <b>{{AvgDischargeperHR}}</b> </td>
+          </ng-container>
+          <ng-container matColumnDef="numWaterProducedInHour">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Total Produced m3/hr
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              id="numericValues"
+              class="tableNumericValue"
+            >
+              <span
+                *ngIf="
+                  !element.numTotalRunningHours ||
+                  !element.txtAverageDischargePerHour
+                "
+                >0</span
+              >
+              <span
+                *ngIf="
+                  element.numTotalRunningHours &&
+                  element.txtAverageDischargePerHour
+                "
+                >{{
+                  element.numTotalRunningHours *
+                    element.txtAverageDischargePerHour
+                }}</span
+              >
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container> -->
+          <ng-container matColumnDef="TotalRunningUnit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Total Running Hour
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              id="numericValues"
+              class="tableNumericValue"
+            >
+             
+                {{ element.numAvgDischargeVolume }}
+              
+              
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="tableNumericValue"> <b>{{TotalRunningHour | number:'1.0-0'}}</b> </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="txtAverageDischargePerUnit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Avg Discharge m3/hr
+            </th>
+            <td mat-cell *matCellDef="let element" class="tableNumericValue">
+              <span *ngIf="element.blnIsMetered">{{
+                element.numWaterProducedInUnit
+              }}</span>
+              <span *ngIf="!element.blnIsMetered">{{
+                element.numTotalRunningHours
+              }}</span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="tableNumericValue">  <b> {{avgDischarge  | number: '1.2-2'}}</b></td>
+          </ng-container>
+  
+          <ng-container matColumnDef="numWaterProducedInUnit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Total Produced cubic/month
+            </th>
+            <td mat-cell *matCellDef="let element" class="tableNumericValue">
+              <span *ngIf="element.blnIsMetered">
+                {{ element.numUnitConsumed }}</span
+              >
+              <span *ngIf="!element.blnIsMetered">
+                {{ element.numWaterProducedInHour }}</span
+              >
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="tableNumericValue"> <b>{{Total | number:'1.0-0'}}</b> </td>
+          </ng-container>
+          <ng-container matColumnDef="numMonthlyBill">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Monthly Electricity Bill
+            </th>
+            <td mat-cell *matCellDef="let element" class="tableNumericValue">
+              {{ element.numMonthlyBill }}
+            </td>
+            <td mat-footer-cell *matFooterCellDef class="tableNumericValue"> <b>{{totalMonthlyBillCalcu | number:'1.0-0'}}</b> </td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="blnIsFunctional">
+            <th mat-header-cell *matHeaderCellDef class="pr-2">Functional</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-icon
+                *ngIf="element.blnIsFunctional"
+                style="color: green; font-size: 25px"
+                class="ml-4 mr-2"
+                >done</mat-icon
+              >
+              <mat-icon
+                *ngIf="!element.blnIsFunctional"
+                style="color: red; font-size: 25px"
+                class="ml-4 mr-2"
+                >close</mat-icon
+              >
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container> -->
+          <ng-container matColumnDef="blnIsMetered">
+            <th mat-header-cell *matHeaderCellDef>Metered Connection</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-icon
+                *ngIf="!element.blnIsMetered"
+                style="color: red; font-size: 25px"
+                class="ml-4 mr-2"
+                >close</mat-icon
+              >
+              <mat-icon
+                *ngIf="element.blnIsMetered"
+                style="color: green; font-size: 25px"
+                class="ml-4 mr-2"
+                >done</mat-icon
+              >
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+           
+          </ng-container>
+        
+        
+        
+          <tr mat-header-row *matHeaderRowDef="waterProductionColumn"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; let even = even; columns: waterProductionColumn"
+          ></tr>
+          <tr mat-footer-row *matFooterRowDef="waterProductionColumn" class="example-first-footer-row"></tr>
+        </table>
+        
+      </mat-card-content>
+    
+ 
+      <mat-paginator
+        #waterSourceProductionPaginator
+        [pageSizeOptions]="[10, 20, 50]"
+        showFirstLastButtons
+      ></mat-paginator>
+      <button mat-raised-button mat-flat-button (click)="downloadPDF()">
+        <span class="material-icons pb-1 pr-1">download</span>Download Water
+        Production List
+      </button>
+      <button
+        class="ml-3"
+        mat-raised-button
+        mat-flat-button
+        (click)="
+          exporter.exportTable('xlsx', {
+            fileName: 'Water Production',
+            sheet: 'sheet'
+          })
+        "
+      >
+        <span class="material-icons pb-1 pr-1">download</span>Download Excel
+      </button>
+    </mat-card>
+  </div>
+  

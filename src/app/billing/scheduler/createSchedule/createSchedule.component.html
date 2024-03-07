@@ -1,0 +1,123 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Create Schedule
+        </mat-expansion-panel-header>
+        <form [formGroup]="createSchedulerForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <!-- <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Zone/Branch <span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option *ngFor="let  branch of branchList" value="{{ branch.id }}">
+                            {{ branch.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Union Council <span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option *ngFor="let  UC of getBranchId" value="{{ UC.id }}">
+                            {{ UC.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Schedule Date & Time <span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="dteScheduleDate" [owlDateTime]="dp5" [owlDateTimeTrigger]="dp5"
+                        placeholder="Date Time" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.dteScheduleDate">
+                        <mat-error
+                            *ngIf="createSchedulerForm.controls.dteScheduleDate.hasError(validation.type) && (createSchedulerForm.controls.dteScheduleDate.dirty || createSchedulerForm.controls.dteScheduleDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    <owl-date-time #dp5></owl-date-time>
+                    <mat-datepicker-toggle matSuffix (click)="clearScheduleDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+                    <mat-datepicker #dp5></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group  col-md-4" appearance="outline">
+                    <mat-label>Distributor  Code <span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="referenceCodeStart" />
+                </mat-form-field> -->
+
+                <mat-form-field class="form-group col-md-4" appearance="outline" appYearMonthFormat>
+                    <mat-label>Bill From <span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="billFrom">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                    </mat-datepicker>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-4" appearance="outline" appYearMonthFormat>
+                    <mat-label>Bill To <span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="billTo">
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1 startView="multi-year" (yearSelected)="chosenYearHandlerBillTo($event)"
+                        (monthSelected)="chosenMonthHandlerBillTo($event, dp1)">
+                    </mat-datepicker>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Bill Due Date <span class="required-straic">* &nbsp;</span>
+                        <span class="required-straic" *ngIf="createSchedulerForm.hasError('notValid')">Enter greater than Schedule Date</span>
+                    </mat-label>
+                    <input matInput formControlName="dteBillLastDate" [owlDateTime]="dp6" [owlDateTimeTrigger]="dp6"
+                        placeholder="Date Time" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.dteBillLastDate">
+                        <mat-error
+                            *ngIf="createSchedulerForm.controls.dteBillLastDate.hasError(validation.type) && (createSchedulerForm.controls.dteBillLastDate.dirty || createSchedulerForm.controls.dteBillLastDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    
+                    <owl-date-time #dp6></owl-date-time>
+                    <mat-datepicker-toggle matSuffix (click)="clearBillLastDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp6"></mat-datepicker-toggle>
+                    <mat-datepicker #dp6></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="form-group  col-md-4" appearance="outline">
+                    <mat-label>Late Payment Penalty in % <span class="required-straic">*</span></mat-label>
+                    <span matSuffix>% &nbsp;</span>
+                    <input matInput formControlName="numLatePayment" type="number" (blur)="onBlurEvent($event)"
+                    onKeyPress="if(this.value.length==2 && this.value> 10) return false;"/>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Validity Date <span class="required-straic">* &nbsp;</span>
+                        <span class="required-straic" *ngIf="createSchedulerForm.hasError('notVal')">Enter greater than Last Date</span>
+                    </mat-label>
+                    <input matInput formControlName="dteBillValidityDate" [matDatepicker]="dpVd" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearValidityDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dpVd"></mat-datepicker-toggle>
+                    <mat-datepicker #dpVd></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                   
+                    <button mat-raised-button type="submit">
+                        <span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/billing/scheduler']" class="ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+                        <!-- <p>DAta: {{createSchedulerForm.value | json}}</p> -->
+                        <!-- <button  (click)="getAllLocation()">
+                          get
+                        </button> -->
+        </form>
+    </mat-expansion-panel>
+</div>

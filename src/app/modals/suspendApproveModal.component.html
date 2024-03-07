@@ -1,0 +1,10 @@
+<mat-dialog-content class="m-0 p-3"> 
+    {{message}}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+<div class="col mb-3 d-flex justify-content-end">
+    <button mat-raised-button class="ml-2" mat-dialog-close  (click)="onConfirmClick()">  <span class="material-icons pb-1 pr-1">check_circle_outline</span>Approve</button>
+    <button mat-raised-button class="ml-2"  mat-dialog-close>  <span class="material-icons pb-1 pr-1">close</span>Cancel</button>
+</div>
+</mat-dialog-actions>

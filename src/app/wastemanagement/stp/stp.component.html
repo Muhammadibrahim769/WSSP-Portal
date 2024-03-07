@@ -1,0 +1,142 @@
+<div class="main">
+
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchform">
+            <div class="row p-0 mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="branch">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="unionCouncil">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let  UC of getUC" value="{{ UC.id }}">
+                            {{ UC.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Water Quality</mat-label>
+                    <mat-select formControlName="txtWaterQuality">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let data of waterQualityList" value="{{data}}">
+                            {{data}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="dteStp" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearTo()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button (click)="onSearch()">
+                        <span class="material-icons">search</span>
+                        Search
+                    </button>
+                    <button mat-raised-button class="ml-2" (click)="onReset()">
+                        <span class="material-icons">refresh</span>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="mat-elevation-z4">
+        <div class="row">
+            <mat-form-field class="col-md-3 text-align-start" appearance="fill">
+                <mat-label>Columns</mat-label>
+                <mat-select [formControl]="selection" multiple>
+                  <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                    {{column | formControl}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-card-header class="form-group col-md-9">
+                <button mat-raised-button class="text-align-right" [routerLink]="['/wasteManagement/stp/ctreateStp']">
+                    <span class="material-icons">add</span>
+                    Add STP
+                </button>
+            </mat-card-header>
+          </div>
+        <mat-card-content class="mat-elevation-z4 mt-2">
+            <table mat-table [dataSource]="stpData" [hiddenColumns]="[7]" matTableExporter
+            #exporter="matTableExporter" #stpDataSort="matSort" matSort>
+
+                <ng-container matColumnDef="txtBranchName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Branch </th>
+                    <td mat-cell *matCellDef="let element">{{element?.txtBranchName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="txtLocationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element">{{element?.txtLocationName}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="txtInflowQuantity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Inflow Quantity </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">{{element?.txtInflowQuantity}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="txtWaterQuality">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Water Quality </th>
+                    <td mat-cell *matCellDef="let element">{{element?.txtWaterQuality}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="txtOutflowQuantity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Outflow Quantity </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue">{{element?.txtOutflowQuantity}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="txtSlitRemoved">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Slit Removed </th>
+                    <td mat-cell *matCellDef="let element">{{element?.txtSlitRemoved}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="dteStp">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date </th>
+                    <td mat-cell *matCellDef="let element">{{element?.dteStp}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2" style="white-space: pre;">
+                        <!-- <mat-icon matTooltip="View"  class="btnView ml-2"
+                        [routerLink]="['/stp/viewStp',element.id]">remove_red_eye
+                    </mat-icon> -->
+                        <mat-icon matTooltip="View" class="btnView ml-2"
+                        [routerLink]="['/wasteManagement/stp/viewStp',element.serStpId]">remove_red_eye</mat-icon>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="stpDataColumn"></tr>
+                <tr mat-row *matRowDef="let row; columns: stpDataColumn;">
+                </tr>
+            </table>
+            <mat-paginator #stpDataPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+            <button mat-raised-button mat-flat-button class="ml-2" (click)="downloadPDF()"><span
+                    class="material-icons pb-1 pr-1">download</span>Download
+                Stp List</button>
+                <button class="ml-3" mat-raised-button mat-flat-button
+      (click)="exporter.exportTable('xlsx', {fileName:'Stp', sheet: 'sheet'})">
+      <span class="material-icons pb-1 pr-1">download</span>Download Excel
+    </button>
+        </mat-card-content>
+
+    </mat-card>
+</div>

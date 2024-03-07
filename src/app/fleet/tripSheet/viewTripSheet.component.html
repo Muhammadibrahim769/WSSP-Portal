@@ -1,0 +1,108 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Trip Sheet
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtBranchName }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Route Type:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtRouteType}}</td>
+                        <th>
+                            <h6>Asset/Vehicle No:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtBatchNo}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Asset/Vehicle Name:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txt_batch_no}}</td>
+                        <th>
+                            <h6>Driver Name:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txt_employee_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Route No:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtRouteNo}}</td>
+                        <th>
+                            <h6>Route Name:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.txtRouteName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Route Distance:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.numRouteDistance}}</td>
+                        <th>
+                            <h6>Distance Covered:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.numCoveredDistance}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Trip No:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.serTripSheetId}}</td>
+                        <th>
+                            <h6>Vehicle Time Out:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.dteTimeout}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Odo Meter Out:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.numOdometerOut}}</td>
+                        <th>
+                            <h6>Vehicle Time In:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.dteTimein}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Odo Meter In:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.numOdometerIn}}</td>
+                        <th>
+                            <h6>Total Garbage Disposed:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.numGarbageDisposed}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Trip Date:</h6>
+                        </th>
+                        <td *ngFor="let item of tripData">{{ item?.dteDate}}</td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+                    Trip List</button>
+                <button mat-flat-button class="ml-2 mr-2" [routerLink]="['/fleet/tripSheet']"><span class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

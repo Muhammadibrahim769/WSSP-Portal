@@ -1,0 +1,193 @@
+<!-- /*
+* Muhammad Mohsin
+*
+* Created on Tue Jan 15 2021 : 7:37 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<div class="main">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" class="card mat-elevation-z8">
+            <mat-expansion-panel-header>
+                Basic info Panel
+            </mat-expansion-panel-header>
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="txtBranch">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <span class="col-md-9"></span>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Main Category</mat-label>
+                    <mat-select formControlName="txtMainCategory">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Category</mat-label>
+                    <mat-select formControlName="txtVehicleCategory">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group  col-md-3" appearance="outline">
+                    <mat-label>Asset Sub Category</mat-label>
+                    <mat-select formControlName="txtVehicleSubCategory">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Asset Type</mat-label>
+                    <mat-select formControlName="txtVehicleType">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="card mat-elevation-z8 mt-3">
+            <mat-expansion-panel-header>
+                Maintenance Panel
+            </mat-expansion-panel-header>
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Item Category <span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="txtItemCategory">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Item Sub Category <span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="txtItemSubCategory">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row mr-1">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Maintenance Item <span class="required-straic">*</span> </mat-label>
+                    <mat-select formControlName="txtMaintenanceItem">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>UOM</mat-label>
+                    <input matInput formControlName="txtUom" placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-2" appearance="outline">
+                    <mat-label>Quantity/Capacity</mat-label>
+                    <input matInput formControlName="txtCapacity" placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-1" appearance="outline">
+                    <mat-label>Life<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtLife" placeholder="Placeholder" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label> Life Measurement<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="txtLifeMeasurement">
+                        <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                        <mat-option value=""></mat-option>
+                        <mat-option value="one">A</mat-option>
+                        <mat-option value="two">B</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="txtDescription" placeholder="Placeholder" />
+                </mat-form-field>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-action-row class="pr-0 mr-2">               
+            <div class="col d-flex justify-content-end p-0">
+                <button mat-raised-button type="submit" [disabled]="!form.valid">
+                    <span class="material-icons">save</span>
+                    Submit
+                </button>
+                <button mat-raised-button type="button" routerLink="/fleet/maintenanceStandard">
+                    <span class="material-icons">
+                        clear
+                        </span>Close
+                </button>
+            </div>              
+        </mat-action-row>
+    </form>
+    <mat-card class="mat-elevation-z8  ">
+        <mat-card-content>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 " style="white-space:nowrap;">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="sNo">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> S No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sNo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_Main_Category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Main Category </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_Main_Category}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_Category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Asset Category</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_Category}} </td>
+                </ng-container>
+                <ng-container matColumnDef="sub_Category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Category</th>
+                    <td mat-cell *matCellDef="let element"> {{element.sub_Category}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_Type}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_No">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset No</th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_No}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Asset_Name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Asset_Name}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                </tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator [pageSizeOptions]="[2, 4,6,8, 10]" showFirstLastButtons></mat-paginator>
+
+    </mat-card>
+</div>

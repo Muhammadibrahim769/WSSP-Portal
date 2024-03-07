@@ -1,0 +1,109 @@
+<div class="main">
+
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput formControlName="txtCustomerCode" />
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of getLocationId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Advance Payment</mat-label>
+                    <input matInput formControlName="numAdvancePayment" type="number" min="0"/>
+                </mat-form-field>
+
+                <span class="col-md-9"></span>
+                <div class="col-md-3 pt-2" style="text-align: end;">
+                    <button type="submit" mat-raised-button>
+                        <span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button type="button" class="ml-2" mat-raised-button (click)="onReset()">
+                        <span class="material-icons pb-1 pr-1">refresh</span>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+
+
+    <mat-card class="card mat-elevation-z8 mb-2">
+        <mat-form-field class="col-md-3 text-align-start" appearance="fill">
+            <mat-label>Columns</mat-label>
+            <mat-select [formControl]="selection" multiple>
+              <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                {{column | formControl}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            <table mat-table [dataSource]="advancePaymentListData" #advancePaymentSort="matSort" matSort>
+                <ng-container matColumnDef="txtCustomerCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCustomerCode}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="txtZone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Zone</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtZone}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtUnionCouncil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Union Council</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtUnionCouncil}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtCustomerCategory">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCustomerCategory}}
+                    </td> 
+                </ng-container>
+                <ng-container matColumnDef="txtBusinessName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBusinessName}}
+                    </td> 
+                </ng-container>
+                <ng-container matColumnDef="numCredit">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Advance Payment</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.numCredit}}
+                    </td> 
+                </ng-container>
+                <ng-container matColumnDef="dteBillIssueDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bill Issue Date</th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.dteBillIssueDate | date:'dd MMMM, yyyy'}}
+                    </td> 
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <!-- <a >Approve</a> -->
+                        <mat-icon [routerLink]="['/billing/advancePaymentView',element.serAdjustedBillId]" matTooltip="View" class="btnView ml-3">
+                            remove_red_eye</mat-icon>
+                    </td>
+                 </ng-container>
+                <tr mat-header-row *matHeaderRowDef="advancePaymentColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: advancePaymentColumns;" ></tr>
+            </table>
+            <mat-paginator #advancePaymentPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </mat-card>
+</div>

@@ -1,0 +1,56 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            View OverHead Tanks
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtBranchName }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtLocationName }}</td>
+                    </tr>
+                    <tr>
+                        <!-- {{ resumeInfo?.unionCouncil }} -->
+                        <th>
+                            <h6>OverHead Number:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtProductCode }}</td>
+                        <th>
+                            <h6>OverHead Name:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtProductName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Functional:</h6>
+                        </th>
+                        <td *ngIf="!basicInfo.blnIsFunctional">Non-Functional</td>
+                        <td *ngIf="basicInfo.blnIsFunctional">Functional</td>                        
+                    </tr>
+                    <tr>                            
+                            <th>
+                                <h6>No Of Feeding :</h6>
+                            </th>
+                            <td>{{ basicInfo?.txtFeedingTubewell }}</td>
+                        </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mb-2">
+            <div class="col d-flex justify-content-end ">
+                    <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        OverHead Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/operationManagement/overHeadTanks']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

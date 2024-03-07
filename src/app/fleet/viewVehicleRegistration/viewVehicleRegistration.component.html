@@ -1,0 +1,243 @@
+<!-- /*
+* Muhammad Mohsin
+*
+* Created on Tue Jan 15 2021 : 7:37 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<mat-card class="main " style="margin-top: 0px;">
+    <mat-card-content class="mat-elevation-z4">
+        <form>
+            <mat-tab-group mat-align-tabs="center" animationDuration="500ms">
+                <mat-tab label="Basic Information">
+                    <mat-card-content class="m-0 mb-3" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+                        <div class="row col-md-12">
+                            <table class="testTable">
+                                <tr>
+                                    <th>
+                                        <h6>Zone/Branch:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtBranchName }}</td>
+                                    <th>
+                                        <h6>Union Council:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtLocationName }}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th>
+                                        <h6>Asset Main Category:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtMainCategory }}</td>
+                                    <th>
+                                        <h6>Asset Category:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtAssetCategory }}</td>
+                                </tr> -->
+                             
+                                <tr>
+                                    <th>
+                                        <h6>Serial No:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.serBatchNo }}</td>
+                                    <th>
+                                        <h6>Vehicle No:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtProductCode }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Vehicle Name:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtProductName }}</td>
+                                    <th>
+                                        <h6>Vehicle Type:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtAssetType }}</td>
+                                  
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Description:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtDescription }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+                <mat-tab label="Dynamic Information">
+                    <mat-card-content class="m-0 mb-3" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+                        <div class="row col-md-12">
+                            <table class="testTable">
+                                <tr>
+                                    <th>
+                                        <h6>Brand:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtBrand }}</td>
+                                    <th>
+                                        <h6>Model:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtModel }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Engine No:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtEngineNo }}</td>
+                                    <th>
+                                        <h6>Chassis No:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtChassisNo }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Color:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtColor }}</td>
+                                    <th>
+                                        <h6>Fuel Type:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtFuelType }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Fuel Capacity:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.numFuelCapacity }}</td>
+                                    <th>
+                                        <h6>Average Fuel Consumption:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.numAvgFuelConsumption }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Reserve Tank Capacity:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.numReserveTankCapacity }}</td>
+                                    <th>
+                                        <h6>Engine Cylinder:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtEngineCylinder }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Engine Size:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtEngineSize }}</td>
+                                    <th>
+                                        <h6>Load Capacity:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtLoadCapacity }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Body Type:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtBodyType }}</td>
+                                    <th>
+                                        <h6>Body Size:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtBodySize }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+                <mat-tab label=" Driver Information ">
+                    <mat-card-content class="m-0 mb-2" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+                        <div class="row col-md-12">
+                            <table class="testTable">
+                                <tr>
+                                    <th>
+                                        <h6>Driver No:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.numDriverNo }}</td>
+                                    <th>
+                                        <h6>Driver Name:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtEmployeeName }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Driver Designation:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtDriverDesignation }}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+                <mat-tab label="Operation & Maintenance ">
+                    <mat-card-content class="m-0 mb-2" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+                        <div class="row col-md-12">
+                            <table class="testTable">
+                                <tr>
+                                    <th>
+                                        <h6>Current Status:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtCurrentStatus }}</td>
+                                    <th>
+                                        <h6>Current Condition:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtCurrentCondition }}</td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <h6>Duration In Svc:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.dteServiceStartDate | date :'dd MMMM, yyyy' }}</td>
+                                    <th>
+                                        <h6>Duration Out Svc:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.dteCreatedDate |date :'dd MMMM, yyyy' }}</td>
+                                </tr>                               
+                                <tr>
+                                    <th>
+                                        <h6>Measuremnet Unit:</h6>
+                                    </th>
+                                    <td>{{ currenctVehicle?.txtUom }}</td>
+                                </tr>
+
+                            </table>
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">Item Code</th>
+                                    <th scope="col">Item Name</th>
+                                    <th scope="col">Distance (km)</th>
+                                    <th scope="col">Duration (in months)</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of maintenanceItemList ;let i=index" >
+                                    <th scope="row">{{ i+1 }}</th>
+                                    <td>{{item.txtItemCode}}</td>
+                                    <td>{{item.txtItemName}}</td>
+                                    <td>{{item.numDueInDistance}}</td>
+                                    <td>{{item.numDueInMonths}}</td>
+                                  </tr>                                
+                                </tbody>
+                              </table>
+                        </div>
+                    </mat-card-content>
+                </mat-tab>
+            </mat-tab-group>
+        </form>
+    </mat-card-content>
+    <mat-action-row class="p-0">
+        <div class="col d-flex justify-content-end p-0">
+            <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+                Vehicle List</button>
+            <button mat-raised-button mat-flat-button type="button" routerLink="/fleet/vehicleRegistration">
+                <span class="material-icons">
+                    clear
+                </span>Close
+            </button>
+        </div>
+    </mat-action-row>
+</mat-card>

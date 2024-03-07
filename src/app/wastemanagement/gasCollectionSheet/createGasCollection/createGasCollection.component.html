@@ -1,0 +1,131 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+          Create Gas Collection
+        </mat-expansion-panel-header>
+    <form [formGroup]="createGasCollectionForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <mat-select formControlName="serBranchId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                        {{branch.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.serBranchId.hasError(validation.type) && (createGasCollectionForm.controls.serBranchId.dirty || createGasCollectionForm.controls.serBranchId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <mat-select formControlName="serLocationId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.serLocationId.hasError(validation.type) && (createGasCollectionForm.controls.serLocationId.dirty || createGasCollectionForm.controls.serLocationId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="txtDate" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtDate">
+                        <mat-error
+                            *ngIf="createGasCollectionForm.controls.txtDate.hasError(validation.type) && (createGasCollectionForm.controls.txtDate.dirty || createGasCollectionForm.controls.txtDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    <mat-datepicker-toggle matSuffix (click)="clearTxtDate()">
+                      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                  </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Vent No</mat-label>
+                <input matInput formControlName="txtVentNo" onKeyPress="if(this.value.length==15) return false;" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtVentNo">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.txtVentNo.hasError(validation.type) && (createGasCollectionForm.controls.txtVentNo.dirty || createGasCollectionForm.controls.txtVentNo.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Cell No</mat-label>
+                <input matInput formControlName="txtCellNo" placeholder="Ex. (0000) 000-0000"
+                mask="(0000) 000-0000" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtCellNo">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.txtCellNo.hasError(validation.type) && (createGasCollectionForm.controls.txtCellNo.dirty || createGasCollectionForm.controls.txtCellNo.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>            
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Gas Collection</mat-label>
+                <input matInput formControlName="txtGasCollection" onKeyPress="if(this.value.length==15) return false;"/>
+                <mat-error *ngFor="let validation of formValidationMessages.txtGasCollection">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.txtGasCollection.hasError(validation.type) && (createGasCollectionForm.controls.txtGasCollection.dirty || createGasCollectionForm.controls.txtGasCollection.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Gas Consumed</mat-label>
+                <input matInput formControlName="numGasConsumed" type="number" onKeyPress="if(this.value.length==10) return false;"/>
+                <mat-error *ngFor="let validation of formValidationMessages.numGasConsumed">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.numGasConsumed.hasError(validation.type) && (createGasCollectionForm.controls.numGasConsumed.dirty || createGasCollectionForm.controls.numGasConsumed.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Balance</mat-label>
+                <input matInput formControlName="numBalance" type="number" readonly/>
+                <mat-error *ngFor="let validation of formValidationMessages.numBalance">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.numBalance.hasError(validation.type) && (createGasCollectionForm.controls.numBalance.dirty || createGasCollectionForm.controls.numBalance.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Rate</mat-label>
+                <input matInput formControlName="numRate" type="number" onKeyPress="if(this.value.length==10) return false;"/>
+                <mat-error *ngFor="let validation of formValidationMessages.numRate">
+                    <mat-error
+                        *ngIf="createGasCollectionForm.controls.numRate.hasError(validation.type) && (createGasCollectionForm.controls.numRate.dirty || createGasCollectionForm.controls.numRate.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>  
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total</mat-label>
+                    <input matInput formControlName="numTotal" readonly/>
+            </mat-form-field>
+        </div>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button type="submit">
+                    <span class="material-icons pb-1 pr-1">save</span>Submit
+                </button>
+                <button mat-raised-button [routerLink]="['/wasteManagement/gasCollection']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+    </mat-expansion-panel>
+</div>

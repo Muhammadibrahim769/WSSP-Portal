@@ -1,0 +1,23 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    Advance Payment
+</mat-card-header>
+<mat-dialog-content class="mt-2">
+    <form [formGroup]="advancePaymentForm" (ngSubmit)="onSubmit()">
+        <div class="row col-12 mt-3">
+            <mat-form-field class="form-group col-6" appearance="outline">
+                <mat-label>Advance Amount</mat-label>
+                <input matInput type="number" min="0" formControlName="numAdvancePayment" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-6" appearance="outline">
+                <mat-label>Discount</mat-label>
+                <input matInput type="number" min="0" formControlName="numDiscount" />
+            </mat-form-field>
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button mat-raised-button class="ml-2" type="submit"><span
+                class="material-icons pb-1 pr-1">save</span>Submit</button>
+            <button mat-raised-button class="ml-2" mat-dialog-close><span
+                class="material-icons pb-1 pr-1">close</span>Close</button>
+        </div>
+    </form>
+</mat-dialog-content>

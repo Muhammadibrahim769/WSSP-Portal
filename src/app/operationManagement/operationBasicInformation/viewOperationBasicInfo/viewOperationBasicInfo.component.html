@@ -1,0 +1,85 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            View Operation Basic Inf
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtBranchName }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtLocationName }}</td>
+                    </tr>
+                    <tr>
+                        <!-- {{ resumeInfo?.unionCouncil }} -->
+                        <th>
+                            <h6>TubeWell Number:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtProductCode }}</td>
+                        <th>
+                            <h6>TubeWell Name:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtProductName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>No Of Connection:</h6>
+                        </th>
+                        <td>{{ basicInfo?.numOfConnections }}</td>
+                        <th *ngIf="!basicInfo.blnIsMetered">
+                            <h6>Avg Discharge m3/hr:</h6>
+                        </th>
+                        <td *ngIf="!basicInfo.blnIsMetered">{{ basicInfo?.numAvgDischargeVolume }}</td>
+                        <th *ngIf="basicInfo.blnIsMetered">
+                                <h6>Avg Discharge m3/unit:</h6>
+                            </th>
+                            <td *ngIf="basicInfo.blnIsMetered">{{ basicInfo?.numAvgDischargeVolume }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Functional:</h6>
+                        </th>
+                        <td *ngIf="!basicInfo.blnIsFunctional">Non-Functional</td>
+                        <td *ngIf="basicInfo.blnIsFunctional">Functional</td>
+                        <th>
+                            <h6>Connection:</h6>
+                        </th>
+                        <td *ngIf="!basicInfo.blnIsMetered">Un-Metered</td>
+                        <td *ngIf="basicInfo.blnIsMetered">Metered</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Meter Type :</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtMeterType }}</td>
+                        <th>
+                                <h6>Warrenty Date :</h6>
+                            </th>
+                            <td>{{ basicInfo?.dteWarrenty | date:'dd MMMM, yyyy' }}</td>
+                    </tr>
+                    <!-- <tr >
+                        <th><h6>Remarks:</h6></th>
+                        <td colspan="3">{{ basicInfo?.txtRemarks }}</td>                               
+                    </tr> -->
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mb-2">
+            <div class="col d-flex justify-content-end ">
+                    <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        TubeWell Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/operationManagement/operationBasicInformation']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+                <!-- [routerLink]="['/operationManagement/overHeadTanks']" -->
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

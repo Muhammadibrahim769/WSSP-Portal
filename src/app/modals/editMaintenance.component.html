@@ -1,0 +1,206 @@
+<div class="main " >
+    <form [formGroup]="createMaintainceForm">
+      <mat-tab-group mat-align-tabs="center" >
+        <mat-tab label="Add Maintenance">
+          <mat-card class="mat-elevation-z8 p-0 m-0">
+            <mat-card-header class="matCardHeader" style="padding: 15px 0px 0px 24px">
+              Add Maintenance
+            </mat-card-header>
+            <mat-card-content>
+  
+              <div class="row p-0 mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Zone/Branch</mat-label>
+                  <mat-select formControlName="serBranchId" (selectionChange)="getBranchIdValue($event.value)">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let branch of branchList" value="{{ branch.id }}">
+                      {{ branch.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Union Council</mat-label>
+                  <mat-select formControlName="serLocationId" (selectionChange)="getLocationIdValue($event.value)">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getUC" value="{{ UC.id }}">
+                      {{ UC.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Line Type</mat-label>
+                  <mat-select formControlName="txtLine" (selectionChange)="change($event.value)">
+                    <mat-option value="Sewerage">Sewerage</mat-option>
+                    <mat-option value="Drainage">Drainage</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Diameter (inches)</mat-label>
+                  <input matInput formControlName="numDiameter" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Length ( meter)</mat-label>
+                  <input matInput formControlName="numLength" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label> Material</mat-label>
+                  <input matInput formControlName="txtMaterial" />
+                </mat-form-field>
+  
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>M&R Reference Number</mat-label>
+                  <input matInput formControlName="txtMaintainanceReferenceNo" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline" *ngIf="showField">
+                  <mat-label>Category</mat-label>
+                  <mat-select formControlName="txtCategory">
+                    <mat-option value="Primary ">Primary</mat-option>
+                    <mat-option value="Secondary">Secondary</mat-option>
+                    <mat-option value="Tertiary ">Tertiary </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Installation Date</mat-label>
+                  <input matInput [matDatepicker]="dpWd2" formControlName="dteInstallationDate">
+                  <mat-datepicker-toggle matSuffix [for]="dpWd2"></mat-datepicker-toggle>
+                  <mat-datepicker #dpWd2></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Maintenance Date</mat-label>
+                  <input matInput [matDatepicker]="dpWd3" formControlName="dteMaintainanceDate">
+                  <mat-datepicker-toggle matSuffix [for]="dpWd3"></mat-datepicker-toggle>
+                  <mat-datepicker #dpWd3></mat-datepicker>
+                </mat-form-field>
+  
+  
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                  <mat-label>Connected Tube Wells </mat-label>
+                  <mat-select formControlName="txtConnectedTubeWell">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getTubeWells" value="{{ UC.txtProductCode }}">
+                      {{ UC.txtProductName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                  <mat-label> Area</mat-label>
+                  <textarea matInput formControlName="txtArea"></textarea>
+                </mat-form-field>
+  
+              </div>
+  
+  
+            </mat-card-content>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="Mantenance coordinates">
+          <mat-card class="">
+            <mat-card-header class="editBasicInfoCardHeader">
+              Mantenance coordinates
+            </mat-card-header>
+            <mat-card-content class="card mat-elevation-z8 mb-0">
+  
+  
+              <div class="row mt-3 editModelWidth">
+  
+                <mat-form-field class="form-group col-md-6 editModelWidth" appearance="outline">
+                  <mat-label>Lattitude</mat-label>
+                  <input matInput formControlName="txtLattitude" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6 editModelWidth" appearance="outline">
+                  <mat-label>Longitude</mat-label>
+                  <input matInput formControlName="txtLongitude" />
+                </mat-form-field>
+                <div></div>
+  
+              </div>
+  
+              <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-center">
+                  <div class="col mb-3 d-flex justify-content-center">
+                    <button mat-raised-button (click)="addItem()"><span class="material-icons pt-1 pb-2">add</span>Add
+                    </button>
+  
+                  </div>
+                </div>
+              </div>
+  
+  
+  
+  
+  
+              <!-- <pre>{{ operationBasicInfoForm.value | json}}</pre>  -->
+            </mat-card-content>
+          </mat-card>
+          <div class="table-height">
+            <mat-card class="mat-elevation-z8 scroll">
+              <!-- <div class="row">
+                <mat-form-field class="form-group col-md-3" appearance="fill">
+                  <mat-label>Columns</mat-label>
+                  <mat-select [formControl]="selection" multiple>
+                    <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                      {{column | formControl}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+              </div> -->
+              <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+                <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="operationBasicInfo"
+                  #operationBasicInfoSort="matSort" matSort style="border: 1px solid #bababa;">
+                  <ng-container matColumnDef="txtLattitude">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Lattitude</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtLattitude}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="txtLongitude">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Longitude </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtLongitude}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element; let i = index" class="p-0 pt-2">
+                      <mat-icon matTooltip="Delete" class="text-danger" (click)="onDelete(i)">
+                        delete</mat-icon>
+                      <!-- <mat-icon matTooltip="Edit" class="btnEdit" (click)="openEditTabsModal(element.serTWBasicInfoId)">edit</mat-icon> -->
+                    </td>
+                  </ng-container>
+  
+                  <tr mat-header-row *matHeaderRowDef="operationBasicInfoColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: operationBasicInfoColumns;">
+                  </tr>
+                  <div *ngIf="!isLoading">
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No Record Found</td>
+                    </tr>
+                  </div>
+                </table>
+                <div *ngIf="isLoading"
+                  style="display: flex; justify-content: center; align-items: center; background: white; margin-top: 5PX">
+                  <mat-progress-spinner class="spinnerClr" mode="indeterminate">
+                  </mat-progress-spinner>
+                </div>
+              </mat-card-content>
+              <mat-paginator #operationBasicInfoPaginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+              </mat-paginator>
+              <!-- <button mat-raised-button mat-flat-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>Download
+                Tubewell List</button>
+            <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'TubeWell', sheet: 'sheet'})">
+                <span class="material-icons pb-1 pr-1">download</span>Download Excel
+            </button> -->
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="row mb-2 mt-5 ">
+        <div class="col d-flex justify-content-end">
+          <button mat-raised-button (click)="onUpdate()">
+            <span class="material-icons">save</span>
+            Update
+          </button>
+          <button mat-raised-button class="ml-2" mat-dialog-close>
+            <span class="material-icons pt-1 pb-2">close</span>
+            Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>

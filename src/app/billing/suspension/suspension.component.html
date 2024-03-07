@@ -1,0 +1,107 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchSuspendForm" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <!-- <span class="col-md-3"></span> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput formControlName="txtCustomerCode"/>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="branch">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="unionCouncil">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Connection Type</mat-label>
+                    <mat-select formControlName="txtConnectionType">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let CT of connectionTypeList" value="{{CT}}">
+                            {{CT}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Suspension Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="suspensionDate" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearSuspenionDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button type="submit" mat-raised-button><span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8 mb-2">
+        <mat-card-header>
+            <button mat-raised-button [routerLink]="['/billing/suspendConnection/searchSuspension']">
+                <span class="material-icons pb-1">add</span>
+                Create Suspension
+            </button>
+        </mat-card-header>
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <table mat-table [dataSource]="suspensionListData" #suspensionSort="matSort" matSort style="border: 1px solid #bababa;">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="txtCustomerCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCustomerCode}} </td>
+                </ng-container>               
+                <ng-container matColumnDef="branch.name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Branch </th>
+                    <td mat-cell *matCellDef="let element"> {{element.branch.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unionCouncil.name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element"> {{element.unionCouncil.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtConnectionType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Connection Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtConnectionType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="suspensionDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Suspension Date </th>
+                    <td mat-cell *matCellDef="let element" id="numericValues" class="tableNumericValue"> {{element.suspensionDate}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="p-0 pt-2">
+                        <mat-icon matTooltip="View" style="color: #bd7d08; cursor: pointer; font-size: 25px;"
+                            class="ml-3">remove_red_eye</mat-icon>
+                        <mat-icon matTooltip="View" style="color: #bd7d08; cursor: pointer; font-size: 25px;"
+                            class="ml-3">remove_red_eye</mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="suspensionColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: suspensionColumns;"></tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator #suspensionPaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </mat-card>
+</div>

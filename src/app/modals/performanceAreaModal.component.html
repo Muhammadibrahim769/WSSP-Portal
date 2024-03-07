@@ -1,0 +1,35 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    Performance Area Definition
+</mat-card-header>
+<!-- (ngSubmit)="onSubmit()" -->
+<mat-dialog-content class="mt-2">
+    <form [formGroup]="performanceAreaForm" (ngSubmit)="onSubmit()">
+        <div class="row mt-2">
+            <mat-form-field class="form-group col-md-6" appearance="outline">
+                <mat-label>Performance Area Code</mat-label>
+                <input matInput formControlName="txtAreaCode" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-6" appearance="outline">
+                <mat-label>Performance Area Name</mat-label>
+                <input matInput formControlName="txtAreaName" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-12" appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput                    
+                formControlName="txtDescription"></textarea> 
+                <!-- <input matInput formControlName="txtDescription" /> -->
+            </mat-form-field>
+        </div>
+        <div class="row mb-2 mt-2">
+            <div class="col pr-3 d-flex justify-content-end">
+                <div class="col d-flex justify-content-center">
+                    <button mat-raised-button type="submit"><span class="material-icons pt-1 mr-1 pb-2">save</span>Submit
+                    </button>
+                    <button mat-raised-button class="ml-3" mat-dialog-close>
+                        <span class="material-icons pt-1 pb-2">close</span>
+                        Close</button>
+                </div>
+            </div>
+        </div>
+    </form> 
+</mat-dialog-content>

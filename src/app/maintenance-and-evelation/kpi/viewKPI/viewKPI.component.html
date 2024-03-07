@@ -1,0 +1,75 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+           KPI Details
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Performance Area Code:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtAreaCode }}</td>
+                        <th>
+                            <h6>Performance Area Name:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtAreaName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>KPI Code:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtKPICode }}</td>
+                        <th>
+                            <h6>KPI Name:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtKPIName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>UOM:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtUom }}</td>
+                        <th>
+                            <h6>Max Value:</h6>
+                        </th>
+                        <td>{{ viewKPI?.numMaxValue}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Min Value:</h6>
+                        </th>
+                        <td>{{ viewKPI?.numMinValue }}</td>    
+                        <th>
+                            <h6>Cost Centre:</h6>
+                        </th>
+                        <td>{{ viewKPI?.txtCostCenterName }}</td>                    
+                    </tr>
+                    <tr>
+                            <th>
+                                <h6>Formula:</h6>
+                            </th>
+                            <td>{{ viewKPI?.txtFormula }}</td>                           
+                        </tr>
+                    <tr>                       
+                        <th>
+                            <h6>Description:</h6>
+                        </th>
+                        <td colspan="2">{{ viewKPI?.txtDescription}}</td>
+                    </tr> 
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    KPI Details</button>
+                    <button mat-raised-button class="ml-2" [routerLink]="['/maintenanceAndEveluation/kpiList']">
+                        <mat-icon class="material-icons pr-1">close</mat-icon>Close </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

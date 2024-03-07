@@ -1,0 +1,13 @@
+table td:hover{
+    cursor: move;
+}
+table tr:hover{
+    outline-style: dashed;
+    outline-color: gray;
+    /* outline-color: tomato; */
+}
+.tr-head:hover{
+    outline-style: none !important;
+    outline-color: transparent;
+    cursor: default !important;
+}

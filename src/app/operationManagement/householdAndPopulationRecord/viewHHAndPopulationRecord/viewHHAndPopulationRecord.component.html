@@ -1,0 +1,132 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            HouseHold And Population
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.txtBranchName }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.txtLocationName }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sewerage</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>No of RPC Manholes:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalMainholes }}</td>
+                        <th>
+                            <h6>No of RCC Manholes:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalSecMainholes }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>No of IronGrid Mainholes:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalTerMainholes }}</td>
+                        <th>
+                            <h6>Primary Sewerage Lines (km):</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalSewerageLines }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>
+                                Secondary Sewerage Lines (km)
+                            </h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalSecondarySewerageLines }}</td>
+                    </tr>
+                    <tr>
+                        <th>Water Supply</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Primary Drainage Line (km):</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numPriDrainageLines }}</td>
+                        <th>
+                            <h6>Secondary Drainage Line (km):</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numSecDrainageLines }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Primary Distribution Network:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numPriDistributedNetworkLines }}</td>
+                        <th>
+                            <h6>Secondary Distribution Network:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numSecDistributedNetworkLines }}</td>
+                    </tr>
+                    <!-- <tr>
+                            <th>
+                                <h6>Tertiary Distribution Network:</h6>
+                            </th>
+                            <td>{{ houseHoldDetails?.numTerDistributedNetworkLines }}</td>
+                            <th>
+                                <h6>Drainage Lines (Total Length):</h6>
+                            </th>
+                            <td>{{ houseHoldDetails?.numTotalDranageLines }}</td>
+                        </tr> -->
+                    <tr>
+                        <th>Population</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Total Population:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalPopulation }}</td>
+                        <th>
+                            <h6>Total HouseHold:</h6>
+                        </th>
+                        <td>{{ houseHoldDetails?.numTotalHouseHold }}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Average Member/House:</h6>
+                        </th>
+                        <td>
+                            <span *ngIf="!houseHoldDetails.numTotalHouseHold  || !houseHoldDetails.numTotalPopulation">0</span>
+                            <span *ngIf="houseHoldDetails.numTotalHouseHold  && houseHoldDetails.numTotalPopulation">{{(houseHoldDetails.numTotalPopulation
+                                / houseHoldDetails.numTotalHouseHold) | number:'1.0'}}</span>
+                        </td>
+                        <th>
+                            <h6>Remarks:</h6>
+                        </th>
+                        <td colspan="6">{{ houseHoldDetails?.txtRemarks }}</td>
+
+                        <!-- <td>{{houseHoldDetails?.numTotalHouseHold / houseHoldDetails?.numTotalPopulation     -->
+                        <!-- }}</td> -->
+                    </tr>
+
+
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card-actions class="mt-2 mb-2">
+        <div class="col d-flex justify-content-end ">
+            <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                HouseHold & Population Detail</button>
+            <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/operationManagement/householdAndPopulationRecord']"><span
+                    class="material-icons pb-1 pr-1">close</span>Close</button>
+        </div>
+    </mat-card-actions>
+</div>

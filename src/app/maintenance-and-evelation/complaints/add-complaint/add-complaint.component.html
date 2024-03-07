@@ -1,0 +1,135 @@
+<div class="main">
+  <mat-card class="mat-elevation-z8 p-0 m-0">
+    <mat-card-header class="matCardHeader" style="padding: 15px 0px 0px 24px">
+      Add Complaint
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="createComplaintForm">
+        <div class="row p-0 mt-3">
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Zone/Branch</mat-label>
+            <mat-select formControlName="serBranchId">
+              <mat-option value=""></mat-option>
+              <mat-option
+                *ngFor="let branch of branchList"
+                value="{{ branch.id }}"
+              >
+                {{ branch.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Union Council</mat-label>
+            <mat-select formControlName="serLocationId">
+              <mat-option value=""></mat-option>
+              <mat-option *ngFor="let UC of getUC" value="{{ UC.id }}">
+                {{ UC.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Total Complaints</mat-label>
+            <input matInput formControlName="numTotalComplaints" />
+          </mat-form-field>
+          <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Location Name</mat-label>
+            <input matInput formControlName="txtLocationName" />
+          </mat-form-field> -->
+
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Total Water Complaints</mat-label>
+            <input matInput formControlName="numTotalWaterComplaints" />
+          </mat-form-field>
+
+
+
+
+          <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Waste Water Complaints</mat-label>
+            <input matInput formControlName="numWasteWaterComplaints" />
+          </mat-form-field> -->
+
+
+
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Solid Waste Complaints</mat-label>
+            <input matInput formControlName="numTotalSolidWasteComplaint" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Complaint resolved (water supply)</mat-label>
+            <input matInput formControlName="numResolvedComplaintsWater" />
+          </mat-form-field> <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Complaint resolved (waste water)</mat-label>
+            <input matInput formControlName="numResolvedComplaintsWaste" />
+          </mat-form-field> <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Complaint resolved (solid waste)</mat-label>
+            <input matInput formControlName="numResolvedComplaintsSolidWaste" />
+          </mat-form-field>
+
+          <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Water inspections</mat-label>
+            <input matInput formControlName="txtWaterInspections" />
+          </mat-form-field> -->
+          <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Waste inspection</mat-label>
+            <input matInput formControlName="txtWasteInspection" />
+          </mat-form-field> -->
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Drainage inspection</mat-label>
+            <input matInput formControlName="numTotalDrainageInspections" />
+          </mat-form-field>
+
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Total inspection</mat-label>
+            <input matInput formControlName="numTotalInspections" />
+          </mat-form-field>
+
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Dogs Strayed</mat-label>
+            <input matInput formControlName="numDogsStrayed" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Spray</mat-label>
+            <input matInput formControlName="numSpray" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label> Bills Distributed</mat-label>
+            <input matInput formControlName="numBillsDistributed" />
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Rats Killed</mat-label>
+            <input matInput formControlName="numRatsKilled" />
+          </mat-form-field>
+
+          <mat-form-field class="form-group col-md-3" appearance="outline">
+            <mat-label>Period</mat-label>
+            <input matInput [matDatepicker]="dp" formControlName="txtMonth">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp
+                            startView="multi-year"
+                            (yearSelected)="chosenYearHandler($event)"
+                            (monthSelected)="chosenMonthHandler($event, dp)"
+                            panelClass="example-month-picker">
+            </mat-datepicker>                 
+          </mat-form-field> 
+        </div>
+        <div class="row mb-2">
+          <div class="col d-flex justify-content-end">
+            <button mat-raised-button (click)="onSumbit()">
+              <span class="material-icons">save</span>
+              Submit
+            </button>
+            <button
+              mat-raised-button
+              class="ml-2"
+              [routerLink]="['/maintenanceAndEveluation/complaints']"
+            >
+              <span class="material-icons">close</span>
+              Close
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

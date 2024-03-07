@@ -1,0 +1,96 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            Create Waste Diversion
+        </mat-expansion-panel-header>
+        <form [formGroup]="createGasCollectionForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Zone/Branch<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                        <mat-error
+                            *ngIf="createGasCollectionForm.controls.serBranchId.hasError(validation.type) && (createGasCollectionForm.controls.serBranchId.dirty || createGasCollectionForm.controls.serBranchId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Union Council<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                        <mat-error
+                            *ngIf="createGasCollectionForm.controls.serLocationId.hasError(validation.type) && (createGasCollectionForm.controls.serLocationId.dirty || createGasCollectionForm.controls.serLocationId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Date<span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="txtDate" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtDate">
+                        <mat-error
+                            *ngIf="createGasCollectionForm.controls.txtDate.hasError(validation.type) && (createGasCollectionForm.controls.txtDate.dirty || createGasCollectionForm.controls.txtDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    <mat-datepicker-toggle matSuffix (click)="clearTxtDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Total Amount Recieved (ton)<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="numTotalAmountRecieved" type="number" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalAmountRecieved">
+                        <mat-error
+                            *ngIf="createGasCollectionForm.controls.numTotalAmountRecieved.hasError(validation.type) && (createGasCollectionForm.controls.numTotalAmountRecieved.dirty || createGasCollectionForm.controls.numTotalAmountRecieved.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Waste sent to Compost Plant (ton)</mat-label>
+                    <input matInput formControlName="numWasteCompostPlant" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Waste sent to RDF(ton)</mat-label>
+                    <input matInput formControlName="numWasteSentToRdf" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Waste sent to Segregation Plant(ton)</mat-label>
+                    <input matInput formControlName="numWasteSentSegregation" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Waste sent to cell(ton)</mat-label>
+                    <input matInput formControlName="numWasteSentToCell" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-4" appearance="outline">
+                    <mat-label>Total Amount of waste balance(ton)</mat-label>
+                    <input matInput formControlName="numTotalBalanace" readonly />
+                </mat-form-field>
+            </div>
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button type="submit">
+                        <span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/wasteManagement/wasteDiversionSheet']" class="ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

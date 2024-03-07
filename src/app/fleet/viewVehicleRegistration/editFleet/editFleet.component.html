@@ -1,0 +1,302 @@
+<!-- /*
+* Muhammad Mohsin
+*
+* Created on Tue Jan 15 2021 : 7:37 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<mat-card class="main " style="margin-top: 0px;">
+    <mat-card-content class="mat-elevation-z4">
+        <form [formGroup]="editVehicleForm" (ngSubmit)="updateVehicle()">
+            <mat-tab-group mat-align-tabs="center" animationDuration="500ms">
+                <mat-tab label="Basic Information">
+                    <div class="row mt-3">
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Zone/Branch</mat-label>
+                            <mat-select formControlName="serBranchId" [disabled]="true">
+                                <mat-option value=""></mat-option>
+                                <mat-option *ngFor="let user of branchList" value={{user.id}}>
+                                    {{user.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Union Council</mat-label>
+                            <mat-select formControlName="serLocationId" [disabled]="true">
+                                <mat-option value=""></mat-option>
+                                <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                                    {{UC.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <span class="col-md-6"></span>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Vehicle Type</mat-label>
+                            <mat-select formControlName="txtAssetType" [disabled]="true" >
+                                <mat-option value=""></mat-option>
+                                <mat-option *ngFor="let assetType of assettypeList" value="{{assetType}}">
+                                    {{assetType}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-group  col-md-3" appearance="outline">
+                            <mat-label>Serial No</mat-label>
+                            <input type="text" matInput formControlName="serBatchNo" readonly />
+                        </mat-form-field>
+                        <mat-form-field class="form-group  col-md-3" appearance="outline">
+                            <mat-label>Vehicle No</mat-label>
+                            <input type="text" matInput formControlName="txtProductCode" readonly/>
+                        </mat-form-field>
+                        <mat-form-field class="form-group  col-md-3" appearance="outline">
+                            <mat-label>Vehicle Name</mat-label>
+                            <input matInput formControlName="txtProductName" readonly/>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-12" appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="txtDescription"></textarea>
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Dynamic Information">
+                    <div class="row ml-2 mr-1 mt-3">
+                        <mat-form-field class="form-group  col-md-3" appearance="outline">
+                            <mat-label>Brand <span class="required-straic">*</span></mat-label>
+                            <input matInput formControlName="txtBrand" />
+                        </mat-form-field>
+                        <div class="form-group col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Model <span class="required-straic">*</span>
+                                </mat-label>
+                                <input matInput formControlName="txtModel" (keypress)="OnlyNumbersAllowed($event)" />
+                            </mat-form-field>                           
+                        </div>
+                        <div class="form-group col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Engine No<span class="required-straic">*</span>
+                                </mat-label>
+                                <input matInput formControlName="txtEngineNo" />
+                            </mat-form-field>                            
+                        </div>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Chassis No<span class="required-straic">*</span></mat-label>
+                            <input matInput formControlName="txtChassisNo" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Color</mat-label>
+                            <input matInput formControlName="txtColor" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Fuel Type</mat-label>
+                            <mat-select formControlName="txtFuelType">
+                                <mat-option value="" disabled selected>Choose...</mat-option>
+                                <mat-option value="CNG">CNG</mat-option>
+                                <mat-option value="Petrol">Petrol</mat-option>
+                                <mat-option value="Diesel">Diesel</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Fuel Capacity</mat-label>
+                            <input matInput formControlName="numFuelCapacity" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Average Fuel Consumption</mat-label>
+                            <input matInput formControlName="numAvgFuelConsumption" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Reserve Tank Capacity</mat-label>
+                            <input matInput formControlName="numReserveTankCapacity" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Engine Cylinder</mat-label>
+                            <input matInput formControlName="txtEngineCylinder" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Engine Size</mat-label>
+                            <input matInput formControlName="txtEngineSize" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Load Capacity</mat-label>
+                            <input matInput formControlName="txtLoadCapacity" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Body Type</mat-label>
+                            <input matInput formControlName="txtBodyType" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Body Size</mat-label>
+                            <input matInput formControlName="txtBodySize" />
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label=" Driver Information ">
+                    <div class="row ml-2 mr-1 mt-3">
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Driver No </mat-label>
+                            <input matInput formControlName="txtDriverNo" (keypress)="OnlyNumbersAllowed($event)" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Driver Name</mat-label>
+                            <input matInput formControlName="txtEmployeeName" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Driver Designation</mat-label>
+                            <input matInput formControlName="txtDriverDesignation" />
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Operation & Maintenance ">
+                    <div class="row ml-2 mr-1 mt-3">
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Current Status</mat-label>
+                            <mat-select formControlName="txtCurrentStatus">
+                                <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                <mat-option value=""></mat-option>
+                                <mat-option value="Operational">Operational</mat-option>
+                                <mat-option value="UnOperations">UnOperations</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Current Condition</mat-label>
+                            <mat-select formControlName="txtCurrentCondition">
+                                <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                <mat-option value=""></mat-option>
+                                <mat-option value="New">New</mat-option>
+                                <mat-option value="Fit For Operations">Fit For Operations</mat-option>
+                                <mat-option value="Repairable">Repairable</mat-option>
+                                <mat-option value="Un Fit">Un Fit</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>With Effect From (Date)<span class="required-straic">*</span></mat-label>
+                                <input matInput formControlName="dteCreateddate" [matDatepicker]="dp1" readonly>
+                                <mat-datepicker-toggle matSuffix (click)="clear()">
+                                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                                <mat-datepicker #dp1></mat-datepicker>
+                            </mat-form-field> -->
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Duration in svc</mat-label>
+                            <input matInput formControlName="dteServiceStartDate" [matDatepicker]="dp2" readonly>
+                            <mat-datepicker-toggle matSuffix (click)="clearServicableTime()">
+                                <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                            <mat-datepicker #dp2></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Duration out of svc</mat-label>
+                            <input matInput formControlName="dteCreatedDate" [matDatepicker]="dp3" readonly />
+                            <mat-datepicker-toggle matSuffix (click)="clearUnServicable()">
+                                <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3></mat-datepicker>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>total running</mat-label>
+                                <input matInput formControlName="numTotalRunning" />
+                            </mat-form-field> -->
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Measurement Unit</mat-label>
+                            <mat-select formControlName="txtUom">
+                                <mat-option value="" disabled selected hidden>Choose...</mat-option>
+                                <mat-option value=""></mat-option>
+                                <mat-option value="km">km</mat-option>
+                                <mat-option value="Hrs">Hrs</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <mat-card class="mat-elevation-z4">
+                        <div class="row">
+                            <h3 class="col-md-3">Mobil Oil</h3>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>km</mat-label>
+                                <input matInput formControlName="oilChangeKm">
+                            </mat-form-field>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>Time in months</mat-label>
+                                <input matInput formControlName="dteOilCahnge">
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <h3 class="col-md-3 "> Air Filter </h3>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>km</mat-label>
+                                <input matInput formControlName="filterChangeKm">
+                            </mat-form-field>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>Time in months</mat-label>
+                                <input matInput formControlName="dteFilterCahnge">
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <h3 class="col-md-3">Service </h3>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>km</mat-label>
+                                <input matInput formControlName="serviceKm">
+                            </mat-form-field>
+                            <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>Time in months</mat-label>
+                                <input matInput formControlName="dteServiceKm">
+                            </mat-form-field>
+                        </div>
+                    </mat-card> -->
+                    <mat-card-content class="mat-elevation-z4 mt-2">
+                        <table mat-table formArrayName="lstMaintainanceStandardDto" [dataSource]="maintenanceListData"
+                            #maintenanceSort="matSort" matSort style=" border: 1px solid #e0e0e0; white-space: nowrap;">
+                            <ng-container matColumnDef="sr">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
+                                <td mat-cell *matCellDef="let element ; let i=index " class="tableNumericValue">
+                                    {{i+1}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="txtItemName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Item Name </th>
+                                <td mat-cell *matCellDef="let element let rowIndex = index" [formGroupName]="rowIndex">
+                                    {{element.txtItemName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="txtItemCode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Item Code </th>
+                                <td mat-cell *matCellDef="let element let rowIndex = index" [formGroupName]="rowIndex">
+                                    {{element.txtItemCode}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="numDueInDistance">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Distance (km) </th>
+                                <td mat-cell *matCellDef="let element let rowIndex = index" [formGroupName]="rowIndex">
+                                    <mat-form-field class="form-group col-lg-12 mt-3" appearance="outline">
+                                        <input matInput formControlName="numDueInDistance" value=" {{element.numDueInDistance}}">
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="numDueInMonths">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Duration (in month)</th>
+                                <td mat-cell *matCellDef="let element let rowIndex = index" [formGroupName]="rowIndex">
+                                    <mat-form-field class="form-group col-lg-12 mt-3" appearance="outline">
+                                        <input matInput formControlName="numDueInMonths" value="{{element.numDueInMonths}}">
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="maintenanceColumn"></tr>
+                            <tr mat-row *matRowDef="let row; columns: maintenanceColumn;"></tr>
+                        </table>
+                    </mat-card-content>
+                    <mat-paginator #maintenancePaginator [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+
+                </mat-tab>
+            </mat-tab-group>
+            <mat-action-row class="p-0 mt-2 mr-1">
+                <div class="col d-flex justify-content-end p-0">
+                    <button mat-raised-button (click)="updateVehicle()">
+                        <span class="material-icons">update</span>
+                        Update
+                    </button>
+                    <button mat-raised-button type="button" routerLink="/fleet/vehicleRegistration">
+                        <span class="material-icons">
+                            clear
+                        </span>Close
+                    </button>
+                </div>
+            </mat-action-row>
+        </form>
+    </mat-card-content>
+</mat-card>

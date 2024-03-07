@@ -1,0 +1,135 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            Water Production & Unit Consumed Details
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                        <tr>
+                                <th>
+                                    <h6>Zone / Branch:</h6>
+                                </th>
+                                <td *ngFor="let item of viewData">{{ item?.txtBranchName }}</td>
+                                <th>
+                                    <h6>Union Council:</h6>
+                                </th>
+                                <td *ngFor="let item of viewData">{{ item?.txtLocationName}}</td>
+                            </tr> 
+                    <tr>
+                        <th>
+                            <h6>TubeWell Number:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.txtProductCode }}</td>
+                        <th>
+                            <h6>TubeWell Name:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.txtProductName}}</td>
+                    </tr>                   
+                    <tr>
+                        <th>
+                            <h6>Monthly Bill:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numMonthlyBill}}</td>
+                        <!-- <td>{{ viewWaterProdInfo?.numMonthlyBill}}</td> -->
+                        <th>
+                            <h6> Functional:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">
+                            <span *ngIf="!item?.blnIsFunctional">Non-Functional</span>
+                            <span *ngIf="item?.blnIsFunctional">Functional</span>
+                        </td>
+                        <!-- <td>{{ viewWaterProdInfo?.blnStatus}}</td>
+                         {{ item?.blnIsFunctional}}
+                        -->
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Metered Connection:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">
+                            <span *ngIf="!item?.blnIsMetered">Un-Metered</span>
+                            <span *ngIf="item?.blnIsMetered">Metered</span>
+                        </td>
+                        <!-- <td>{{ viewWaterProdInfo?.blnIsActive}}</td>
+                         {{ item?.blnIsMetered}}
+                        -->
+
+                    </tr>
+                    <tr *ngFor="let item of viewData">
+                            <th *ngIf="!item?.blnIsMetered">
+                                <h6>Total Running Hour:</h6>
+                            </th>
+                            <td *ngFor="let item of viewData">
+    
+                                <span *ngIf="!item?.blnIsMetered">
+                                    {{ item?.numTotalRunningHours}}
+                                </span>
+                            </td>
+                            <th *ngIf="!item?.blnIsMetered">
+                                <h6>Avg Discharge m3/hr:</h6>
+                            </th>
+                            <td *ngFor="let item of viewData">
+                                <span *ngIf="!item?.blnIsMetered">
+                                    {{ item?.txtAverageDischargePerHour}}
+                                </span>
+                            </td>
+                            <!-- <td></td> -->
+                        </tr>
+                        
+                        <tr *ngFor="let item of viewData">
+                            <th *ngIf="!item?.blnIsMetered">
+                                <h6>Total Produced m3/hr:</h6>
+                            </th>
+                            <td *ngFor="let item of viewData">
+                                <span *ngIf="!item?.blnIsMetered">
+                                    {{ item?.numWaterProducedInHour}}
+                                </span>
+                            </td>
+                            <!-- <td>{{ viewWaterProdInfo?.numWaterProducedInHour}}</td> -->
+                        </tr>
+                        <tr *ngFor="let item of viewData">
+    
+                            <th *ngIf="item?.blnIsMetered">
+                                <h6>Water Produced In hr:</h6>
+                            </th>
+                            <td>
+                                <span *ngIf="item?.blnIsMetered">{{ item.numWaterProducedInUnit}}</span>
+                            </td>
+    
+                        </tr>
+                        <tr *ngFor="let item of viewData">
+                            <th *ngIf="item?.blnIsMetered">
+                                <h6>Avg Discharge m3/hr:</h6>
+                            </th>
+                            <td *ngFor="let item of viewData">
+                                <span *ngIf="item?.blnIsMetered">
+                                    {{ item?.txtAverageDischargePerUnit}}
+                                </span>
+                            </td>
+                            <!-- <td>{{ viewWaterProdInfo?.numWaterProducedInUnit}}</td> -->
+                            <th *ngIf="item?.blnIsMetered">
+                                <h6>Total Produced Cubic Per/Month:</h6>
+                            </th>
+                            <td *ngFor="let item of viewData">
+                                <span *ngIf="item?.blnIsMetered">
+                                    {{ item?.numUnitConsumed}}
+                                </span>
+                            </td>
+                            <!-- <td>{{ viewWaterProdInfo?.numUnitConsumed}}</td> -->  
+                        </tr>                  
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mb-2">
+            <div class="col d-flex justify-content-end ">
+                    <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        Water Production Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/waterSupplyManagement/waterProduction']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,22 @@
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    width: 100%;
+    padding-right: 16px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.btnClose{
+    cursor: pointer !important;
+}
+.btnClear{
+    background-color: #0BA698;
+    color: rgb(255, 255, 255) !important;
+
+}
+.container-fluid{
+    width: 650px;
+}
+.calculator{
+    width: 350px !important;
+
+}

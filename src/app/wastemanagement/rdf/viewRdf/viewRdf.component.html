@@ -1,0 +1,72 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            View Rdf
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.branch.name }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.unionCouncil.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Segregated Recieved:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtSegregatedRecieved }}</td>
+                        <th>
+                            <h6>Date:</h6>
+                        </th>
+                        <td>{{ basicInfo?.dteRdf }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Pallet Produced:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtPalletProduced }}</td>
+                        <th>
+                            <h6>Rdf Sold:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtRdfSold }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Rate:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtRate }}</td>
+                        <th>
+                            <h6>Vendor:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtVendor }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Amount:</h6>
+                        </th>
+                        <td>{{ basicInfo?.numAmount }}</td>
+                        <th>
+                            <h6>Rdf Balance:</h6>
+                        </th>
+                        <td>{{ basicInfo?.numRdfBalance }}</td>
+                    </tr>  
+                </table>             
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="col d-flex justify-content-end mb-3">
+                    <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        Rdf Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/rdf']">
+                    <mat-icon class="material-icons">close</mat-icon>Close
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

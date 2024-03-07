@@ -1,0 +1,131 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Update Connection
+        </mat-expansion-panel-header>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mt-3 mr-2">
+                <!-- <span class="col-md-3"></span> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Consumer Id</mat-label>
+                    <input matInput formControlName="txtCustomerCode" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="branch">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="unionCouncil">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Connection Type</mat-label>
+                    <mat-select formControlName="txtConnectionType">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let CT of connectionTypeList" value="{{CT}}">
+                            {{CT}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Connection Date</mat-label>
+                    <input matInput formControlName="dteCreatedDate" [matDatepicker]="dp1" readonly>
+                    <mat-datepicker-toggle matSuffix (click)="clearConnectionDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="row mb-2">
+                <div class="col pr-3 d-flex justify-content-end">
+                    <button mat-raised-button type="submit"><span class="material-icons pb-1 pr-1">search</span>Search
+                    </button>
+                    <button mat-raised-button class="ml-2" type="button" (click)="onReset()">
+                        <mat-icon class="material-icons pr-1">refresh</mat-icon>Reset
+                    </button>
+                </div>
+            </div>
+            <!-- <pre>{{form.value.dteCreatedDate | json}}</pre> -->
+            <!-- <pre>{{2021-09-08T19:00:00.000Z}}</pre> -->
+        </form>
+    </mat-expansion-panel>
+    <mat-card class="card mat-elevation-z8">
+        <mat-card-content class="mat-elevation-z2 mt-2 mb-1">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="fill">
+                    <mat-label>Columns</mat-label>
+                    <mat-select [formControl]="selection" multiple>
+                        <!-- <mat-select-trigger>
+                                {{selection.value ? selection.value[0] : ''}}
+                                <span *ngIf="selection.value?.length > 1" class="example-additional-selection">
+                                  (+{{selection.value.length - 1}} {{selection.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                              </mat-select-trigger> -->
+                        <mat-option *ngFor="let column of tableColumn" [value]="column" (click)="selectingColumns()">
+                            {{column | formControl}}
+                        </mat-option>
+                        <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <table mat-table [dataSource]="updateListData" [hiddenColumns]="[6]" matTableExporter #exporter="matTableExporter" #updateSort="matSort" matSort class="mat-elevation-z2" style="border: 1px solid #bababa;">
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="txtCustomerCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Consumer Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtCustomerCode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="branch">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Branch </th>
+                    <td mat-cell *matCellDef="let element"> {{element.branch.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unionCouncil">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Union Council </th>
+                    <td mat-cell *matCellDef="let element"> {{element.unionCouncil.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtBusinessName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtBusinessName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="txtConnectionType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Connection Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.txtConnectionType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dteModifiedDate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Connection Date </th>
+                    <td mat-cell *matCellDef="let element" class="tableNumericValue"> {{element.dteModifiedDate | date:'dd MMMM, YYYY'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" style="white-space: pre;">
+                        <mat-icon matTooltip="View" class="btnView ml-2" [routerLink]="['/billing/viewUpdatedConnection',element.id]">remove_red_eye</mat-icon>
+                        <mat-icon matTooltip="Edit" class="btnEdit ml-2" [routerLink]="['/billing/editUpadtedConnection',element.id]">edit</mat-icon>
+                        <mat-icon matTooltip="Approve" class="btnApproved ml-2" (click)="openApprovedDialog(element)">check_circle_outline</mat-icon>
+                        <mat-icon matTooltip="Reject" class="btnReject ml-2" (click)="openRejectDialog(element)">unpublished</mat-icon>
+                        <mat-icon matTooltip="View Bill" class="btnViewBill ml-2" [routerLink]="['/billing/connectionList/viewBill',element.txtCustomerCode]">insert_drive_file
+                        </mat-icon>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="updateColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: updateColumns;"></tr>
+            </table>
+        </mat-card-content>
+        <mat-paginator #updatePaginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+        <button mat-raised-button mat-flat-button class="ml-2" (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+            Detail Report PDF</button>
+        <button class="ml-3" mat-raised-button mat-flat-button (click)="exporter.exportTable('xlsx', {fileName:'Update List', sheet: 'sheet'})">
+                <span class="material-icons pb-1 pr-1">download</span>Detail Report Excel
+            </button>
+    </mat-card>
+</div>

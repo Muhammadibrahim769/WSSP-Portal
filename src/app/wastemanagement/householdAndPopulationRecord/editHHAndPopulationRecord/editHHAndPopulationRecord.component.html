@@ -1,0 +1,75 @@
+<div class="main">
+    <form [formGroup]="editHHAndPopulationForm" >
+        <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+            <mat-expansion-panel-header>
+               HouseHold And Population
+            </mat-expansion-panel-header>
+
+            <div class="row mt-3">
+                    <mat-form-field class="form-group col-md-3" appearance="outline">
+                            <mat-label>Zone/Branch</mat-label>
+                            <input matInput formControlName="txtBranchName" />
+                        </mat-form-field>
+                        <mat-form-field class="form-group col-md-3" appearance="outline">
+                                <mat-label>Union Council</mat-label>
+                                <input matInput formControlName="txtLocationName" />
+                            </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.txtBranchName}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.txtLocationName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>No Of Mainholes</mat-label>
+                    <input matInput formControlName="numTotalMainholes" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Sewerage Lines (Total Length)</mat-label>
+                    <input matInput formControlName="numTotalSewerageLines" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total HouseHold</mat-label>
+                    <input matInput formControlName="numTotalHouseHold"/>
+                </mat-form-field>
+                
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total Population</mat-label>
+                    <input matInput formControlName="numTotalPopulation" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                        <mat-label>Avg Member/House</mat-label>
+                        <input matInput formControlName="avgMemberPerHouse"                     
+                        />
+                        <!-- value="{{ editHHAndPopulationForm.controls.numTotalHouseHold.value / editHHAndPopulationForm.controls.numTotalPopulation.value}}" -->
+                    </mat-form-field>
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Remarks </mat-label>
+                    <textarea matInput formControlName="txtRemarks"></textarea>
+                </mat-form-field>
+            </div>
+        </mat-expansion-panel>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button (click)="onUpdate()">
+                    <span class="material-icons pb-1 pr-1">save</span>Submit
+                </button>
+                <button mat-raised-button [routerLink]="['/operationManagement/householdAndPopulationRecord']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

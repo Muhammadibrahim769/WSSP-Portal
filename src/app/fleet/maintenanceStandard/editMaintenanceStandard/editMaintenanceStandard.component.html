@@ -1,0 +1,204 @@
+
+<!-- /*
+* Muhammad Mohsin
+*
+* Created on Tue Jan 15 2021 : 7:37 PM
+*
+* Copyright (c) 2020 - DRL
+*/ -->
+<div class="main">
+    <div class="card">
+      <div class="card-header">
+
+        Edit Maintenance Standard
+
+      </div>
+      <mat-card class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" class="card-body mt-3">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            Basic info Panel
+        </mat-panel-title>
+
+
+      </mat-expansion-panel-header>
+
+      <div class="row ml-2 mr-1 mt-2">
+        <div class="form-group col-md-3">
+            <label for="inputState">Branch</label>
+            <select id="inputState" class="form-control form-select" formControlName="txtBranchId">
+                <option value="" disabled selected hidden>Choose...</option>
+                <option value=""></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+    </div>
+    <div class="row ml-2 mr-1 ">
+        <div class="form-group col-md-3">
+            <label for="inputState">Asset Main Category</label>
+            <select id="inputState" class="form-control form-select" formControlName="txtMainCategory">
+                <option value="" disabled selected hidden>Choose...</option>
+                <option value=""></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputState">Asset Category</label>
+            <select id="inputState" class="form-control form-select" formControlName="txtVehicleCategory">
+                <option value="" disabled selected hidden>Choose...</option>
+                <option value=""></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputState">Sub-Category</label>
+            <select id="inputState" class="form-control form-select" formControlName="txtVehicleSubcategory">
+                <option value="" disabled selected hidden>Choose...</option>
+                <option value=""></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="inputState">Asset Type</label>
+            <select id="inputState" class="form-control form-select" formControlName="txtVehicleType">
+                <option value="" disabled selected hidden>Choose...</option>
+                <option value=""></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+            </select>
+        </div>
+        
+   </div>
+            
+
+
+    </mat-expansion-panel>
+    
+
+      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" class="card-body mt-3" >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Maintenance Panel
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="row ml-2 mr-1 mt-3">
+
+            <div class="form-group col-md-6">
+                <label for="inputState">Maintenance Item Category<span
+                        class="required-straic">*</span></label>
+                <select id="inputState" class="form-control form-select" formControlName="txtMaintenanceItem">
+                    <option value="" disabled selected hidden>Choose...</option>
+                    <option value=""></option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+                <div *ngFor="let validation of formValidationMessages.txtMaintenanceItem">
+                    <div class='alert alert-danger'
+                        *ngIf="form.controls.txtMaintenanceItem.hasError(validation.type) && (form.controls.txtMaintenanceItem.dirty || form.controls.txtMaintenanceItem.touched)">
+                        {{validation.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputState">Maintenance Item Sub-Category<span
+                        class="required-straic">*</span></label>
+                <select id="inputState" class="form-control form-select" formControlName="txtMaintenanceItem">
+                    <option value="" disabled selected hidden>Choose...</option>
+                    <option value=""></option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+                <div *ngFor="let validation of formValidationMessages.txtMaintenanceItem">
+                    <div class='alert alert-danger'
+                        *ngIf="form.controls.txtMaintenanceItem.hasError(validation.type) && (form.controls.txtMaintenanceItem.dirty || form.controls.txtMaintenanceItem.touched)">
+                        {{validation.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Maintenance Item<span class="required-straic">*</span></label>
+                <select id="inputState" class="form-control form-select" formControlName="txtMaintenanceItem">
+                    <option value="" disabled selected hidden>Choose...</option>
+                    <option value=""></option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                </select>
+                <div *ngFor="let validation of formValidationMessages.txtMaintenanceItem">
+                    <div class='alert alert-danger'
+                        *ngIf="form.controls.txtMaintenanceItem.hasError(validation.type) && (form.controls.txtMaintenanceItem.dirty || form.controls.txtMaintenanceItem.touched)">
+                        {{validation.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">UOM</label>
+                <input type="text" class="form-control" id="inputZip" formControlName="txtUom">
+
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="inputZip">Quantity/Capacity</label>
+                <input type="text" class="form-control" id="inputZip" formControlName="txtCapacity">
+
+            </div>
+            <div class="form-group col-md-2">
+                <label for="inputZip">Life <span class="required-straic">*</span></label>
+                <input type="text" class="form-control" id="inputZip" formControlName="txtLife">
+                <div *ngFor="let validation of formValidationMessages.txtLife">
+                    <div class='alert alert-danger'
+                        *ngIf="form.controls.txtLife.hasError(validation.type) && (form.controls.txtLife.dirty || form.controls.txtLife.touched)">
+                        {{validation.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputZip">Life Measurement <span class="required-straic">*</span></label>
+                <input type="text" class="form-control" id="inputZip" formControlName="txtLife">
+                <div *ngFor="let validation of formValidationMessages.txtLife">
+                    <div class='alert alert-danger'
+                        *ngIf="form.controls.txtLife.hasError(validation.type) && (form.controls.txtLife.dirty || form.controls.txtLife.touched)">
+                        {{validation.message}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="inputZip">Description</label>
+                <input type="text" class="form-control" id="inputZip" formControlName="txtDescription" placeholder="Alphabets Only"
+
+                onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
+
+            </div>
+
+
+        </div>
+
+      </mat-expansion-panel>
+
+
+
+      <mat-action-row>
+        <div class="row mb-3 mt-3">
+            <div class="col d-flex justify-content-end">
+                <button type="submit" class="btn btn-submit" [disabled]="!form.valid">Update
+                    <mat-icon aria-label="Example icon-button with a update icon">update</mat-icon>
+
+                </button>
+                <button type="button" class="btn btn-close ml-2" routerLink="/maintenanceStandard">Close
+                    <mat-icon aria-label="Example icon-button with a close icon">close</mat-icon>
+
+
+                </button>
+            </div>
+        </div>
+    </mat-action-row>
+        </form>
+      </mat-card>
+    </div>
+</div>

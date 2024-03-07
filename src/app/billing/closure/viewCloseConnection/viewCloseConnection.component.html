@@ -1,0 +1,151 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            Close Connection Information
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.branch.name }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.unionCouncil.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Connection Type:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtConnectionType }}</td>
+                        <th>
+                            <h6>Consumer ID:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtCustomerCode }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Bussiness Name:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtBusinessName }}</td>
+                        <th>
+                            <h6>Cnic:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtCnicNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>NTN:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtNtnNo }}</td>
+                        <th>
+                            <h6>STN:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStnNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Area:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtShippingAddress }}</td>
+                        <th>
+                            <h6>Sector Mohallah:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtMohallah }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Street No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStreetNo }}</td>
+                        <th>
+                            <h6>House No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtHouseNo }}</td>
+
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Cell No:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtMobileNo }}</td>
+                        <th>
+                            <h6>Status</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStatus }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <div class="mat-elevation-z8 p-0">
+                <table mat-table [dataSource]="documentDatasource">
+
+                    <ng-container matColumnDef="sr">
+                        <th mat-header-cell *matHeaderCellDef>Sr#</th>
+                        <td mat-cell *matCellDef="let element; let i = index" class="numeric">
+                            {{ i + 1 }}
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="txtDocumentType">
+                        <th mat-header-cell *matHeaderCellDef>Document Type</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.txtDocumentType }}
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="documentName">
+                        <th mat-header-cell *matHeaderCellDef>Document Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.documentName }}
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="txtDocumentReferenceNo">
+                        <th mat-header-cell *matHeaderCellDef>Document Reference No</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.txtDocumentReferenceNo }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="download">
+                        <th mat-header-cell *matHeaderCellDef>Download</th>
+                        <td mat-cell *matCellDef="let element">
+                            <button (click)="
+                                downloadFile(
+                                  element.byteDocumentFile,
+                                  element.documentName
+                                )
+                              " mat-raised-button>
+                                Download Attachment &nbsp;<i class="material-icons">
+                                    cloud_download
+                                </i>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="doccolumn"></tr>
+                    <tr mat-row *matRowDef="let row; columns: doccolumn"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="col d-flex justify-content-end mb-3">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                        Close Connectio Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/billing/closedConnectionList']">
+                    <mat-icon class="material-icons">close</mat-icon>Close
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

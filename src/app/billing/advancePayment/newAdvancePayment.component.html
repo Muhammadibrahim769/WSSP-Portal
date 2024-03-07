@@ -1,0 +1,92 @@
+<div class="main">
+    <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+        <mat-expansion-panel-header>
+            Search Consumer
+        </mat-expansion-panel-header>
+        <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Customer Id</mat-label>
+                    <input matInput formControlName="txtCustomerCode"/>
+                </mat-form-field>
+                <span class="col-md-6"></span>
+                <div class="col-md-3 pt-2" style="text-align: end;">
+                    <button type="submit" mat-raised-button [disabled]="!searchForm.valid">
+                        <span class="material-icons pb-1 pr-1">search</span>Search</button>
+                </div>
+            </div>
+       
+        </form>
+
+    </mat-expansion-panel>
+
+    <mat-card  class="card mat-elevation-z8  p-0"  *ngIf="show">
+        <mat-card-header class="matCardHeader">
+            Consumer Information
+        </mat-card-header>
+              <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+                <div class="row col-md-12">
+                    <table class="testTable">
+                        <tr>
+                            <th><h6>Zone/Branch:</h6></th>
+                            <td>{{ customerInfo?.branch.name }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Union Council:</h6></th>
+                            <td>{{ customerInfo?.unionCouncil.name }}</td>
+                            <th><h6>Connection Type:</h6></th>
+                            <td>{{ customerInfo?.txtConnectionType }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Consumer ID:</h6></th>
+                            <td>{{ customerInfo?.txtCustomerCode }}</td>
+                            <th><h6>Bussiness Name:</h6></th>
+                            <td>{{ customerInfo?.txtBusinessName }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>STN:</h6></th>
+                            <td>{{ customerInfo?.txtStnNo }}</td>
+                            <th><h6>NTN:</h6></th>
+                            <td>{{ customerInfo?.txtNtnNo }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Category:</h6></th>
+                            <td>{{ customerInfo?.category.name }}</td>
+                            <th><h6>Old/Parcel Id:</h6></th>
+                            <td>{{ customerInfo?.txtReferenceCode }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Cnic:</h6></th>
+                            <td>{{ customerInfo?.txtCnicNo }}</td>
+                            <th><h6>Area:</h6></th>
+                            <td>{{ customerInfo?.txtShippingAddress }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Sector Mohallah:</h6></th>
+                            <td>{{ customerInfo?.txtMohallah }}</td>
+                            <th><h6>House No:</h6></th>
+                            <td>{{ customerInfo?.txtHouseNo }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Street No:</h6></th>
+                            <td>{{ customerInfo?.txtStreetNo }}</td>
+                            <th><h6>Cell No:</h6></th>
+                            <td>{{ customerInfo?.txtMobileNo }}</td>
+                        </tr>
+                        <tr>
+                            <th><h6>Status</h6></th> 
+                            <td>{{ customerInfo?.txtStatus }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="float: right; padding: 8px 8px 0px 0px">
+                    <button mat-raised-button type="button" (click)="openAdvancePaymentModalDialog()">
+                        <span class="material-icons pr-1 mb-1">add</span>Advance Payment
+                    </button>
+                    <button mat-raised-button type="button" class="ml-2" [routerLink]="['/billing/advancePaymentList']">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+              </mat-card-content>
+    </mat-card>
+</div>

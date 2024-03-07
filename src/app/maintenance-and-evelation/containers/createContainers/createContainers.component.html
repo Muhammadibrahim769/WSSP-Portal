@@ -1,0 +1,207 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            Create Compost
+        </mat-expansion-panel-header>
+        <form [formGroup]="createCompostForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.serBranchId.hasError(validation.type) && (createCompostForm.controls.serBranchId.dirty || createCompostForm.controls.serBranchId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.serLocationId.hasError(validation.type) && (createCompostForm.controls.serLocationId.dirty || createCompostForm.controls.serLocationId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="txtCompostDate" readonly>
+                    <!-- <mat-error *ngFor="let validation of formValidationMessages.txtCompostDate">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtCompostDate.hasError(validation.type) && (createCompostForm.controls.txtCompostDate.dirty || createCompostForm.controls.txtCompostDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error> -->
+                    <mat-datepicker-toggle matSuffix (click)="clearTimeOut()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Raw Waste Recieved</mat-label>
+                    <mat-select formControlName="txtRawWasteRecieved">                      
+                        <mat-option value="Compost">Compost</mat-option>
+                        <mat-option value="LF">LF</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtRawWasteRecieved">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtRawWasteRecieved.hasError(validation.type) && (createCompostForm.controls.txtRawWasteRecieved.dirty || createCompostForm.controls.txtRawWasteRecieved.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field> -->
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Produced</mat-label>
+                    <input matInput formControlName="txtProduced" maxlength="25" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtProduced">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtProduced.hasError(validation.type) && (createCompostForm.controls.txtProduced.dirty || createCompostForm.controls.txtProduced.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Amount</mat-label>
+                    <input matInput formControlName="numAmount" type="number"
+                        onKeyPress="if(this.value.length==10) return false;" />
+                        <mat-error *ngFor="let validation of formValidationMessages.numAmount">
+                            <mat-error
+                                *ngIf="createCompostForm.controls.numAmount.hasError(validation.type) && (createCompostForm.controls.numAmount.dirty || createCompostForm.controls.numAmount.touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Rate</mat-label>
+                    <input matInput formControlName="numRate" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numRate">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numRate.hasError(validation.type) && (createCompostForm.controls.numRate.dirty || createCompostForm.controls.numRate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Vender</mat-label>
+                    <input matInput formControlName="txtVendor" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtVendor">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtVendor.hasError(validation.type) && (createCompostForm.controls.txtVendor.dirty || createCompostForm.controls.txtVendor.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Sold</mat-label>
+                    <input matInput formControlName="numSold" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numSold">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numSold.hasError(validation.type) && (createCompostForm.controls.numSold.dirty || createCompostForm.controls.numSold.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  class="form-group col-md-3" appearance="outline">
+                    <mat-label>Compost Balance</mat-label>
+                    <input matInput formControlName="numBalance" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numBalance">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numBalance.hasError(validation.type) && (createCompostForm.controls.numBalance.dirty || createCompostForm.controls.numBalance.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Produced</mat-label>
+                    <input matInput formControlName="txtProduced" maxlength="25" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtProduced">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtProduced.hasError(validation.type) && (createCompostForm.controls.txtProduced.dirty || createCompostForm.controls.txtProduced.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Amount</mat-label>
+                    <input matInput formControlName="numAmount" type="number"
+                        onKeyPress="if(this.value.length==10) return false;" />
+                        <mat-error *ngFor="let validation of formValidationMessages.numAmount">
+                            <mat-error
+                                *ngIf="createCompostForm.controls.numAmount.hasError(validation.type) && (createCompostForm.controls.numAmount.dirty || createCompostForm.controls.numAmount.touched)">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Rate</mat-label>
+                    <input matInput formControlName="numRate" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numRate">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numRate.hasError(validation.type) && (createCompostForm.controls.numRate.dirty || createCompostForm.controls.numRate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field  *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Vender</mat-label>
+                    <input matInput formControlName="txtVendor" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtVendor">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.txtVendor.hasError(validation.type) && (createCompostForm.controls.txtVendor.dirty || createCompostForm.controls.txtVendor.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Sold</mat-label>
+                    <input matInput formControlName="numSold" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numSold">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numSold.hasError(validation.type) && (createCompostForm.controls.numSold.dirty || createCompostForm.controls.numSold.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="createCompostForm.controls.txtRawWasteRecieved.value === 'LF'" class="form-group col-md-3" appearance="outline">
+                    <mat-label>LF Balance</mat-label>
+                    <input matInput formControlName="numBalance" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numBalance">
+                        <mat-error
+                            *ngIf="createCompostForm.controls.numBalance.hasError(validation.type) && (createCompostForm.controls.numBalance.dirty || createCompostForm.controls.numBalance.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field> -->
+                <!-- <div class="form-group col-md-6 mt-3">
+                <mat-radio-group aria-label="Select an option" formControlName="txtModality">
+                    <mat-radio-button value="Container Management">Container Management</mat-radio-button>
+                    <mat-radio-button value="Door to Door">Door to Door</mat-radio-button>
+                </mat-radio-group>
+            </div>          -->
+            </div>
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button type="submit">
+                        <span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/maintenanceAndEveluation/container']" class="ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

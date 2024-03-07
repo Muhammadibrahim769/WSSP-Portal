@@ -1,0 +1,71 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    General Operation
+</mat-card-header>
+<mat-card-content>
+    <form [formGroup]="editGeneralOperationForm">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <input matInput formControlName="txtBranchName" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <input matInput formControlName="txtLocationName" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Month</mat-label>
+                <input matInput formControlName="txtMonth" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>No of Bill Distributed</mat-label>
+                <input matInput formControlName="numOfBillDistributed"/>
+            </mat-form-field>          
+            <div class="rowManHoles">
+               Water Supply
+            </div>          
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Distribution Lines Repair</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesRepaired" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Distribution Lines Replaced</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesCleaned" />
+            </mat-form-field>
+            <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Distribution Lines Discelitation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesDiscelitation" />
+            </mat-form-field> -->
+
+
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Repair</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesRepaired" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Replaced</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesCleaned" />
+            </mat-form-field>
+            <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Discelitation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesDiscelitation" />
+            </mat-form-field> -->
+        </div>
+        <div class="row mt-2">
+            <div class="col pr-3 d-flex justify-content-end">
+                <div class="col mb-1 d-flex justify-content-center">
+                    <button mat-raised-button (click)="onUpdate()"><span class="material-icons pt-1 pb-2">update</span>Update
+                    </button>
+                    <button mat-raised-button class="ml-2" mat-dialog-close>
+                        <span class="material-icons pt-1 pb-2">close</span>
+                        Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-card-content>

@@ -1,0 +1,134 @@
+<div class="main">
+
+    <mat-card class="card mat-elevation-z8 m-0 p-0">
+        <mat-card-header class="matCardHeader">
+            Water Test Detail
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Testing Agency:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtTestingAgency }}</td>
+                        <th>
+                            <h6>Testing Type:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtTestingType }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Sampling Date:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtSamplingDate | date:'dd MMMM, yyyy' }}</td>
+                        <th>
+                            <h6>Asset Type:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtAssetType }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Sampling Point:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtSamplingPoint }}</td>
+                        <th>
+                            <h6>Consumer No:</h6>
+                        </th>
+                        <td *ngIf="basicInfo?.txtSamplingPoint === 'Consumer Tap'">{{ basicInfo?.numConsumerNo }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Address:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtAddress }}</td>
+                        <th>
+                            <h6>Consumer Name:</h6>
+                        </th>
+                        <td *ngIf="basicInfo?.txtSamplingPoint === 'Consumer Tap'">{{ basicInfo?.txtConsumerName }}</td>
+
+                    </tr>
+                    <tr>
+
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Street Name:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtStreetName }}</td>
+                        <th>
+                            <h6>Consumer Type:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtConsumerType }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Test Result:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtTestResult }}</td>
+                        <th>
+                            <h6>Result Submission Date:</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtResultSubmissionDate | date:'dd MMMM, yyyy' }}</td>
+                    </tr>
+
+                    <tr>
+                        <th><h6>Latitude:</h6></th>
+                        <td>{{ basicInfo?.numLatitude }}</td>
+                        <th><h6>Longitude:</h6></th>
+                        <td>{{ basicInfo?.numLongitude }}</td>
+                    </tr>
+                   <!-- <tr>
+                        <th><h6>Latitude:</h6></th>
+                        <td>{{ basicInfo?.numLatitude }}</td>
+                        <th><h6>Result Submission Date:</h6></th>
+                        <td>{{ basicInfo?.txtResultSubmissionDate }}</td>
+                    </tr> -->
+                    <tr>
+                        <th>
+                            <h6>Comments/Remarks</h6>
+                        </th>
+                        <td>{{ basicInfo?.txtComments }}</td>
+                    </tr>
+                </table>
+            </div>
+            <table mat-table [dataSource]="editWaterTestListData" matSort>
+                <ng-container matColumnDef="txtDocumentFileName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                    <td mat-cell *matCellDef="let element"> {{name(element.txtDocumentFileName)}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Download </th>
+                    <td mat-cell *matCellDef="let element" (click)="downloadFile(element.byteDocumentFile,element.txtDocumentFileName)" style="justify-content: center;">
+                        <button mat-flat-button>
+                            <mat-icon>download</mat-icon>Download
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="editWaterTestColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: editWaterTestColumns;"></tr>
+            </table>
+
+        </mat-card-content>
+        <mat-card-actions class="mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Water Testing Detail</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/waterSupplyManagement/waterTesting']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

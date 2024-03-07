@@ -1,0 +1,9 @@
+<mat-dialog-content class="m-0 p-3"> 
+    <h6>{{message}}</h6>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="col mb-3 d-flex justify-content-center">
+        <button mat-raised-button class="ml-2"  (click)="onConfirmClick()">{{confirmButtonText}}</button>
+        <button mat-raised-button class="ml-2" mat-dialog-close>{{cancelButtonText}}</button>
+    </div>
+</mat-dialog-actions>

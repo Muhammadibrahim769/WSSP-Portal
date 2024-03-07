@@ -1,0 +1,70 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            General Operation Details
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone/Branch:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.txtBranchName }}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.txtLocationName }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Month:</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.txtMonth }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Distribution Lines Repair(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numPriDistributionLinesRepaired }}</td>
+                        <th>
+                            <h6>Sec Distribution Lines Repair(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numSecDistributionLinesRepaired }}</td>
+
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Distribution Lines Replaced(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numPriDistributionLinesCleaned }}</td>
+                        <th>
+                            <h6>Sec Distribution Lines Replaced(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numSecDistributionLinesCleaned }}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Distribution Lines Discelitation(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numPriDistributionLinesDiscelitation }}</td>
+                        <th>
+                            <h6>Sec Distribution Lines Discelitation(km):</h6>
+                        </th>
+                        <td *ngFor="let item of viewData">{{ item?.numSecDistributionLinesDiscelitation }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card-actions class="mt-2 mb-2">
+        <div class="col d-flex justify-content-end ">
+            <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                General Operation Detail</button>
+            <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/waterSupplyManagement/generalOperation']"><span
+                    class="material-icons pb-1 pr-1">close</span>Close</button>
+        </div>
+    </mat-card-actions>
+</div>

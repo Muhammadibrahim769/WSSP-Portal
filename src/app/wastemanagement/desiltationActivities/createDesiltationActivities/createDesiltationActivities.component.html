@@ -1,0 +1,179 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+          Create Desiltation Activity
+        </mat-expansion-panel-header>
+    <form [formGroup]="createWasteCollectionForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <mat-select formControlName="serBranchId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                        {{branch.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.serBranchId.hasError(validation.type) && (createWasteCollectionForm.controls.serBranchId.dirty || createWasteCollectionForm.controls.serBranchId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <mat-select formControlName="serLocationId">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.serLocationId.hasError(validation.type) && (createWasteCollectionForm.controls.serLocationId.dirty || createWasteCollectionForm.controls.serLocationId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Date & Time Service Performed</mat-label>
+                <input matInput formControlName="txtDateServicePerformed" [owlDateTime]="dp2" [owlDateTimeTrigger]="dp2"
+                    placeholder="Date Time" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                        <mat-error
+                            *ngIf="createWasteCollectionForm.controls.serBranchId.hasError(validation.type) && (createWasteCollectionForm.controls.serBranchId.dirty || createWasteCollectionForm.controls.serBranchId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                <owl-date-time #dp2></owl-date-time>
+                <mat-datepicker-toggle matSuffix (click)="clearTimeOut()">
+                    <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                <mat-datepicker #dp2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="txtCategory">
+                    <mat-option value="Open Drain">Open Drain</mat-option>
+                    <mat-option value="Covered Drain">Covered Drain</mat-option>
+                    <mat-option value="Sewer">Sewer</mat-option>
+                    <mat-option value="Manhole">Manhole</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.txtCategory">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtCategory.hasError(validation.type) && (createWasteCollectionForm.controls.txtCategory.dirty || createWasteCollectionForm.controls.txtCategory.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Area</mat-label>
+                <input matInput formControlName="txtStreetName" maxlength="25"/>
+                <mat-error *ngFor="let validation of formValidationMessages.txtStreetName">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtStreetName.hasError(validation.type) && (createWasteCollectionForm.controls.txtStreetName.dirty || createWasteCollectionForm.controls.txtStreetName.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Street Id / Container Id</mat-label>
+                <input matInput formControlName="numStreetId" type="number" onKeyPress="if(this.value.length==10) return false;"  />
+                <mat-error *ngFor="let validation of formValidationMessages.numStreetId">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.numStreetId.hasError(validation.type) && (createWasteCollectionForm.controls.numStreetId.dirty || createWasteCollectionForm.controls.numStreetId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>            
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Start Point Coord</mat-label>
+                <input matInput formControlName="txtStartPointCoord" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtStartPointCoord">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtStartPointCoord.hasError(validation.type) && (createWasteCollectionForm.controls.txtStartPointCoord.dirty || createWasteCollectionForm.controls.txtStartPointCoord.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Finish Point Coord</mat-label>
+                <input matInput formControlName="txtFinishPointCoord" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtFinishPointCoord">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtFinishPointCoord.hasError(validation.type) && (createWasteCollectionForm.controls.txtFinishPointCoord.dirty || createWasteCollectionForm.controls.txtFinishPointCoord.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>No of Houses</mat-label>
+                <input matInput [readonly]="this.isEditable" formControlName="numHouses" type="number" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Mode of Collection</mat-label>
+                <mat-select formControlName="txtModeOfCollection">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="Through Hand Carts">Through Hand Carts</mat-option>
+                    <mat-option value="Mini Dumpers">Mini Dumpers</mat-option>
+                    <mat-option value="Compactor">Compactor</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.txtModeOfCollection">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtModeOfCollection.hasError(validation.type) && (createWasteCollectionForm.controls.txtModeOfCollection.dirty || createWasteCollectionForm.controls.txtModeOfCollection.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Frequency of Waste Collection</mat-label>
+                <mat-select formControlName="txtFrequencyWasteCollection">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="Twice a day">Twice a day</mat-option>
+                    <mat-option value="Daily">Daily</mat-option>
+                    <mat-option value="Alternate Day">Alternate Day</mat-option>
+                    <mat-option value="Twice a week">Twice a week</mat-option>
+                    <mat-option value="Thrice a week">Thrice a week</mat-option>
+                    <mat-option value="Weekly">Weekly</mat-option>
+                    <mat-option value="Monthly">Monthly</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.txtFrequencyWasteCollection">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtFrequencyWasteCollection.hasError(validation.type) && (createWasteCollectionForm.controls.txtFrequencyWasteCollection.dirty || createWasteCollectionForm.controls.txtFrequencyWasteCollection.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Amount of Waste Collected (ton)</mat-label>
+                <input matInput formControlName="numTotalWasteCollected" />
+                <mat-error *ngFor="let validation of formValidationMessages.numTotalWasteCollected">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.numTotalWasteCollected.hasError(validation.type) && (createWasteCollectionForm.controls.numTotalWasteCollected.dirty || createWasteCollectionForm.controls.numTotalWasteCollected.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>  
+            <!-- <div class="form-group col-md-6 mt-3">
+                <mat-radio-group aria-label="Select an option" formControlName="txtModality">
+                    <mat-radio-button value="Container Management">Container Management</mat-radio-button>
+                    <mat-radio-button value="Door to Door">Door to Door</mat-radio-button>
+                </mat-radio-group>
+            </div>          -->
+        </div>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button type="submit">
+                    <span class="material-icons pb-1 pr-1">save</span>Submit
+                </button>
+                <button mat-raised-button [routerLink]="['/wasteManagement/desiltationActivity']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+    </mat-expansion-panel>
+</div>

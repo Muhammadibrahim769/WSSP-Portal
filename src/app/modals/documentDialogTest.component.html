@@ -1,0 +1,54 @@
+
+    <mat-card-header mat-dialog-title class="matCardHeader1">
+        Add Document
+    </mat-card-header>
+    <mat-card-content class="mt-2">
+      
+        <form [formGroup]="form">
+          <div class="row">
+            <mat-form-field class="form-group col-6" appearance="outline">
+              <mat-label>Document Name<span class="required-straic">*</span></mat-label>
+              <input matInput formControlName="txtDocumentFileName" readonly>
+              <mat-error *ngIf="form.controls.txtDocumentFileName.invalid">
+                <span *ngIf="form.controls.txtDocumentFileName.errors.required">Document Name is Required</span>
+                <span *ngIf="form.controls.txtDocumentFileName.errors.maxlength">{{errorMessage.MAXLENGTH_100}}</span>
+              </mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field class="form-group col-6" appearance="outline">
+              <mat-label>Document Reference No<span class="required-straic">*</span></mat-label>
+              <input type="text" matInput formControlName="txtDocumentReferenceNo">
+              <mat-error *ngIf="form.controls.txtDocumentReferenceNo.invalid">
+                <span *ngIf="form.controls.txtDocumentReferenceNo.errors.required">Document Reference No is Required</span>
+                <span *ngIf="form.controls.txtDocumentReferenceNo.errors.maxlength">{{errorMessage.MAXLENGTH_20}}</span>
+              </mat-error>
+            </mat-form-field> -->
+          </div>
+  
+          <div class="col-6">
+            <input type="file" (change)="onSelectFile($event)" accept="application/pdf"/>
+            <span class="mat-error"
+              *ngIf="form.controls.txtDocumentFileName.invalid || form.controls.txtDocumentFileName.invalid">
+              <span
+                *ngIf="form.controls.txtDocumentFileName.errors.required || form.controls.txtDocumentFileName.errors.required">Please
+                Select File.</span>
+            </span>
+          </div>
+  
+          <div class="col-6">
+  
+          </div>
+  
+          <div class="col d-flex justify-content-end">
+            <button mat-raised-button [disabled]="form.invalid" [mat-dialog-close]="form.value"
+            ><i class="material-icons material-icon-field-size pr-1 mb-1">
+              add
+            </i>Add</button>
+  
+            <button mat-raised-button class="ml-2" (click)="onNoClick()">Close</button>
+          </div>
+      </form>
+    
+      
+    </mat-card-content>
+  
+  

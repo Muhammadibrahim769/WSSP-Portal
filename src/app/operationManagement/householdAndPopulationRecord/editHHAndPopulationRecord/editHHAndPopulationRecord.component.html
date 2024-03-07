@@ -1,0 +1,161 @@
+<div class="main">
+    <form [formGroup]="editHHAndPopulationForm">
+        <mat-expansion-panel class="card mat-elevation-z8" [expanded]="step === 0">
+            <mat-expansion-panel-header>
+                HouseHold And Population
+            </mat-expansion-panel-header>
+
+            <div class="row mt-3">
+
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <input matInput formControlName="txtBranchName" readonly />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <input matInput formControlName="txtLocationName" readonly />
+                </mat-form-field>
+                <span class="form-group col-md-6"></span>
+
+                <div class="rowManHoles">
+                    Sewerage
+                </div>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>No Of RPC Manholes<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="numTotalMainholes" type="number" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalMainholes">
+                        <mat-error *ngIf="editHHAndPopulationForm.controls.numTotalMainholes.hasError(validation.type) && (editHHAndPopulationForm.controls.numTotalMainholes.dirty || editHHAndPopulationForm.controls.numTotalMainholes.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>No Of RCC Manholes</mat-label>
+                    <input matInput formControlName="numTotalSecMainholes" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>No Of IronGrid Manholes</mat-label>
+                    <input matInput formControlName="numTotalTerMainholes" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Primary Sewerage Lines (Total Length)<span class="required-straic">*</span></mat-label>
+                    <span matSuffix>km &nbsp;</span>
+                    <input matInput formControlName="numTotalSewerageLines" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalSewerageLines">
+                        <mat-error *ngIf="editHHAndPopulationForm.controls.numTotalSewerageLines.hasError(validation.type) && (editHHAndPopulationForm.controls.numTotalSewerageLines.dirty || editHHAndPopulationForm.controls.numTotalSewerageLines.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Secondary Sewerage Lines (Total Length)<span class="required-straic">*</span></mat-label>
+                    <span matSuffix>km &nbsp;</span>
+                    <input matInput formControlName="numTotalSecondarySewerageLines" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalSecondarySewerageLines">
+                        <mat-error *ngIf="editHHAndPopulationForm.controls.numTotalSecondarySewerageLines.hasError(validation.type) && (editHHAndPopulationForm.controls.numTotalSecondarySewerageLines.dirty || editHHAndPopulationForm.controls.numTotalSecondarySewerageLines.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>               
+                <!-- <mat-form-field class="form-group col-md-6" appearance="outline">
+                            <mat-label>Tertiary Distribution Network</mat-label>
+                            <input matInput formControlName="numTerDistributedNetworkLines" type="number" />
+                        </mat-form-field> -->
+                <div class="rowManHoles">
+                    Drainage    
+                </div>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Primary Drainage Line (Total Length)</mat-label>
+                    <span matSuffix>km &nbsp;</span>
+                    <input matInput formControlName="numPriDrainageLines" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Secondary Drainage Line (Total Length)</mat-label>
+                    <span matSuffix>km &nbsp;</span>
+                    <input matInput formControlName="numSecDrainageLines" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Primary Distribution Network</mat-label>
+                    <input matInput formControlName="numPriDistributedNetworkLines" type="number" />
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Secondary Distribution Network</mat-label>
+                    <input matInput formControlName="numSecDistributedNetworkLines" type="number" />
+                </mat-form-field>
+
+                <div class="rowManHoles">
+                    Population
+                </div>
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Total Population<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="numTotalPopulation" type="number" min="1" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalPopulation">
+                        <mat-error *ngIf="editHHAndPopulationForm.controls.numTotalPopulation.hasError(validation.type) && (editHHAndPopulationForm.controls.numTotalPopulation.dirty || editHHAndPopulationForm.controls.numTotalPopulation.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Total HouseHold<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="numTotalHouseHold" type="number" min="1" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalHouseHold">
+                        <mat-error *ngIf="editHHAndPopulationForm.controls.numTotalHouseHold.hasError(validation.type) && (editHHAndPopulationForm.controls.numTotalHouseHold.dirty || editHHAndPopulationForm.controls.numTotalHouseHold.touched)">
+
+                            {{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-6" appearance="outline">
+                    <mat-label>Avg Member/House</mat-label>
+                    <input matInput [value]="editHHAndPopulationForm.get('avgMemberPerHouse').value | number:'1.0'"
+                        formControlName="avgMemberPerHouse" type="number" readonly />
+                    <!-- value="{{ editHHAndPopulationForm.controls.numTotalHouseHold.value / editHHAndPopulationForm.controls.numTotalPopulation.value}}" -->
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-12" appearance="outline">
+                    <mat-label>Remarks </mat-label>
+                    <textarea matInput formControlName="txtRemarks"></textarea>
+                </mat-form-field>
+            </div>
+
+
+
+
+            <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+                            <mat-option value=""></mat-option>
+                            <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                                {{branch.txtBranchName}}
+                            </mat-option>
+                    </mat-select>
+                </mat-form-field> 
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+                        <mat-option value=""></mat-option>
+                        <mat-option *ngFor="let UC of unionCouncilList" value="{{UC.id}}">
+                            {{UC.txtLocationName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+
+
+
+
+
+            <!-- <pre>{{editHHAndPopulationForm.value | json}}</pre> -->
+        </mat-expansion-panel>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button (click)="onUpdate()" type="submit">
+                    <span class="material-icons pb-1 pr-1">update</span>Update
+                </button>
+                <button mat-raised-button [routerLink]="['/operationManagement/householdAndPopulationRecord']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

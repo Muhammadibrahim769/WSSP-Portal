@@ -1,0 +1,108 @@
+<!-- /*
+*  Author Muhammad Ibrahim Sagheer
+*
+* Created on Tue Feb 23 2021 : 7:37 PM
+*
+* Copyright (c) 2021 - DRL
+*/ -->
+<!-- <div class="main">
+  <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+    <mat-expansion-panel-header>
+      Edit Trip Sheet
+    </mat-expansion-panel-header>
+    <form [formGroup]="editTripSheetForm" (ngSubmit)="onSubmit()">
+      <div class="row p-0 mt-3">
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehical No</mat-label>
+          <input matInput formControlName="serBatchNo" (change)="onChange($event)" />
+        </mat-form-field>  
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Zone/Branch</mat-label>
+          <mat-select formControlName="serBranchId">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let serBranchId of branchList" value="{{serBranchId.id}}">
+              {{serBranchId.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+     
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Driver Name</mat-label>
+         
+          <input matInput formControlName="txtDriverName" readonly />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Route No</mat-label>
+          <mat-select formControlName="txt_route_no" (selectionChange)="onChangeRoute($event)">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let bacth of getBatchCode"  value="{{bacth.id}}">
+              {{bacth.code}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Route Distance </mat-label>
+          <input matInput formControlName="numRouteDistance" type="number" min="0" readonly/>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Trip Date</mat-label>
+          <input matInput formControlName="dteDate" [matDatepicker]="dp5" readonly>
+          <mat-datepicker-toggle matSuffix (click)="clearWEFD()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+          <mat-datepicker #dp5></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Odometer Out</mat-label>
+          <input matInput formControlName="numOdometerOut" (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+            maxlength="10" />
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Odometer In</mat-label>
+          <input matInput formControlName="numOdometerIn" (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+            maxlength="10" />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehicle Time Out<span class="required-straic">*</span></mat-label>
+          <input matInput formControlName="dteTimeout" type="time">
+          <mat-datepicker-toggle matSuffix (click)="clearTimeOut()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix>
+            <mat-icon matDatepickerToggleIcon>time</mat-icon>
+          </mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehicle Time In<span class="required-straic">*</span></mat-label>
+          <input matInput formControlName="dteTimein" type="time">
+          <mat-datepicker-toggle matSuffix (click)="clearTimeIn()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Distance Covered </mat-label>
+          <input matInput formControlName="numCoveredDistance" type="number" min="0" readonly />
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Garbage disposed </mat-label>
+          <input matInput formControlName="numGarbageDisposed" type="number" min="0" />
+        </mat-form-field>
+      </div>
+      <mat-action-row class="pr-0">
+        <div class="col d-flex justify-content-end p-0">
+          <button mat-raised-button type="submit" [disabled]="!editTripSheetForm.valid">
+            <span class="material-icons mb-1">save</span>
+            Submit
+          </button>
+          <button class="mr-2" mat-raised-button type="button" routerLink="/fleet/tripSheet">
+            <span class="material-icons mb-1">
+              clear
+            </span>Close
+          </button>
+        </div>
+      </mat-action-row>
+    </form>
+  </mat-expansion-panel>
+
+</div> -->

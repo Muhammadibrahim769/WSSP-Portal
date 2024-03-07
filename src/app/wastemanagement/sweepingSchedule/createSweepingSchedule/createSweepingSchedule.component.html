@@ -1,0 +1,179 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+          Create Sweeping Schedule
+        </mat-expansion-panel-header>
+    <form [formGroup]="createWasteCollectionForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch<span class="required-straic">*</span></mat-label>
+                <mat-select formControlName="serBranchId">
+                    
+                    <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                        {{branch.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.serBranchId.hasError(validation.type) && (createWasteCollectionForm.controls.serBranchId.dirty || createWasteCollectionForm.controls.serBranchId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council<span class="required-straic">*</span></mat-label>
+                <mat-select formControlName="serLocationId">
+                    
+                    <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                        {{UC.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.serLocationId.hasError(validation.type) && (createWasteCollectionForm.controls.serLocationId.dirty || createWasteCollectionForm.controls.serLocationId.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Date<span class="required-straic">*</span></mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="txtDate" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtDate">
+                        <mat-error
+                            *ngIf="createWasteCollectionForm.controls.txtDate.hasError(validation.type) && (createWasteCollectionForm.controls.txtDate.dirty || createWasteCollectionForm.controls.txtDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    <mat-datepicker-toggle matSuffix (click)="clearTxtDate()">
+                      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Shift<span class="required-straic">*</span></mat-label>
+                    <mat-select formControlName="txtShift">                        
+                        <mat-option value="Morning">Morning</mat-option>
+                        <mat-option value="Afternoon">Afternoon</mat-option>
+                        <mat-option value="Evening">Evening</mat-option>
+                        <mat-option value="Night">Night</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtShift">
+                        <mat-error
+                            *ngIf="createWasteCollectionForm.controls.txtShift.hasError(validation.type) && (createWasteCollectionForm.controls.txtShift.dirty || createWasteCollectionForm.controls.txtShift.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Type of Area<span class="required-straic">*</span></mat-label>
+                <mat-select formControlName="txtTypeOfArea">
+                    
+                    <mat-option value="Main Road">Main Road</mat-option>
+                    <mat-option value="Secondry Road">Secondry Road</mat-option>
+                    <mat-option value="Main Street">Main Street</mat-option>
+                    <mat-option value="Secondry Street">Secondry Street</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.txtTypeOfArea">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtTypeOfArea.hasError(validation.type) && (createWasteCollectionForm.controls.txtTypeOfArea.dirty || createWasteCollectionForm.controls.txtTypeOfArea.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Mode of Sweeping<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="txtSweepingMode" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtSweepingMode">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtSweepingMode.hasError(validation.type) && (createWasteCollectionForm.controls.txtSweepingMode.dirty || createWasteCollectionForm.controls.txtSweepingMode.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Length (Km)<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numLength" type="number" />
+                <mat-error *ngFor="let validation of formValidationMessages.numLength">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.numLength.hasError(validation.type) && (createWasteCollectionForm.controls.numLength.dirty || createWasteCollectionForm.controls.numLength.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>            
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Start Point Coord<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="txtStartPointCoord" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtStartPointCoord">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtStartPointCoord.hasError(validation.type) && (createWasteCollectionForm.controls.txtStartPointCoord.dirty || createWasteCollectionForm.controls.txtStartPointCoord.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Finish Point Coord<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="txtFinishPointCoord" />
+                <mat-error *ngFor="let validation of formValidationMessages.txtFinishPointCoord">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtFinishPointCoord.hasError(validation.type) && (createWasteCollectionForm.controls.txtFinishPointCoord.dirty || createWasteCollectionForm.controls.txtFinishPointCoord.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Schedule & Frequency of Sweeping<span class="required-straic">*</span></mat-label>
+                <mat-select formControlName="txtScheduleSweeping">
+                                       
+                    <mat-option value="Daily">Daily</mat-option>
+                    <mat-option value="Alternate Day">Alternate Day</mat-option>
+                    <mat-option value="Twice a week">Twice a week</mat-option>                    
+                    <mat-option value="Weekly">Weekly</mat-option>
+                    <mat-option value="Monthly">Monthly</mat-option>
+                    <mat-option value="Other">Bimonthly Other Remarks</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let validation of formValidationMessages.txtScheduleSweeping">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.txtScheduleSweeping.hasError(validation.type) && (createWasteCollectionForm.controls.txtScheduleSweeping.dirty || createWasteCollectionForm.controls.txtScheduleSweeping.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Required Number of Days<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numOfRequiredDays" />
+                <mat-error *ngFor="let validation of formValidationMessages.numOfRequiredDays">
+                    <mat-error
+                        *ngIf="createWasteCollectionForm.controls.numOfRequiredDays.hasError(validation.type) && (createWasteCollectionForm.controls.numOfRequiredDays.dirty || createWasteCollectionForm.controls.numOfRequiredDays.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>  
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Staff Deputed<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtStaffDeputed" />
+                    <mat-error *ngFor="let validation of formValidationMessages.txtStaffDeputed">
+                        <mat-error
+                            *ngIf="createWasteCollectionForm.controls.txtStaffDeputed.hasError(validation.type) && (createWasteCollectionForm.controls.txtStaffDeputed.dirty || createWasteCollectionForm.controls.txtStaffDeputed.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-12" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="txtRemarks"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="row mt-3 mb-1">
+            <div class="col d-flex justify-content-end">
+                <button mat-raised-button type="submit">
+                    <span class="material-icons pb-1 pr-1">save</span>Submit
+                </button>
+                <button mat-raised-button [routerLink]="['/wasteManagement/sweepingSchedule']" class="ml-2">
+                    <span class="material-icons pb-1 pr-1">close</span>Close
+                </button>
+            </div>
+        </div>
+    </form>
+    </mat-expansion-panel>
+</div>

@@ -1,0 +1,76 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Compost
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewCompost?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewCompost?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Compost Date</h6>
+                        </th>
+                        <td>{{viewCompost?.txtCompostDate }}</td>
+                        <th>
+                            <h6>Raw Waste Recieved</h6>
+                        </th>
+                        <td>{{viewCompost?.txtRawWasteRecieved}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Compost Amount</h6>
+                        </th>
+                        <td>{{viewCompost?.numAmount}}</td>
+                        <th>
+                            <h6>Compost Rate:</h6>
+                        </th>
+                        <td>{{viewCompost?.numRate}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Compost Produced</h6>
+                        </th>
+                        <td>{{viewCompost?.txtProduced}}</td>
+                        <th>
+                            <h6>Compost Vender</h6>
+                        </th>
+                        <td>{{viewCompost?.txtVendor}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Compost Balance</h6>
+                        </th>
+                        <td>{{viewCompost?.numBalance}}</td>
+                        <th>
+                            <h6>Compost Sold</h6>
+                        </th>
+                        <td>{{viewCompost?.numSold}}</td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Compost Details</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/compost']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

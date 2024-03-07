@@ -1,0 +1,199 @@
+<mat-card-header mat-dialog-title class="matCardHeader">
+    General Operation
+</mat-card-header>
+<mat-card-content>
+    <form [formGroup]="editGeneralOperationForm">
+        <div class="row mt-3">
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Zone/Branch</mat-label>
+                <input matInput formControlName="txtBranchName" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Union Council</mat-label>
+                <input matInput formControlName="txtLocationName" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Month</mat-label>
+                <input matInput formControlName="txtMonth" readonly />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>No of Bill Distributed</mat-label>
+                <input matInput formControlName="numOfBillDistributed"/>
+            </mat-form-field>
+            <div class="rowManHoles">
+                Sewerage
+            </div>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>RPC Manholes Repair(No.s)<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numPriMhRepaired" type="number" />
+                <mat-error *ngFor="let validation of formValidationMessages.numPriMhRepaired">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numPriMhRepaired.hasError(validation.type) && (editGeneralOperationForm.controls.numPriMhRepaired.dirty || editGeneralOperationForm.controls.numPriMhRepaired.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>RCC Manholes Repair(No.s)</mat-label>
+                <input matInput formControlName="numSecMhRepaired" type="number" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>IronGrit Manholes Repair(No.s)</mat-label>
+                <input matInput formControlName="numTerMhRepaired" type="number" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label> Manholes Cleaned(No.s)<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numPriMhCleaned" />
+                <mat-error *ngFor="let validation of formValidationMessages.numPriMhCleaned">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numPriMhCleaned.hasError(validation.type) && (editGeneralOperationForm.controls.numPriMhCleaned.dirty || editGeneralOperationForm.controls.numPriMhCleaned.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>RCC Manholes Cleaned<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numSecMhCleaned" />
+                <mat-error *ngFor="let validation of formValidationMessages.numSecMhCleaned">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numSecMhCleaned.hasError(validation.type) && (editGeneralOperationForm.controls.numSecMhCleaned.dirty || editGeneralOperationForm.controls.numSecMhCleaned.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field> -->
+            <!-- <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>IronGrit Manholes Cleaned<span class="required-straic">*</span></mat-label>
+                <input matInput formControlName="numTerMhCleaned" />
+                <mat-error *ngFor="let validation of formValidationMessages.numTerMhCleaned">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numTerMhCleaned.hasError(validation.type) && (editGeneralOperationForm.controls.numTerMhCleaned.dirty || editGeneralOperationForm.controls.numTerMhCleaned.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field> -->
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Sewerage Lines Repair<span class="required-straic">*</span></mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriSewerageLinesRepaired" />
+                <mat-error *ngFor="let validation of formValidationMessages.numPriSewerageLinesRepaired">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numPriSewerageLinesRepaired.hasError(validation.type) && (editGeneralOperationForm.controls.numPriSewerageLinesRepaired.dirty || editGeneralOperationForm.controls.numPriSewerageLinesRepaired.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Sewerage Lines Cleaned<span class="required-straic">*</span></mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriSewerageLinesCleaned" />
+                <mat-error *ngFor="let validation of formValidationMessages.numPriSewerageLinesCleaned">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numPriSewerageLinesCleaned.hasError(validation.type) && (editGeneralOperationForm.controls.numPriSewerageLinesCleaned.dirty || editGeneralOperationForm.controls.numPriSewerageLinesCleaned.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Sewerage Lines Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriSewerageLineDiscelitation" />
+            </mat-form-field>
+
+
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Sewerage Lines Repaired</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecSewerageLineRepaired" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Sewerage Lines Cleaned</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecSewerageLineCleaned" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Sewerage Lines Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecSewerageLineDiscelitation" />
+            </mat-form-field>
+
+
+            <div class="rowManHoles">
+               Drainage
+            </div>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Drainage Lines Repair<span class="required-straic">*</span></mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDrainageLinesRepaired" />
+                <mat-error *ngFor="let validation of formValidationMessages.numPriDrainageLinesRepaired">
+                    <mat-error *ngIf="editGeneralOperationForm.controls.numPriDrainageLinesRepaired.hasError(validation.type) && (editGeneralOperationForm.controls.numPriDrainageLinesRepaired.dirty || editGeneralOperationForm.controls.numPriDrainageLinesRepaired.touched)">
+                        {{validation.message}}
+                    </mat-error>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Drainage Lines Cleaned</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDrainageLinesCleaned" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Primary Drainage Lines Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDrainageLinesDiscelitation" />
+            </mat-form-field>
+
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Drainage Lines Repair</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDrainageLinesRepaired" />                
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Drainage Lines Cleaned</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDrainageLinesCleaned" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Drainage Lines Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDrainageLinesDiscelitation" />
+            </mat-form-field>
+
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Street Drain Repair</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesRepaired" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Street Drain Cleaned</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesCleaned" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Street Drain Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numPriDistributionLinesDiscelitation" />
+            </mat-form-field>
+
+<!--
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Repair</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesRepaired" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Cleaned</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesCleaned" />
+            </mat-form-field>
+            <mat-form-field class="form-group col-md-3" appearance="outline">
+                <mat-label>Secondary Distribution Lines Desilation</mat-label>
+                <span matSuffix>km &nbsp;</span>
+                <input matInput formControlName="numSecDistributionLinesDiscelitation" />
+            </mat-form-field> -->
+        </div>
+        <div class="row mt-2">
+            <div class="col pr-3 d-flex justify-content-end">
+                <div class="col mb-1 d-flex justify-content-center">
+                    <button mat-raised-button (click)="onUpdate()"><span class="material-icons pt-1 pb-2">update</span>Update
+                    </button>
+                    <button mat-raised-button class="ml-2" mat-dialog-close>
+                        <span class="material-icons pt-1 pb-2">close</span>
+                        Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-card-content>

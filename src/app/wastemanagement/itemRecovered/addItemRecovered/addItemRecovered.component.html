@@ -1,0 +1,121 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            Add Item Recovered
+        </mat-expansion-panel-header>
+        <form [formGroup]="addItemRecoveredForm" class="card mat-elevation-z8" (ngSubmit)="onSubmit()">
+            <div class="row mt-3">
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Zone/Branch</mat-label>
+                    <mat-select formControlName="serBranchId">
+
+                        <mat-option *ngFor="let branch of branchList" value="{{branch.id}}">
+                            {{branch.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serBranchId">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.serBranchId.hasError(validation.type) && (addItemRecoveredForm.controls.serBranchId.dirty || addItemRecoveredForm.controls.serBranchId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Union Council</mat-label>
+                    <mat-select formControlName="serLocationId">
+
+                        <mat-option *ngFor="let UC of getBranchId" value="{{UC.id}}">
+                            {{UC.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.serLocationId">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.serLocationId.hasError(validation.type) && (addItemRecoveredForm.controls.serLocationId.dirty || addItemRecoveredForm.controls.serLocationId.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="dp1" formControlName="txtRecoveredDate" readonly>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtRecoveredDate">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.txtRecoveredDate.hasError(validation.type) && (addItemRecoveredForm.controls.txtRecoveredDate.dirty || addItemRecoveredForm.controls.txtRecoveredDate.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                    <mat-datepicker-toggle matSuffix (click)="clearTxtDate()">
+                        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                    <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Item Recovered</mat-label>
+                    <mat-select formControlName="txtItemRecovered">
+
+                        <mat-option value="PET Recovered">PET Recovered</mat-option>
+                        <mat-option value="Metal Recovered">Metal Recovered</mat-option>
+                        <mat-option value="Glass Recovered">Glass Recovered</mat-option>
+                        <mat-option value="Paper Recovered">Paper Recovered</mat-option>
+                        <mat-option value="Plastic Recovered">Plastic Recovered</mat-option>
+                        <mat-option value="Combutib">Combutib</mat-option>
+                        <mat-option value="Left Over Insert Waste">Left Over Insert Waste</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtItemRecovered">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.txtItemRecovered.hasError(validation.type) && (addItemRecoveredForm.controls.txtItemRecovered.dirty || addItemRecoveredForm.controls.txtItemRecovered.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Amount of Waste Recieved (ton)</mat-label>
+                    <input matInput formControlName="numTotalWasteRecieved" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalWasteRecieved">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.numTotalWasteRecieved.hasError(validation.type) && (addItemRecoveredForm.controls.numTotalWasteRecieved.dirty || addItemRecoveredForm.controls.numTotalWasteRecieved.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Total Amount Recovered</mat-label>
+                    <input matInput formControlName="numTotalRecovered" />
+                    <mat-error *ngFor="let validation of formValidationMessages.numTotalRecovered">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.numTotalRecovered.hasError(validation.type) && (addItemRecoveredForm.controls.numTotalRecovered.dirty || addItemRecoveredForm.controls.numTotalRecovered.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-group col-md-3" appearance="outline">
+                    <mat-label>Route type</mat-label>
+                    <mat-select formControlName="txtRouteType">
+                        <mat-option value="TS">TS</mat-option>
+                        <mat-option value="DS">DS</mat-option>
+                    </mat-select>
+                    <mat-error *ngFor="let validation of formValidationMessages.txtRouteType">
+                        <mat-error
+                            *ngIf="addItemRecoveredForm.controls.txtRouteType.hasError(validation.type) && (addItemRecoveredForm.controls.txtRouteType.dirty || addItemRecoveredForm.controls.txtRouteType.touched)">
+                            {{validation.message}}
+                        </mat-error>
+                    </mat-error>
+
+                </mat-form-field>
+            </div>
+            <div class="row mt-3 mb-1">
+                <div class="col d-flex justify-content-end">
+                    <button mat-raised-button type="submit">
+                        <span class="material-icons pb-1 pr-1">save</span>Submit
+                    </button>
+                    <button mat-raised-button [routerLink]="['/wasteManagement/quantityRecoveredItem']" class="ml-2">
+                        <span class="material-icons pb-1 pr-1">close</span>Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>

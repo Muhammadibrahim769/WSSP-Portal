@@ -1,0 +1,149 @@
+<!-- /*
+*  Author Muhammad Ibrahim Sagheer
+*
+* Created on Tue Feb 23 2021 : 7:37 PM
+*
+* Copyright (c) 2021 - DRL
+*/ -->
+<!-- <div class="main">
+  <mat-card>
+    <mat-form-field>
+      <mat-label>Select a Vehicle </mat-label>
+      <mat-select #batch>
+        <mat-select-trigger>{{batch}}</mat-select-trigger>
+  
+        <mat-option>
+          <lib-mat-select-search
+            [searchProperties]="['txtBatchNo']"
+            (filtered)="getBatchNolist = $event">
+          </lib-mat-select-search>
+        </mat-option>
+  
+         <mat-option *ngFor="let country of filteredCountries" [value]="country.name">
+          <div class="country-container">
+            <span>{{country.name}}</span><span>{{country.dialCode}}</span>
+          </div>
+        </mat-option>  -->
+        <!-- <mat-option *ngFor="let batch of getBatchNolist" value="{{batch}}">
+          {{batch}}
+        </mat-option>
+  
+      </mat-select>
+    </mat-form-field>
+  </mat-card>  -->
+  
+  <mat-expansion-panel class="mat-elevation-z8" [expanded]="step === 0" (opened)="setStep(0)">
+    <mat-expansion-panel-header>
+      Add Trip Sheet
+    </mat-expansion-panel-header>
+    <form [formGroup]="addTripSheetForm" (ngSubmit)="onSubmit()">
+      <div class="row p-0 mt-3">
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehical No</mat-label>
+          <mat-select formControlName="txtBatchNo" (selectionChange)="onChange($event)">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let batch of getBatchNolist" value="{{batch}}">
+              {{batch}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Driver Name</mat-label>
+          <input matInput formControlName="txtDriverName" readonly />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Route No</mat-label>
+          <mat-select formControlName="txtRouteNo" (selectionChange)="onChangeRoute($event)">
+            <mat-option value=""></mat-option>
+            <mat-option *ngFor="let bacth of getBatchCode" value="{{bacth.code}}">
+              {{bacth.code}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Zone/Branch</mat-label>
+          <input matInput formControlName="txtBranchName" readonly />
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Union Council</mat-label>
+          <input matInput formControlName="txtLocationName" readonly />
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+            <mat-label>Route Name </mat-label>
+            <input matInput formControlName="txtRouteName" readonly />
+          </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Route Type</mat-label>
+          <input matInput formControlName="txtRouteType" readonly />
+        </mat-form-field>        
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Trip Date</mat-label>
+          <input matInput formControlName="dteDate" [matDatepicker]="dp5" readonly>
+          <mat-datepicker-toggle matSuffix (click)="clearWEFD()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+          <mat-datepicker #dp5></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+            <mat-label>Route Distance </mat-label>
+            <input matInput formControlName="numRouteDistance" type="number" min="0" readonly />
+          </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Odometer Out</mat-label>
+          <input matInput formControlName="numOdometerOut" (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+            maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Odometer In</mat-label>
+          <input matInput formControlName="numOdometerIn" (keypress)="OnlyNumbersAllowed($event)" minlength="1"
+            maxlength="10" />
+        </mat-form-field>
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+            <mat-label>Distance Covered </mat-label>
+            <input matInput formControlName="numCoveredDistance" type="number" min="0" readonly />
+          </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehicle Date & Time Out<span class="required-straic">*</span></mat-label>
+          <input matInput formControlName="dteTimeout" [owlDateTime]="dp2" [owlDateTimeTrigger]="dp2" placeholder="Date Time"
+            readonly>
+          <owl-date-time #dp2></owl-date-time>
+          <mat-datepicker-toggle matSuffix (click)="clearTimeOut()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+          <mat-datepicker #dp2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="form-group col-md-4" appearance="outline">
+          <mat-label>Vehicle Date & Time In<span class="required-straic">*</span></mat-label>
+          <input matInput formControlName="dteTimein" [owlDateTime]="dp1" [owlDateTimeTrigger]="dp1" placeholder="Date Time"
+            readonly>
+          <owl-date-time #dp1></owl-date-time>
+          <mat-datepicker-toggle matSuffix (click)="clear()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field>        
+        <mat-form-field class="form-group  col-md-4" appearance="outline">
+          <mat-label>Garbage disposed (Ton) </mat-label>
+          <input matInput formControlName="numGarbageDisposed" type="number" min="0" />
+        </mat-form-field>
+      </div>
+      <mat-action-row class="pr-0">
+        <div class="col d-flex justify-content-end p-0">
+          <button mat-raised-button type="submit">
+            <span class="material-icons mb-1">save</span>
+            Submit
+          </button>
+          <button class="mr-2" mat-raised-button type="button" routerLink="/fleet/tripSheet">
+            <span class="material-icons mb-1">
+              clear
+            </span>Close
+          </button>
+        </div>
+      </mat-action-row>
+    </form>
+  </mat-expansion-panel>
+  <!-- <pre>{{addTripSheetForm.value | json}}</pre>  -->

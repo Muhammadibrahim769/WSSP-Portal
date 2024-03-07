@@ -1,0 +1,79 @@
+﻿<div class="signin-content">
+  
+    <mat-card class="mat-elevation-z8 mt-3 loginForm" fxLayout="row" fxLayoutAlign="center center">
+        <mat-card-content >
+          
+            <form class="loginFormColor" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              
+                <span style="cursor: pointer;" class="logo"><img src="./assets/wsspLogo.png"></span>
+
+                <mat-form-field class="full-width-input">
+                    <mat-label>User Name<span class="required-straic">*</span></mat-label>
+                    <input matInput placeholder="Enter User Name " formControlName="txtUserId" [ngClass]="{ 'is-invalid': submitted && f.txtUserId.errors }">
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error class="errorMessageLogin" *ngIf="loginForm.controls.txtUserId.invalid">
+                      <span *ngFor="let validation of formValidationMessages.txtUserId">
+                            <span *ngIf="loginForm.controls.txtUserId.hasError(validation.type)">{{validation.message}}</span></span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width-input">
+                    <mat-label>Password<span class="required-straic">*</span></mat-label>
+                    <input matInput formControlName="txtPassword" [type]="hide ? 'password' : 'text'" placeholder="Enter Password "
+                        [ngClass]="{ 'is-invalid': submitted && f.txtPassword.errors }">
+                        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>                   
+                    <mat-error class="errorMessageLogin" *ngIf="loginForm.controls.txtPassword.invalid">
+                      <span *ngFor="let validation of formValidationMessages.txtPassword">
+                            <span *ngIf="loginForm.controls.txtPassword.hasError(validation.type)">
+                              {{validation.message}}
+                            </span>
+                      </span>
+                      <span *ngIf="loginForm.get('txtPassword').hasError('minlength')">
+                          Password should contain 8 characters
+                      </span>
+                      <!-- <span >
+                        {{Message}}
+                    </span> -->
+                    <!-- <div *ngIf="submitted">
+                      {{Message}}}
+                  </div> -->
+                    </mat-error>
+                </mat-form-field>
+               
+                <button mat-raised-button type="submit" class="loginButton">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Login</button>
+            </form>
+
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<router-outlet></router-outlet>
+
+<!-- <form [formGroup]='addAdminForm'>   
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-7">
+            <input type="password" class="form-control" formControlName='password' (keyup)="checkPassSame()">
+
+            <div *ngIf="addAdminForm.controls?.password?.invalid && addAdminForm.controls?.password.touched">
+              <p *ngIf="addAdminForm.controls?.password?.errors.required" class="errorMsg">*This field is required.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Confirm Password</label>
+          <div class="col-sm-7">
+            <input type="password" class="form-control" formControlName='confPass' (keyup)="checkPassSame()">
+
+            <div *ngIf="addAdminForm.controls?.confPass?.invalid && addAdminForm.controls?.confPass.touched">
+              <p *ngIf="addAdminForm.controls?.confPass?.errors.required" class="errorMsg">*This field is required.</p>
+            </div>
+            <div *ngIf="passmsg != '' && !addAdminForm.controls?.confPass?.errors?.required">
+              <p class="errorMsg">*{{passmsg}}</p>
+            </div>  
+          </div>
+        </div>
+    </form> -->

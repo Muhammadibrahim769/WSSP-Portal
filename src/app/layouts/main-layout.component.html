@@ -1,0 +1,516 @@
+<mat-toolbar class="col-md-12">
+  <!--  -->
+  <div class="iconLogo col-md-5">
+    <button type="button" mat-button class="mr-3" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span style="cursor: pointer;" class="logo"><img src="./assets/wsspLogo.png"></span>
+  </div>
+  <div class="titleHeader col-md-5">
+    <span>
+      WSSP Web-Portal </span>
+  </div>
+
+  <!-- <button mat-button [matMenuTriggerFor]="beforeMenu">
+      <mat-label class="resp_login-user">
+        <mat-icon>perm_identity</mat-icon>
+        <span class="userName">{{user.txtUserName}}</span>
+      </mat-label>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item>
+        Logout
+        <mat-icon (click)="signOut()">logout</mat-icon>
+      </button>
+      <button mat-menu-item>
+        Change Password
+        <mat-icon>repeat</mat-icon>
+      </button>
+    </mat-menu> -->
+
+  <div class="logOutHeader col-md-2">
+    <mat-label class="resp_login-user">
+      <mat-icon class="userIdentityIcon">perm_identity</mat-icon>
+      <span class="userName">{{user.txtUserName}}</span>
+    </mat-label>
+    <button mat-button (click)="signOut()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+    <br>
+    <span class="userName">
+      <mat-icon>
+        <span>
+          query_builder
+        </span>
+
+      </mat-icon>{{ time | date: 'hh:mm:ss a' }}
+    </span>
+  </div>
+</mat-toolbar>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened fixedInViewport="true">
+    <!--  -->
+    <mat-accordion>
+      <mat-expansion-panel #sidenav
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Fleet Management' || user.userRightsOnModulesDto.txt_user_name == 'webadmin' ">
+        <mat-expansion-panel-header>
+          Fleet Management
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/fleet/vehicleRegistration" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Vehicle Registration</span>
+            <mat-icon mat-list-icon>commute</mat-icon>
+          </mat-list-item>
+          <!-- <mat-list-item routerLink="/fleet/maintenanceStandard" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Maintenance Standard</span>
+            <mat-icon mat-list-icon>engineering</mat-icon>
+          </mat-list-item> -->
+          <mat-list-item routerLink="/fleet/routes" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Routes</span>
+            <mat-icon mat-list-icon>alt_route</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/fleet/tripSheet" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Trip Sheet</span>
+            <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/fleet/maintenanceSheet" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Maintenance Sheet</span>
+            <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+          </mat-list-item>
+          <!-- <mat-list-item routerLink="/fleet/transferRecord" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Routine Expense</span>
+            <mat-icon mat-list-icon>attach_money</mat-icon>
+          </mat-list-item> -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mep"
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Billing System'|| user.userRightsOnModulesDto.txt_user_name == 'webadmin' ">
+        <mat-expansion-panel-header>
+          Billing System
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/billing/connectionList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Connection List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/createConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Create Connection</span>
+            <mat-icon mat-list-icon>add</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/updateConnectionList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Updated Connection List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/updateConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Update Connection</span>
+            <mat-icon mat-list-icon>update</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/suspendedList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Suspended List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/suspendedConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Suspend Connection</span>
+            <mat-icon mat-list-icon>leak_remove</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/closedConnectionList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Closed Connection List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/closeConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Close Connection</span>
+            <mat-icon mat-list-icon>not_interested</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/connectionResumption" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Connection Resumption</span>
+            <mat-icon mat-list-icon>sensors</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/billAdjustment" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Bill Adjustment</span>
+            <mat-icon mat-list-icon>adjust</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/bill" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Bill</span>
+            <mat-icon mat-list-icon>edit</mat-icon>
+          </mat-list-item>
+          <!-- <mat-list-item routerLink="/billing/billInstallment" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Bill Installment</span>
+            <mat-icon mat-list-icon>attach_money</mat-icon>
+          </mat-list-item> -->
+          <mat-list-item routerLink="/billing/scheduler" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Scheduler</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/scheduler/createSchedule" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Create Scheduler</span>
+            <mat-icon mat-list-icon>add</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item routerLink="/billing/advancePaymentList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Advance Payment List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item routerLink="/billing/newAdvancePayment" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">New Advance Payment</span>
+            <mat-icon mat-list-icon>add</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item routerLink="/billing/fundsTransfer" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Funds Transfer</span>
+            <mat-icon mat-list-icon>attach_money</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/uploadcsv" routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="isExpanded || isShowing">Upload CSV</span>
+          <mat-icon mat-list-icon>file_copy</mat-icon>
+        </mat-list-item>
+          <!-- <mat-list-item routerLink="/billing/reports" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Reports</span>
+            <mat-icon mat-list-icon>text_snippet</mat-icon>
+          </mat-list-item> -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mep"
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Operation Management' || user.userRightsOnModulesDto.txt_user_name == 'webadmin' ">
+        <mat-expansion-panel-header>
+          Operation Management
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/operationManagement/operationBasicInformation" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">TubeWell</span>
+            <mat-icon mat-list-icon>info</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/operationManagement/overHeadTanks" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">OverHead Tanks</span>
+            <mat-icon mat-list-icon>local_drink</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/operationManagement/filterationPlant" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Filteration Plant</span>
+            <mat-icon mat-list-icon>opacity</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/operationManagement/householdAndPopulationRecord" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Household & Population Record</span>
+            <mat-icon mat-list-icon>house</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/operationManagement/generalOperation" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">General Operation</span>
+            <mat-icon mat-list-icon>stacked_line_chart</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/operationManagement/maintenance" routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="isExpanded || isShowing">Maintenance</span>
+        
+            <mat-icon mat-list-icon>engineering</mat-icon>
+        </mat-list-item>
+        <mat-list-item routerLink="/operationManagement/addmaintenance" routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <span *ngIf="isExpanded || isShowing">Add Maintenance</span>
+        <mat-icon mat-list-icon>add</mat-icon>
+      </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Waste Management'">
+        <mat-expansion-panel-header>
+          Waste Management
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/wasteManagement/householdAndPopulationRecord" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Household & Population Record</span>
+            <mat-icon mat-list-icon>house</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/generalOperation" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">General Operation</span>
+            <mat-icon mat-list-icon>stacked_line_chart</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/routes" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Routes</span>
+            <mat-icon mat-list-icon>alt_route</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/tripSheet" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Trip Sheet</span>
+            <mat-icon mat-list-icon>commute</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/wasteCollection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Waste Collection</span>
+            <mat-icon mat-list-icon>local_shipping</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/sweepingSchedule" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Sweeping Schedule</span>
+            <mat-icon mat-list-icon>departure_board</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/desiltationActivity" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Desiltation Activities</span>
+            <mat-icon mat-list-icon>local_shipping</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/report" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Reports</span>
+            <mat-icon mat-list-icon>text_snippet</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/gasCollection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Gas Collection</span>
+            <mat-icon mat-list-icon>local_gas_station</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/wasteDiversionSheet" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Waste Diversion Sheet</span>
+            <mat-icon mat-list-icon>local_gas_station</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/stp" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">STP</span>
+            <mat-icon mat-list-icon>local_gas_station</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/rdf" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">RDF</span>
+            <mat-icon mat-list-icon>local_gas_station</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/quantityRecoveredItem" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Recovered List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <!-- quantityRecoveredItem 
+          itemRecovered
+          -->
+          <mat-list-item routerLink="/wasteManagement/saleRecoveredItemList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Sale Item List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/wasteManagement/compost" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Compost</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <!-- saleRecoveredItem -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Water Supply Management' || user.userRightsOnModulesDto.txt_user_name == 'webadmin'">
+        <mat-expansion-panel-header>
+          Water Supply Management
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-expansion-panel class="waterProductionHeader">
+            <mat-expansion-panel-header class="waterProductionHeader">
+              TubeWell
+            </mat-expansion-panel-header>
+            <mat-list-item routerLink="/waterSupplyManagement/tubeWell" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Tube Well</span>
+              <mat-icon mat-list-icon>info</mat-icon>
+            </mat-list-item>
+            <mat-list-item routerLink="/waterSupplyManagement/waterProduction" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Tube Well Production</span>
+              <mat-icon mat-list-icon>info</mat-icon>
+            </mat-list-item>
+            <mat-list-item routerLink="/waterSupplyManagement/monthlyReport" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Monthly Reports</span>
+              <mat-icon mat-list-icon>text_snippet</mat-icon>
+            </mat-list-item>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="waterProductionHeader">
+            <mat-expansion-panel-header class="waterProductionHeader">
+              Filteration Plant
+            </mat-expansion-panel-header>
+            <mat-list-item routerLink="/waterSupplyManagement/waterFilterationPlant" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Filteration Plant</span>
+              <mat-icon mat-list-icon>opacity</mat-icon>
+            </mat-list-item>
+            <mat-list-item routerLink="/waterSupplyManagement/filterationPlantProduction" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Filteration Plant Production</span>
+              <mat-icon mat-list-icon>opacity</mat-icon>
+            </mat-list-item>
+            <mat-list-item routerLink="/waterSupplyManagement/filterationReport" routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <span *ngIf="isExpanded || isShowing">Monthly Reports</span>
+              <mat-icon mat-list-icon>text_snippet</mat-icon>
+            </mat-list-item>
+          </mat-expansion-panel>
+
+          <mat-list-item routerLink="/waterSupplyManagement/generalOperation" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">General Operation</span>
+            <mat-icon mat-list-icon>stacked_line_chart</mat-icon>
+          </mat-list-item>
+
+          <mat-list-item routerLink="/waterSupplyManagement/waterTesting" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Water Testing</span>
+            <mat-icon mat-list-icon>local_drink</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/connectionList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Connection List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/createConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Create Connection</span>
+            <mat-icon mat-list-icon>add</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/updateConnectionList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Updated Connection List</span>
+            <mat-icon mat-list-icon>list</mat-icon>
+            
+          </mat-list-item>
+          <mat-list-item routerLink="/billing/updateConnection" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Update Connection</span>
+            <mat-icon mat-list-icon>update</mat-icon>
+          </mat-list-item>
+          <!-- <mat-list-item routerLink="/waterSupplyManagement/googleMaps" routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="isExpanded || isShowing">GIS</span>
+          <mat-icon mat-list-icon>alt_route</mat-icon>
+        </mat-list-item> -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Monitoring & Evaluation Module' || user.userRightsOnModulesDto.txt_user_name == 'webadmin'">
+        <mat-expansion-panel-header>
+          M & E
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/maintenanceAndEveluation/monthlyExpenseSheet" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Monthly Expense Sheet </span>
+            <mat-icon mat-list-icon>attach_money</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/maintenanceAndEveluation/monthlyFactorValue" routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="isExpanded || isShowing">Monthly Factor value </span>
+          <mat-icon mat-list-icon>attach_money</mat-icon>
+        </mat-list-item>
+
+          <mat-list-item routerLink="/maintenanceAndEveluation/factor" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Factor </span>
+            <mat-icon mat-list-icon>fact_check</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/maintenanceAndEveluation/createKPI" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Create KPI </span>
+            <mat-icon mat-list-icon>add</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/maintenanceAndEveluation/kpiList" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">KPI List </span>
+            <mat-icon mat-list-icon>list</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/maintenanceAndEveluation/kpiDashboard" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">KPI Dashboard </span>
+            <mat-icon mat-list-icon>dashboard</mat-icon>
+          </mat-list-item>
+          <mat-list-item routerLink="/maintenanceAndEveluation/complaints" routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <span *ngIf="isExpanded || isShowing">Complaints </span>
+          <mat-icon mat-list-icon>contact_support</mat-icon>
+          
+        </mat-list-item>
+        <mat-list-item routerLink="/maintenanceAndEveluation/addcomplaints" routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <span *ngIf="isExpanded || isShowing">Add Complaints </span>
+        <mat-icon mat-list-icon>add</mat-icon>
+        
+      </mat-list-item>
+          <!-- <mat-list-item routerLink="/maintenanceAndEveluation/container" routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <span *ngIf="isExpanded || isShowing">Containers </span>
+            <mat-icon mat-list-icon>dashboard</mat-icon>
+          </mat-list-item> -->
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Management Dashboards – Finance' || user.userRightsOnModulesDto.txt_user_name == 'webadmin'">
+        <mat-expansion-panel-header>
+          Financial DashBoards
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item>
+            <a href="http://115.186.137.140:8080/HoneycombFinancialDashboard/">Financial DashBoards</a>
+
+            <!-- <span *ngIf="isExpanded || isShowing">Financial Dashboard</span> -->
+            <mat-icon mat-list-icon>dashboard</mat-icon>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Management Dashboards – HR' || user.userRightsOnModulesDto.txt_user_name == 'webadmin'">
+        <mat-expansion-panel-header>
+          HR Payroll DashBoards
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item>
+            <a href="http://115.186.137.140:8080/HoneycombHR-PayRollDashboard/">HR Payroll</a>
+
+            <!-- <span *ngIf="isExpanded || isShowing">H R Payroll</span> -->
+            <mat-icon mat-list-icon>dashboard</mat-icon>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        *ngIf="user.userRightsOnModulesDto.txt_module_name === 'Geographic Information System' || user.userRightsOnModulesDto.txt_module_name === 'Operation Management' || user.userRightsOnModulesDto.txt_user_name == 'webadmin'">
+        <mat-expansion-panel-header>
+          GIS
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item>
+            <a href="https://115.186.137.140/GIS/">Geographic Info System</a>
+            <mat-icon mat-list-icon>gps_fixed</mat-icon>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-drawer>
+  <div class="example-sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

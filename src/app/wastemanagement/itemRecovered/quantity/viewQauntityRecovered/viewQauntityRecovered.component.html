@@ -1,0 +1,60 @@
+<div class="main">
+    <mat-card class="card mat-elevation-z8 m-0 p-0 pb-2">
+        <mat-card-header class="matCardHeader">
+            View Recovered Item
+        </mat-card-header>
+        <mat-card-content class="m-0" style="justify-content: center !important; padding: 25px 0px 0px 30px;">
+
+            <div class="row col-md-12">
+                <table class="testTable">
+                    <tr>
+                        <th>
+                            <h6>Zone / Branch:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtBranchName}}</td>
+                        <th>
+                            <h6>Union Council:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtLocationName}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6> Date:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtRecoveredDate |date:'dd MMMM, yyyy' }}</td>
+                        <th>
+                            <h6>Total Amount Recovered:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.numTotalWasteRecieved}}</td>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <h6>Amount of Waste Recieved (ton):</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.numTotalRecovered}}</td>
+                        <th>
+                            <h6>Item Recovered:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtItemRecovered}}</td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h6>Route Type:</h6>
+                        </th>
+                        <td>{{viewRecoveredItem?.txtRouteType}}</td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mt-2 mb-2">
+            <div class="col d-flex justify-content-end ">
+                <button mat-raised-button (click)="downloadPDF()"><span class="material-icons pb-1 pr-1">download</span>
+                    Quantity Recovered</button>
+                <button mat-raised-button class="ml-2 mr-2" [routerLink]="['/wasteManagement/quantityRecoveredItem']"><span
+                        class="material-icons pb-1 pr-1">close</span>Close</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

@@ -1,0 +1,494 @@
+<div class="main">
+    <mat-expansion-panel class="mat-elevation-z8 p-0 mb-2" [expanded]="step === 0" *ngIf="show">
+        <mat-expansion-panel-header>
+            Bill Page
+        </mat-expansion-panel-header>
+        <mat-card-content class="page mb-0" id="printBill">
+            <mat-card class="example-card">
+                <mat-card class="table-card">
+                    <table id="billBasicInfo">
+                        <thead>
+                            <tr>
+                                <th>Zone</th>
+                                <th>Union Council</th>
+                                <th>Neighborhood Council</th>
+                                <th>Billing Period From</th>
+                                <th>Billing Period To</th>
+                                <th>Issue Date</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{billInfo?.branchName}}</td>
+                                <td>{{billInfo?.UCName}}</td>
+                                <td>{{billInfo?.txtNeighbourhoodCouncil}}</td>
+                                <td>{{billInfo?.dteBillFrom}}</td>
+                                <td>{{billInfo?.dteBillTo}}</td>
+                                <td>{{billInfo?.dteBillIssueDate | date:'dd MMMM, YYYY'}}</td>
+                                <td>{{billInfo?.dteBillDueDate | date:'dd MMMM, YYYY'}}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>Bill No.</th>
+                                <th>Distributor Code</th>
+                                <th>Customer Id</th>
+                                <th>Old ID/Parcel ID</th>
+                                <th>Connection Type</th>
+                                <th>Category</th>
+                                <th>Sub Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{billInfo?.txtBillNo}}</td>
+                                <td class="billInt">{{billInfo?.txtDistributorsCode}}</td>
+                                <td>{{billInfo?.txtCustomerCode}}</td>
+                                <td class="billInt">{{billInfo?.txtReferenceCode}}</td>
+                                <td>{{billInfo?.txtConnectionType}}</td>
+                                <td>{{billInfo?.txtCustomerCategory}}</td>
+                                <td>{{billInfo?.txtSubCategory}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-card>
+                <div class="row col-md-12">
+                    <div class="col-md-12 pr-1 pl-0">
+                        <mat-card class="customer-card mt-2 p-0">
+                            <mat-card-header class="billCardHeader">CUSTOMER DETAILS</mat-card-header>
+                            <mat-card-content class="p-1">
+                                <table>
+                                    <tr><span>Name: </span>{{billInfo?.txtBusinessName}}</tr>
+                                    <tr><span>Address:
+                                        </span>{{billInfo?.txtArea}},{{billInfo?.txtSectorMohallah}},{{billInfo?.txtStreetNo}},{{billInfo?.txtHouseNo}}
+                                    </tr>
+                                    <tr><span>Cnic: </span>{{billInfo?.txtCnicNo}}</tr>
+                                </table>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <!-- <div class="col-md-6 pl-1 pr-0">
+                        <mat-card class="customer-card mt-2 p-0">
+                            <mat-card-header class="billCardHeader">BILLING HISTORY</mat-card-header>
+                            <mat-card-content>
+                                <table id="billInfo">
+                                    <thead>
+                                        <tr>
+                                            <th>BILLING PERIOD</th>
+                                            <th>BILL</th>
+                                            <th>PAYMENT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Jan-20 to Feb-20</td>
+                                            <td class="billInt">2.220</td>
+                                            <td class="billInt">2.220</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mar-20 to Apr-20</td>
+                                            <td class="billInt">2.220</td>
+                                            <td class="billInt">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>May-20 to June-20</td>
+                                            <td class="billInt">4.660</td>
+                                            <td class="billInt">4.660</td>
+                                        </tr>
+                                        <tr>
+                                            <td>July-20 to Aug-20</td>
+                                            <td class="billInt">3.120</td>
+                                            <td class="billInt">3.120</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sep-20 to Oct-20</td>
+                                            <td class="billInt">3.120</td>
+                                            <td class="billInt">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-card-content>
+                        </mat-card>
+                    </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="row p-0">
+                            <div class="col-md-8 p-0">
+                                <div class="row">
+                                    <div class="col-md-7 pr-1 pl-0">
+                                        <mat-card class="serviceDetail mt-2 p-0">
+                                            <mat-card-header class="billCardHeader">
+                                                WATER SUPPLY/CONSERVANCY/SEWERAGE CHARGES
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Service</th>
+                                                            <th>Rate/Month</th>
+                                                            <th>Amount Of Period</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo1}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice1}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty1}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo2}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice2}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty2}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo3}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice3}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty3}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo4}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice4}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty4}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo5}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice5}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty5}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo6}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice6}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty6}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo7}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice7}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty7}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo8}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice8}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty8}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo9}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice9}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty9}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo10}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice10}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty10}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo11}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice11}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty11}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo12}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice12}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty12}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo13}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice13}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty13}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo14}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice14}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty14}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo15}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice15}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty15}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo16}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice16}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty16}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo17}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice17}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty17}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo18}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice18}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty18}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo19}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice19}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty19}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo20}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice20}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty20}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo21}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice21}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty21}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo22}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice22}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty22}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo23}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice23}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty23}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo24}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice24}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty24}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="billTxt">{{billInfo?.txtServiceNo25}}</td>
+                                                            <td class="billInt">{{billInfo?.numServicePrice25}}</td>
+                                                            <td class="billInt">{{billInfo?.numServiceQty25}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">{{waterSupplyTotal}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-5 pr-1 pl-1">
+                                        <mat-card class="serviceDetail mt-2 p-0">
+                                            <mat-card-header class="billCardHeader">
+                                                SOLID WASTE MANAGEMENT SERVICES</mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Particulars</th>
+                                                            <th>Number/Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 pl-0 pr-1 pt-0">
+                                        <mat-card class="serviceDetail p-0 mt-2">
+                                            <mat-card-header class="billCardHeader">GROUND WATER ABSTRACTION/AQUIFER
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Service</th>
+                                                            <th>Rate/Month</th>
+                                                            <th>Amount of Period</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td class="billInt">0</td>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-5 p-1 pt-0">
+                                        <mat-card class="serviceDetail p-0 mt-2">
+                                            <mat-card-header class="billCardHeader">OTHER SERVICES</mat-card-header>
+                                            <mat-card-content>
+                                                <table id="billInfo">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Particulars</th>
+                                                            <th>Number/Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>-</td>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>TOTAL (Rs):</th>
+                                                            <td class="billInt">0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0 pl-1">
+                                <mat-card class="billSummary p-0 mt-2">
+                                    <mat-card-header class="billSummaryHeader">BILL SUMMARY</mat-card-header>
+                                    <mat-card-content>
+                                        <table id="billInfo">
+                                            <tr>
+                                                <th>Water Supply(Rs.)</th>
+                                                <td class="billInt">{{waterSupplyTotal}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Aquifer(Rs.)</th>
+                                                <td class="billInt">0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Solid Waste(Rs.)</th>
+                                                <td class="billInt">0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Other Services(Rs.)</th>
+                                                <td class="billInt">0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Arrears(Rs.)</th>
+                                                <td class="billInt">{{billInfo?.numArears}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Discount(Rs.)</th>
+                                                <td class="billInt">{{billInfo?.numDiscount}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Credit(Rs.)</th>
+                                                <td class="billInt">{{billInfo?.numCredit}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Adjustment(Rs.)</th>
+                                                <td class="billInt">{{billInfo?.numAdjustment}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: blue;">Payable within Due Date</th>
+                                                <td class="billInt">{{billInfo?.numPayableWithinDueDate}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>LP Surcharge</th>
+                                                <td class="billInt">{{billInfo?.numLatePaymentSurcharge}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="color: red;">Payable after Due Date</th>
+                                                <td class="billInt">{{billInfo?.numPayableAfterDueDate}}</td>
+                                            </tr>
+                                        </table>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="row p-0 mat-elevation-z1">
+                            <img src="././././assets/DepositDetail.PNG" style="background-size: cover;padding: 0px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="row p-0">
+                            <div class="col-md-6">
+                                <div class="row p-0">
+                                    <div class="col-md-4">
+                                        <img src="././././assets/wsspLogo.png" style="padding: 0px;">
+                                    </div>
+                                    <div class="col-md-4 pt-3">
+                                        <p style="color: chocolate; font-weight: bold;">
+                                            CONSUMER BILL<br>BANK COPY</p>
+                                    </div>
+                                    <div class="col-md-4 pt-2">
+                                        <img src="././././assets/3.png" style="padding: 0px;">
+                                    </div>
+                                </div>
+                                <div class="row p-0">
+                                    <!-- <table>
+                                        <th><span>Consumer Id: </span>{{billInfo?.txtCustomerCode}}</th>
+                                        <tr><span>Name & Address: </span>{{billInfo?.txtBusinessName}},{{billInfo?.txtArea}},{{billInfo?.txtSectorMohallah}},{{billInfo?.txtStreetNo}},{{billInfo?.txtHouseNo}}</tr>
+                                        <tr><span>Billing Period: </span>{{billInfo?.dteBillFrom}} to {{billInfo?.dteBillTo}}</tr>
+                                    </table> -->
+                                    <table id="billInfo">
+                                        <tr>
+                                            <th>Consumer Id</th>
+                                            <td style="text-align: start;">{{billInfo?.txtCustomerCode}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Name & Address</th>
+                                            <td style="text-align: start;">{{billInfo?.txtBusinessName}} &nbsp;,{{billInfo?.txtArea}},{{billInfo?.txtSectorMohallah}},{{billInfo?.txtStreetNo}},{{billInfo?.txtHouseNo}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Billing Period</th>
+                                            <td style="text-align: start;">{{billInfo?.dteBillFrom}} to {{billInfo?.dteBillTo}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="billInfo" class="mt-3">
+                                    <tr>
+                                        <th>Payable Within Due Date</th>
+                                        <th>Payable After Due Date</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{billInfo?.numPayableWithinDueDate}}</td>
+                                        <td>{{billInfo?.numPayableAfterDueDate}}</td>
+                                        <td>{{billInfo?.dteBillDueDate}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-card>
+        </mat-card-content>
+        <!-- <mat-card-actions class="m-0">
+            <div class="col d-flex justify-content-end mb-1">
+                <button mat-raised-button class="mr-2" (click)="downloadPdf('printBill')"><span
+                    class="material-icons pb-1 pr-1">file_download</span>Download Pdf</button>
+                <button mat-raised-button class="ml-2" (click)="openInstallmentDialog()"><span class="material-icons pb-1 pr-1">attach_money</span>Installment</button>
+            </div>
+        </mat-card-actions> -->
+
+    </mat-expansion-panel>
+
+</div>
